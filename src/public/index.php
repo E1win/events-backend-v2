@@ -6,7 +6,7 @@
  * So we no longer have to manually load our classes.
  */
 
-// require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /**
  * RUN APPLICATION
@@ -15,7 +15,7 @@
  * Then, send appropiate response back to client.
  */
 
-$app = require_once __DIR__ . '/../bootstrap/app.php';
+// $app = require_once __DIR__ . '/../bootstrap/app.php';
 // Add application here
 
 // send response
