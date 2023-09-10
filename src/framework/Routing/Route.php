@@ -4,6 +4,8 @@ namespace Framework\Routing;
 use Framework\Routing\Contract\RouteInterface;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class Route implements RouteInterface
 {
@@ -39,7 +41,7 @@ class Route implements RouteInterface
   /**
    * Run the route action and return the response
    */
-  public function run(): ResponseInterface
+  public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
   {
     try {
       return $this->runController();
@@ -51,8 +53,8 @@ class Route implements RouteInterface
   /**
    * Run the route controller action and return the response
    */
-  protected function runController()
+  protected function runController(): ResponseInterface
   {
-
+    // use ControllerDispatcher to dispatch route
   }
 }
