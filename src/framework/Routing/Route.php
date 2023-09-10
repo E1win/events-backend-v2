@@ -1,7 +1,11 @@
 <?php
 namespace Framework\Routing;
 
-class Route
+use Framework\Routing\Contract\RouteInterface;
+
+use Psr\Http\Message\ResponseInterface;
+
+class Route implements RouteInterface
 {
   /**
    * URI pattern the route responds to
@@ -35,7 +39,7 @@ class Route
   /**
    * Run the route action and return the response
    */
-  public function run(): mixed
+  public function run(): ResponseInterface
   {
     try {
       return $this->runController();
