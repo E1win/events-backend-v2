@@ -1,4 +1,5 @@
 <?php
+namespace Framework\Routing\Contract;
 
 use Framework\Routing\Contract\RouteInterface;
 
