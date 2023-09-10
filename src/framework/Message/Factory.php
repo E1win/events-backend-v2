@@ -1,5 +1,5 @@
 <?php
-namespace App\Message;
+namespace Framework\Message;
 
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
@@ -10,11 +10,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
-use App\Message\Response;
-use App\Message\Uri;
-use App\Message\ServerRequest;
-use App\Message\Stream\FileStream;
-use App\Message\Stream\InputStream;
+use Framework\Message\Response;
+use Framework\Message\Uri;
+use Framework\Message\ServerRequest;
+use Framework\Message\Stream\FileStream;
+use Framework\Message\Stream\InputStream;
 
 class Factory implements ResponseFactoryInterface, ServerRequestFactoryInterface, UriFactoryInterface, StreamFactoryInterface 
 {

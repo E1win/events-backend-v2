@@ -1,10 +1,10 @@
 <?php
-namespace App\Message;
+namespace Framework\Message;
 
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
-use App\Message\Message;
+use Framework\Message\Message;
 
 use InvalidArgumentException;
 

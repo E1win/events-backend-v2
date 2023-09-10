@@ -1,7 +1,7 @@
 <?php
-namespace App\Message\Stream;
+namespace Framework\Message\Stream;
 
-use App\Message\Stream;
+use Framework\Message\Stream;
 
 class InputStream extends Stream
 {

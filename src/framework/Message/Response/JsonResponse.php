@@ -1,8 +1,8 @@
 <?php
-namespace App\Message\Response;
+namespace Framework\Message\Response;
 
-use App\Message\Factory as MessageFactory;
-use App\Message\Response;
+use Framework\Message\Factory as MessageFactory;
+use Framework\Message\Response;
 use InvalidArgumentException;
 use JsonException;
 use Psr\Http\Message\StreamInterface;

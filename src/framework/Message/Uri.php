@@ -1,5 +1,5 @@
 <?php
-namespace App\Message;
+namespace Framework\Message;
 
 use InvalidArgumentException;
 use Psr\Http\Message\UriInterface;

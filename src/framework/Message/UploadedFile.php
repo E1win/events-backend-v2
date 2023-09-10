@@ -1,5 +1,5 @@
 <?php
-namespace App\Message;
+namespace Framework\Message;
 
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
