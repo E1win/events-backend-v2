@@ -1,5 +1,7 @@
 <?php
 
+use Framework\Message\Factory as MessageFactory;
+
 /**
  * ADDING COMPOSER AUTOLOADER
  * 
@@ -15,9 +17,12 @@ require __DIR__ . '/../vendor/autoload.php';
  * Then, send appropiate response back to client.
  */
 
-// $app = require_once __DIR__ . '/../bootstrap/app.php';
-// Add application here
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// send response
+$response = $app->handle(
+ (new MessageFactory)->createServerRequestFromGlobals()
+);
+
+// send response with ResponseSender
 
 echo 'Hello World!';
