@@ -44,7 +44,7 @@ class Route implements RouteInterface
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
   {
     try {
-      return $this->runController();
+      return $this->runController($request);
     } catch (\Exception $e) {
       // Return exception response
     }
@@ -53,8 +53,9 @@ class Route implements RouteInterface
   /**
    * Run the route controller action and return the response
    */
-  protected function runController(): ResponseInterface
+  protected function runController(ServerRequestInterface $request): ResponseInterface
   {
     // use ControllerDispatcher to dispatch route
+    // controllerDispatcher->dispatch($this, $request)
   }
 }

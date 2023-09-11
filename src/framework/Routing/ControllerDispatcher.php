@@ -6,6 +6,7 @@ use Framework\Routing\Contract\RouteInterface;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class ControllerDispatcher implements DispatcherInterface
 {
@@ -19,7 +20,7 @@ class ControllerDispatcher implements DispatcherInterface
     $this->container = $container;
   }
 
-  public function dispatch(RouteInterface $route): ResponseInterface
+  public function dispatch(RouteInterface $route, ServerRequestInterface $request): ResponseInterface
   {
     // . . .
   }
