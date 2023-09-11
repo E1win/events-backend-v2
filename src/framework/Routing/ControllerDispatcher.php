@@ -22,6 +22,7 @@ class ControllerDispatcher implements DispatcherInterface
 
   public function dispatch(RouteInterface $route, ServerRequestInterface $request): ResponseInterface
   {
-    // . . .
+    // resolve controller / parameters
+    // callAction
   }
 }
