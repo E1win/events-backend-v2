@@ -23,6 +23,7 @@ class Dispatcher implements DispatcherInterface, RequestHandlerInterface
     // add all middleware from route middleware to stack
 
     // add route to end of middleware stack
+    $this->middlewareStack->append($route);
 
     return $this->handle($request);
   } 
