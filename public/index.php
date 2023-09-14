@@ -1,7 +1,15 @@
 <?php
 
+use App\Test\TestClassOne;
+use App\Test\TestClassThree;
+use App\Test\TestClassTwo;
 use Framework\Message\Factory as MessageFactory;
 use Framework\Application\App;
+use Framework\Container\Resource\ContainerResource;
+use Framework\Container\Resource\ContainerResourceCollection;
+use Framework\Container\Resource\ContainerResourceCollectionChain;
+use Framework\Message\Request;
+use Framework\Message\Response;
 
 /**
  * ADDING COMPOSER AUTOLOADER
@@ -11,21 +19,99 @@ use Framework\Application\App;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$resources = require __DIR__ . '/../config/testing.php';
+$config = require __DIR__ . '/../config/testing.php';
 
-var_dump($resources);
+var_dump($config);
+echo '<br/>';
+echo '<br/>';
+echo '<br/>';
+
+
+$resourceCollection = new ContainerResourceCollection(
+  $config
+);
+
+echo '<br/>';
+echo '<br/>';
+echo '<br/>';
+
+$resource = $resourceCollection->getResource(TestClassOne::class);
+
+echo "<pre>";
+var_dump($resource);
+echo "</pre>";
+
+
 echo '<br/>';
 echo '<br/>';
 echo '<br/>';
 
 use Framework\Container\Resource\ReflectionAutowiring;
-use Framework\Message\Response;
 
 $autowiring = new ReflectionAutowiring();
 
-$parameters = $autowiring->autowire(Response::class);
+$parameters = $autowiring->autowire(TestClassThree::class);
 
-var_dump($parameters['name']);
+var_dump($parameters);
+
+// require __DIR__ . '/../testing/testing.php';
+// echo '<br/>';
+// echo '<br/>';
+// echo '<br/>';
+
+// Even duidelijk neerzetten hoe een
+// ContainerResource class eruit moet zien.
+// Zodat er verder mee gewerkt kan worden
+
+// Moet het gewoon een normaal array zijn met alle parameters?
+// voorbeeld voor bijvoorbeeld 
+// TestClass(ResponseInterface $response, int $testInt, ?string $optionalString = null);
+// $params = [Response::class, 13, null];
+
+// Maak een paar classes waarin we makkelijk dit kunnen proberen
+
+// use Framework\Container\Resource\ContainerResourceCollectionChain;
+// use Framework\Container\Resource\ContainerResourceCollection;
+
+// $test1= new ContainerResourceCollection([], null);
+// $test2= new ContainerResourceCollection([], null);
+
+
+
+// $resourceCollectionOne = new ContainerResourceCollection(
+//   [
+//     ContainerResource::create(Response::class),
+//     ContainerResource::create(Request::class),
+//   ]
+// );
+
+// $resourceCollectionTwo = new ContainerResourceCollection(
+//   [
+//     ContainerResource::create(Response::class),
+//     ContainerResource::create(Request::class),
+//   ]
+// );
+
+// echo '<pre>';
+// var_dump($resourceCollectionOne);
+// echo '</pre>';
+
+// $resourceChain = new ContainerResourceCollectionChain([
+//   $resourceCollectionOne,
+//   $resourceCollectionTwo
+// ]);
+
+// echo '<pre>';
+// var_dump($resourceChain);
+// echo '</pre>';
+
+// $resourceChain->getResource('t');
+
+
+
+
+
+
 
 // use Framework\Container\Resource\ContainerResource;
 

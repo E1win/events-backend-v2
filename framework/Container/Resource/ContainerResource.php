@@ -8,7 +8,7 @@ class ContainerResource implements ContainerResourceInterface
 {
   protected string $className;
 
-  protected ?array $parameters;
+  protected ?array $parameters = null;
 
   public static function create(string $className)
   {
@@ -50,7 +50,7 @@ class ContainerResource implements ContainerResourceInterface
 
   public function hasParameters(): bool
   {
-    return $this->parameters != null;
+    return $this->parameters != null && count($this->parameters) > 0;
   }
 
   protected function setClassNameIfExists(string $className)

@@ -43,6 +43,8 @@ class Container implements ContainerInterface
     // if that doesn't work (so if it has dependency with primitive parameter)
     // parent get's called with more definitions to try there.
 
+    // then also call get on parameters if it's a class
+
     
     $resource = $this->resourceCollection->getResource($name);
 

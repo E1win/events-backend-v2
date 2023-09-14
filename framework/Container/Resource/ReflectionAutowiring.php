@@ -28,7 +28,6 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
 
     $parameters = $this->getResourceParameters($constructor);
 
-
     return $parameters;
 
     // get class constructor
@@ -57,12 +56,28 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
     $parameters = [];
 
     foreach ($constructor->getParameters() as $index => $parameter) {
-      echo $key;
-      echo '   value: ';
-      echo $value;
+      echo $parameter;
       echo '<br/>';
+      
+      echo '<pre>';
 
-      $parameters[$parameter->getName()] = 
+      $dependency = class_exists($parameter->getType()) ? $parameter->getType() : null;
+
+      echo class_exists($parameter->getType());
+      // echo is_object($parameter->getType());
+      echo '</pre>';
+
+      if ($dependency === null) {
+        // Check if default value for a parameter is available
+        if ($parameter->isDefaultValueAvailable()) {
+          $parameters[$parameter->getName()] = $parameter->getDefaultValue();
+        } else {
+          throw new Exception("Can't resolvesfeasfldkjaflka");
+        }
+      } else {
+        // resolve dependencies maybe?
+        $parameters[$parameter->getName()] = $dependency->getName();
+      }
     }
 
     return $parameters;
