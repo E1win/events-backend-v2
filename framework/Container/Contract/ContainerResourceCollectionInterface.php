@@ -8,10 +8,10 @@ interface ContainerResourceCollectionInterface
    * 
    * TODO: add return type
    */
-  public function getDefinition(string $name): ContainerResourceInterface|null;
+  public function getResource(string $name): ContainerResourceInterface|null;
 
   /**
    * Returns an array of definitions indexed by their names.
    */
-  public function getDefinitions(): array;
+  public function getResources(): array;
 }

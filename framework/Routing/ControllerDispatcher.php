@@ -13,12 +13,6 @@ class ControllerDispatcher implements DispatcherInterface
   /**
    * The container instance
    */
-  protected $container;
-
-  public function __construct(ContainerInterface $container)
-  {
-    $this->container = $container;
-  }
 
   public function dispatch(RouteInterface $route, ServerRequestInterface $request): ResponseInterface
   {

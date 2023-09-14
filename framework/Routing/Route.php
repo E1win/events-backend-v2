@@ -5,9 +5,10 @@ use Framework\Routing\Contract\RouteInterface;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class Route implements RouteInterface
+class Route implements RouteInterface, MiddlewareInterface
 {
   /**
    * URI pattern the route responds to
@@ -56,6 +57,7 @@ class Route implements RouteInterface
   protected function runController(ServerRequestInterface $request): ResponseInterface
   {
     // use ControllerDispatcher to dispatch route
+    // new ControllerDispatcher();
     // controllerDispatcher->dispatch($this, $request)
   }
 }

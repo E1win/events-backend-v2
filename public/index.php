@@ -11,18 +11,34 @@ use Framework\Application\App;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Framework\Container\Resource\ContainerResource;
+$resources = require __DIR__ . '/../config/testing.php';
 
-$resource = new ContainerResource(Framework\Message\Response::class);
-
-$resource
-  ->setParameter('statusCode', 200)
-  ->setParameter('reasonPhrase', "Testing the ContainerResource");
-
-echo $resource->getName();
+var_dump($resources);
 echo '<br/>';
-var_dump($resource->getParameters());
 echo '<br/>';
+echo '<br/>';
+
+use Framework\Container\Resource\ReflectionAutowiring;
+use Framework\Message\Response;
+
+$autowiring = new ReflectionAutowiring();
+
+$parameters = $autowiring->autowire(Response::class);
+
+var_dump($parameters['name']);
+
+// use Framework\Container\Resource\ContainerResource;
+
+// $resource = new ContainerResource(Framework\Message\Response::class);
+
+// $resource
+//   ->setParameter('statusCode', 200)
+//   ->setParameter('reasonPhrase', "Testing the ContainerResource");
+
+// echo $resource->getName();
+// echo '<br/>';
+// var_dump($resource->getParameters());
+// echo '<br/>';
 
 /**
  * RUN APPLICATION

@@ -10,6 +10,11 @@ class ContainerResource implements ContainerResourceInterface
 
   protected ?array $parameters;
 
+  public static function create(string $className)
+  {
+    return new ContainerResource($className);
+  }
+
   public function __construct(string $className)
   {
     $this->setClassNameIfExists($className);

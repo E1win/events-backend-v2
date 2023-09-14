@@ -3,7 +3,7 @@ namespace Framework\Routing\Contract;
 
 use Psr\Http\Server\MiddlewareInterface;
 
-interface RouteInterface extends MiddlewareInterface
+interface RouteInterface
 {
   
 }
