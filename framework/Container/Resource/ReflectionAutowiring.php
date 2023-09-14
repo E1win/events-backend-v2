@@ -1,19 +1,21 @@
 <?php
-namespace Framework\Container;
+namespace Framework\Container\Resource;
 
+use Exception;
 use Framework\Container\Contract\AutowiringInterface;
-use Framework\Container\Contract\DefinitionSourceInterface;
+use Framework\Container\Contract\ContainerResourceCollectionInterface;
+use ReflectionClass;
 
-class ReflectionAutowiring implements AutowiringInterface, DefinitionSourceInterface
+class ReflectionAutowiring implements AutowiringInterface, ContainerResourceCollectionInterface
 {
   // . . .
 
   public function autowire(string $name)
   {
-    $reflector = new ReflectionClass($id);
+    $reflector = new ReflectionClass($name);
 
     if (!$reflector->isInstantiable()) {
-      throw new Exception("Class {$id} is not instantiable.");
+      throw new Exception("Class {$name} is not instantiable.");
     }
 
     // get class constructor
