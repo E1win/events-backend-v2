@@ -10,6 +10,8 @@ use Framework\Container\Resource\ContainerResourceCollection;
 use Framework\Container\Resource\ContainerResourceCollectionChain;
 use Framework\Message\Request;
 use Framework\Message\Response;
+use Framework\Container\Resource\ReflectionAutowiring;
+
 
 /**
  * ADDING COMPOSER AUTOLOADER
@@ -28,7 +30,8 @@ echo '<br/>';
 
 
 $resourceCollection = new ContainerResourceCollection(
-  $config
+  $config,
+  new ReflectionAutowiring()
 );
 
 echo '<br/>';
@@ -41,18 +44,27 @@ echo "<pre>";
 var_dump($resource);
 echo "</pre>";
 
+$resource = $resourceCollection->getResource(TestClassThree::class);
+
+echo "<pre>";
+var_dump($resource);
+echo "</pre>";
+
 
 echo '<br/>';
 echo '<br/>';
 echo '<br/>';
 
-use Framework\Container\Resource\ReflectionAutowiring;
 
-$autowiring = new ReflectionAutowiring();
 
-$parameters = $autowiring->autowire(TestClassThree::class);
+// $autowiring = new ReflectionAutowiring();
 
-var_dump($parameters);
+// $resource = $autowiring->autowire(TestClassThree::class);
+
+
+// var_dump($resource);
+// $testing = $resourceCollection->getResource($resource->getParameters()['myClass']);
+// var_dump($testing);
 
 // require __DIR__ . '/../testing/testing.php';
 // echo '<br/>';

@@ -12,7 +12,7 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
 {
   // . . .
 
-  public function autowire(string $name)
+  public function autowire(string $name): ContainerResourceInterface|null
   {
     $reflector = new ReflectionClass($name);
 
@@ -28,7 +28,7 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
 
     $parameters = $this->getResourceParameters($constructor);
 
-    return $parameters;
+    return new ContainerResource($name, $parameters);
 
     // get class constructor
 
@@ -39,8 +39,7 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
 
   public function getResource(string $name): ContainerResourceInterface|null
   {
-    // return $this->autowire($name);
-    return null;
+    return $this->autowire($name);
   }
 
   /**
@@ -70,13 +69,13 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
       if ($dependency === null) {
         // Check if default value for a parameter is available
         if ($parameter->isDefaultValueAvailable()) {
-          $parameters[$parameter->getName()] = $parameter->getDefaultValue();
+          $parameters[$index] = $parameter->getDefaultValue();
         } else {
           throw new Exception("Can't resolvesfeasfldkjaflka");
         }
       } else {
         // resolve dependencies maybe?
-        $parameters[$parameter->getName()] = $dependency->getName();
+        $parameters[$index] = $dependency->getName();
       }
     }
 

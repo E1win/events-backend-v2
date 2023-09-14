@@ -15,9 +15,10 @@ class ContainerResource implements ContainerResourceInterface
     return new ContainerResource($className);
   }
 
-  public function __construct(string $className)
+  public function __construct(string $className, ?array $parameters = null)
   {
     $this->setClassNameIfExists($className);
+    $this->parameters = $parameters;
   }
 
   public function setName(string $className): self

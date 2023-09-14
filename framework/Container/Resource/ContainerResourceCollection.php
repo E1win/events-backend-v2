@@ -29,7 +29,11 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
       return $this->resources[$name];
     }
 
-    
+    $resource = $this->autowiring->autowire($name);
+
+    $this->resources[$name] = $resource;
+
+    return $resource;
 
     // Use autowire to get class and parameters
 

@@ -49,12 +49,25 @@ class Container implements ContainerInterface
     $resource = $this->resourceCollection->getResource($name);
 
     if ($resource == null) {
-      if ($this->parentContainer != null) {
-        $resource = $this->parentContainer->get($name);
-      } else {
-        throw new NotFoundException("Resource {$name} not found in {$this->containerName}");
-      }
+      throw new NotFoundException("Resource {$name} not found in {$this->containerName}");
     }
+
+    // Does it have class dependencies?
+    // Call this->get on those.
+
+    // after that,
+    // resolve it.
+
+
+    return $resource;
+
+    // if ($resource == null) {
+    //   if ($this->parentContainer != null) {
+    //     $resource = $this->parentContainer->get($name);
+    //   } else {
+    //     throw new NotFoundException("Resource {$name} not found in {$this->containerName}");
+    //   }
+    // }
 
     // After resource is returned, use a resolver to instantiate object
   }
