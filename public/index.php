@@ -13,7 +13,9 @@ use Framework\Container\Resource\ContainerResourceCollectionChain;
 use Framework\Message\Request;
 use Framework\Message\Response;
 use Framework\Container\Resource\ReflectionAutowiring;
+use Framework\Model\Mapper\MapperFactory;
 
+define('ROOT_PATH', __DIR__ . "/../");
 
 /**
  * ADDING COMPOSER AUTOLOADER
@@ -23,12 +25,10 @@ use Framework\Container\Resource\ReflectionAutowiring;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$config = require __DIR__ . '/../config/database.php';
-
-
-var_dump($config);
-echo "<br>";
-echo "<br>";
+// var_dump($config);
+// echo "<br>";
+// echo "<br>";
+$config = require __DIR__ . '/../config/testing.php';
 
 $resourceCollection = new ContainerResourceCollection(
   $config,
@@ -42,15 +42,13 @@ echo '<br/>';
 
 $container = new Container($resourceCollection);
 
-$myClass = $container->get(TestClassFour::class);
+$myClass = $container->get(MapperFactory::class);
 
 
 echo '<br><br>THE GOTTEN CLASS<br>';
 echo "<pre>";
 var_dump($myClass);
 echo "</pre>";
-
-$myClass = $container->get(TestClassThree::class);
 
 // $myClass->testMethod();
 // $resource = $resourceCollection->getResource(TestClassOne::class);
@@ -66,9 +64,6 @@ $myClass = $container->get(TestClassThree::class);
 // echo "</pre>";
 
 
-echo '<br/>';
-echo '<br/>';
-echo '<br/>';
 
 
 

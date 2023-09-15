@@ -13,20 +13,24 @@ class ResourceResolver
   {
     $className = $resource->getName();
 
+
     $reflectionClass = new ReflectionClass($className);
 
-    try {
-      $args = $this->resolveParameters(
-        $resource,
-        $reflectionClass->getConstructor()
-      );
+    $args = $this->resolveParameters(
+      $resource,
+      $reflectionClass->getConstructor()
+    );
 
-      return $reflectionClass->newInstanceArgs($args);
-    } catch (Exception $e) {
-      // . . .
-    }
+    
+    $instance = $reflectionClass->newInstanceArgs($args);
+    
+    echo "<br><br>in resolver: {$className}, instance:";
+    echo "<pre>";
+    var_dump($instance);
+    echo "</pre>";
+    echo "<br><br>";
 
-    return $resource;
+    return $reflectionClass->newInstanceArgs($args);
   }
 
   private function resolveParameters(
@@ -37,6 +41,7 @@ class ResourceResolver
 
     foreach ($resource->getParameters() as $key => $value) {
       if ($value instanceof ContainerResourceInterface) {
+        echo '<br><br>resolving dependency<br><br>';
         $args[] = $this->resolve($value);
       } else {
         $args[] = $value;

@@ -19,11 +19,6 @@ class Container implements ContainerInterface
   
   protected array $resolvedResources = [];
 
-  /**
-   * Use `$container = new Container()` for default configuration.
-   * 
-   * Otherwise use ContainerFactory class to customize the config.
-   */
   public function __construct(
     ContainerResourceCollectionInterface $resourceCollection,
   ) {
@@ -43,6 +38,12 @@ class Container implements ContainerInterface
     if ($resource == null) {
       throw new NotFoundException("Resource {$name} not found in {$this->containerName}");
     }
+
+    echo "<br><br>now resolving: {$name}<br><br>";
+
+    echo '<pre>';
+    var_dump($resource);
+    echo '</pre>';
 
     $resolvedResource = $this->resourceResolver->resolve($resource);
 

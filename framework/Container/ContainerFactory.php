@@ -15,6 +15,6 @@ class ContainerFactory
    */
   public function create()
   {
-
+    // maybe here: get all config
   }
 }
