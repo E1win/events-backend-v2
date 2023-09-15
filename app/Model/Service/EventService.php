@@ -24,4 +24,13 @@ class EventService
 
     return $event;
   }
+
+  public function getEventById(int $id): Event
+  {
+    $event = new Event($id);
+
+    $this->mapper->fetch($event);
+
+    return $event;
+  }
 }

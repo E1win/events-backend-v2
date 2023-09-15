@@ -54,9 +54,10 @@ $mapper = $mapperFactory->create(Event::class);
 $service = new EventService($mapper);
 
 // $event = $service->createEvent('My First Event');
+$event = $service->getEventById(1);
 
 echo '<br><br>EVENT SUCCESFULLY CREATED:<pre>';
-var_dump($mapperFactory);
+var_dump($event);
 echo "</pre>";
 
 // $myClass->testMethod();
