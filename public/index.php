@@ -45,6 +45,7 @@ echo '<br/>';
 
 $container = new Container($resourceCollection);
 
+$myClass = $container->get(TestClassFour::class);
 $myClass = $container->get(TestClassThree::class);
 
 
