@@ -1,10 +1,12 @@
 <?php
 
+use App\Test\TestClassFour;
 use App\Test\TestClassOne;
 use App\Test\TestClassThree;
 use App\Test\TestClassTwo;
 use Framework\Message\Factory as MessageFactory;
 use Framework\Application\App;
+use Framework\Container\Container;
 use Framework\Container\Resource\ContainerResource;
 use Framework\Container\Resource\ContainerResourceCollection;
 use Framework\Container\Resource\ContainerResourceCollectionChain;
@@ -28,27 +30,32 @@ echo '<br/>';
 echo '<br/>';
 echo '<br/>';
 
-
 $resourceCollection = new ContainerResourceCollection(
   $config,
   new ReflectionAutowiring()
 );
 
+
 echo '<br/>';
 echo '<br/>';
 echo '<br/>';
 
-$resource = $resourceCollection->getResource(TestClassOne::class);
+$container = new Container($resourceCollection);
 
 echo "<pre>";
-var_dump($resource);
+var_dump($container->get(TestClassThree::class));
 echo "</pre>";
+// $resource = $resourceCollection->getResource(TestClassOne::class);
 
-$resource = $resourceCollection->getResource(TestClassThree::class);
+// echo "<pre>";
+// var_dump($resource);
+// echo "</pre>";
 
-echo "<pre>";
-var_dump($resource);
-echo "</pre>";
+// $resource = $resourceCollection->getResource(TestClassTwo::class);
+
+// echo "<pre>";
+// var_dump($resource);
+// echo "</pre>";
 
 
 echo '<br/>';

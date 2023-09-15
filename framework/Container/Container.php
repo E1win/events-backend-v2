@@ -3,6 +3,7 @@ namespace Framework\Container;
 
 use Framework\Container\Contract\ContainerResourceCollectionInterface;
 use Framework\Container\Exception\NotFoundException;
+use Framework\Container\Resource\ResourceResolver;
 use Psr\Container\ContainerInterface;
 
 // https://medium.com/tech-tajawal/dependency-injection-di-container-in-php-a7e5d309ccc6
@@ -15,6 +16,8 @@ class Container implements ContainerInterface
   private ?ContainerInterface $parentContainer;
 
   private ContainerResourceCollectionInterface $resourceCollection;
+
+  private ResourceResolver $resourceResolver;
   
   protected array $resolvedResources = [];
 
@@ -25,10 +28,12 @@ class Container implements ContainerInterface
    */
   public function __construct(
     ContainerResourceCollectionInterface $resourceCollection,
-    ContainerInterface|null $parentContainer
+    ContainerInterface|null $parentContainer = null
   ) {
     $this->resourceCollection = $resourceCollection;
     $this->parentContainer = $parentContainer;
+
+    $this->resourceResolver = new ResourceResolver();
   }
 
   public function get(string $name)
@@ -58,8 +63,11 @@ class Container implements ContainerInterface
     // after that,
     // resolve it.
 
+    $resolvedResource = $this->resourceResolver->resolve($resource);
 
-    return $resource;
+    $this->resolvedResources[$name] = $resolvedResource;
+
+    return $resolvedResource;
 
     // if ($resource == null) {
     //   if ($this->parentContainer != null) {

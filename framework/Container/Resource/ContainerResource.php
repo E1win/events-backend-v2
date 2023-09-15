@@ -32,14 +32,21 @@ class ContainerResource implements ContainerResourceInterface
   {
     return $this->className;
   }
+
+  public function addParameter(mixed $value): self
+  {
+    $this->parameters[] = $value;
+
+    return $this;
+  }
   
   /**
    * Sets parameter, overrides if parameter
    * already exists
    */
-  public function setParameter(string $key, mixed $value): self
+  public function setParameter(string $index, mixed $value): self
   {
-    $this->parameters[$key] = $value;
+    $this->parameters[$index] = $value;
 
     return $this;
   }

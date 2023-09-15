@@ -21,6 +21,7 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
   {
     $this->resources = $resources;
     $this->autowiring = $autowiring;
+    $this->autowiring->setParent($this);
   }
 
   public function getResource(string $name): ?ContainerResourceInterface
@@ -47,4 +48,5 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
   {
     return $this->resources;
   }
+
 }

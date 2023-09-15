@@ -8,7 +8,12 @@ use Framework\Container\Resource\ContainerResource;
 return [
   App\Test\TestClassOne::class 
     => ContainerResource::create(App\Test\TestClassOne::class)
-      ->setParameter(0, 4),
+      ->addParameter(4),
+  App\Test\TestClassTwo::class 
+    => ContainerResource::create(App\Test\TestClassTwo::class)
+      ->addParameter(App\Test\TestClassOne::class)
+      ->addParameter(22)
+      ->addParameter(null),
   // App\Test\TestClassThree::class
   //   => ContainerResource::create(App\Test\TestClassThree::class)
   //     ->setParameter('myClass', App\Test\TestClassOne::class),

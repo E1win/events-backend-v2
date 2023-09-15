@@ -6,11 +6,18 @@ use Framework\Container\Contract\AutowiringInterface;
 use Framework\Container\Contract\ContainerResourceCollectionInterface;
 use Framework\Container\Contract\ContainerResourceInterface;
 use Framework\Container\Exception\ContainerException;
+use Framework\Container\Exception\NotFoundException;
 use ReflectionClass;
 
 class ReflectionAutowiring implements AutowiringInterface, ContainerResourceCollectionInterface
 {
   // . . .
+
+  public function __construct(
+    private ?ContainerResourceCollectionInterface $parent = null
+  )
+  {
+  }
 
   public function autowire(string $name): ContainerResourceInterface|null
   {
@@ -27,6 +34,10 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
     }
 
     $parameters = $this->getResourceParameters($constructor);
+
+    if ($parameters == null) {
+      throw new NotFoundException("Can't resolve parameters of class '{$name}' in Container");
+    }
 
     return new ContainerResource($name, $parameters);
 
@@ -71,14 +82,28 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
         if ($parameter->isDefaultValueAvailable()) {
           $parameters[$index] = $parameter->getDefaultValue();
         } else {
-          throw new Exception("Can't resolvesfeasfldkjaflka");
+          return null;
         }
       } else {
         // resolve dependencies maybe?
-        $parameters[$index] = $dependency->getName();
+        // $parameters[$index] = $dependency->getName();
+
+        if ($this->parent != null) {
+          $parameters[$index] = $this->parent->getResource($dependency->getName());
+        } else {
+          $parameters[$index] = $this->getResource($dependency->getName());
+        }
+
+
+        // HERE CALL ->GETRESOURCE IN PARENT (CONTAINERRESOURCECOLLECTION)
       }
     }
 
     return $parameters;
+  }
+
+  public function setParent(ContainerResourceCollectionInterface $parent)
+  {
+    $this->parent = $parent;
   }
 }
