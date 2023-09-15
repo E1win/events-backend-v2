@@ -23,12 +23,12 @@ use Framework\Container\Resource\ReflectionAutowiring;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$config = require __DIR__ . '/../config/testing.php';
+$config = require __DIR__ . '/../config/database.php';
+
 
 var_dump($config);
-echo '<br/>';
-echo '<br/>';
-echo '<br/>';
+echo "<br>";
+echo "<br>";
 
 $resourceCollection = new ContainerResourceCollection(
   $config,
