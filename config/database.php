@@ -6,9 +6,9 @@ $dotenv->load();
 
 return [
   'driver' => 'mysql',
-  'url' => $_ENV['DB_URL'],
+  'host' => $_ENV['DB_HOST'],
   'port' => $_ENV['DB_PORT'],
-  'database_name' => $_ENV['DB_NAME'],
+  'name' => $_ENV['DB_NAME'],
   'user' => $_ENV['DB_USER'],
   'password' => $_ENV['DB_PASS'],
   'options' => '',
