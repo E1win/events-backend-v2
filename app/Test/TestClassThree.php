@@ -3,7 +3,7 @@ namespace App\Test;
 
 class TestClassThree
 {
-  public function __construct(public TestClassOne $myClass)
+  public function __construct(public TestInterface $myClass)
   {
   }
 

@@ -4,6 +4,7 @@ use App\Test\TestClassFour;
 use App\Test\TestClassOne;
 use App\Test\TestClassThree;
 use App\Test\TestClassTwo;
+use App\Test\TestInterface;
 use Framework\Message\Factory as MessageFactory;
 use Framework\Application\App;
 use Framework\Container\Container;
@@ -35,6 +36,8 @@ $resourceCollection = new ContainerResourceCollection(
   new ReflectionAutowiring()
 );
 
+$resourceCollection->addAlias(TestInterface::class, TestClassOne::class);
+
 
 echo '<br/>';
 echo '<br/>';
@@ -42,7 +45,7 @@ echo '<br/>';
 
 $container = new Container($resourceCollection);
 
-$myClass = $container->get(MapperFactory::class);
+$myClass = $container->get(TestClassThree::class);
 
 
 echo '<br><br>THE GOTTEN CLASS<br>';

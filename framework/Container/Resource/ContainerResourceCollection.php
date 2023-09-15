@@ -7,23 +7,21 @@ use Framework\Container\Contract\ContainerResourceInterface;
 
 class ContainerResourceCollection implements ContainerResourceCollectionInterface
 {
-  /**
-   * @var ContainerResourceInterface[] $resources
-   */
-  protected array $resources;
+  private array $resources;
 
-  /**
-   * @var ContainerResourceInterface[] $cachedResources
-   */
-  protected array $cachedResources = [];
+  private array $cachedResources = [];
 
-  protected ?AutowiringInterface $autowiring;
+  private ?AutowiringInterface $autowiring;
+
+  private array $resourceAliases = [];
 
   /**
    * @param ContainerResourceInterface[] $resources
    */
-  public function __construct(array $resources, ?AutowiringInterface $autowiring = null)
-  {
+  public function __construct(
+    array $resources = [], 
+    ?AutowiringInterface $autowiring = null
+  ) {
     $this->resources = $resources;
     $this->autowiring = $autowiring;
     $this->autowiring->setParent($this);
@@ -31,7 +29,15 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
 
   public function getResource(string $name): ?ContainerResourceInterface
   {
-    echo "<br><br>RESOLVING: {$name}<br>";
+    if (interface_exists($name)) {
+      if (array_key_exists($name, $this->resourceAliases)) {
+        return $this->getResource($this->resourceAliases[$name]);
+      }
+
+      // TODO: Maybe throw error here?
+      // 'Unaliased Interface'
+      return null;
+    }
 
     if (array_key_exists($name, $this->cachedResources)) {
 
@@ -69,11 +75,31 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
     return $this->resources;
   }
 
+  public function addResources(array $resources): self
+  {
+    $this->resources[] += $resources;
+
+    return $this;
+  }
+
+  public function addAlias(string $key, string $value): self
+  {
+    $this->resourceAliases[$key] = $value;
+
+    return $this;
+  }
+
+  public function addAliases(array $aliases): self
+  {
+    $this->resourceAliases[] += $aliases;
+
+    return $this;
+  }
+
   private function resolveUncachedDependencies(ContainerResourceInterface $resource)
   {
     foreach ($resource->getParameters() as $key => $value) {
       if (class_exists($value)) {
-        echo "UNCACHED DEPENDENCY: {$value}, key: {$key}";
         $resource->setParameter($key, $this->getResource($value));
       }
     }
