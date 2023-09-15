@@ -40,12 +40,6 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
     }
 
     return new ContainerResource($name, $parameters);
-
-    // get class constructor
-
-    // get constructor params
-
-    // get new instance with dependencies resolved
   }
 
   public function getResource(string $name): ContainerResourceInterface|null

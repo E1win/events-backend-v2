@@ -52,9 +52,6 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
       $this->resolveUncachedDependencies($resource);
       $this->cachedResources[$name] = $resource;
 
-      // Go through parameters and check if there's a class dependency in it.
-      // If there is, call getResource on that class.
-      // (don't forget to change the ContainerResource class)
       return $this->cachedResources[$name];
     }
 

@@ -50,9 +50,7 @@ echo "<pre>";
 var_dump($myClass);
 echo "</pre>";
 
-echo 'test';
 $myClass = $container->get(TestClassThree::class);
-echo 'test';
 
 // $myClass->testMethod();
 // $resource = $resourceCollection->getResource(TestClassOne::class);

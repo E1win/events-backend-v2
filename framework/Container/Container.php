@@ -13,8 +13,6 @@ class Container implements ContainerInterface
 {
   private $containerName = 'Container';
 
-  private ?ContainerInterface $parentContainer;
-
   private ContainerResourceCollectionInterface $resourceCollection;
 
   private ResourceResolver $resourceResolver;
@@ -28,10 +26,8 @@ class Container implements ContainerInterface
    */
   public function __construct(
     ContainerResourceCollectionInterface $resourceCollection,
-    ContainerInterface|null $parentContainer = null
   ) {
     $this->resourceCollection = $resourceCollection;
-    $this->parentContainer = $parentContainer;
 
     $this->resourceResolver = new ResourceResolver();
   }
@@ -41,15 +37,6 @@ class Container implements ContainerInterface
     if (array_key_exists($name, $this->resolvedResources)) {
       return $this->resolvedResources[$name];
     }
-
-    // if can't find here, try parent container
-    // so for example: this container has ReflectionAutowiring
-    // as it's ContainerResourceCollection.
-    // if that doesn't work (so if it has dependency with primitive parameter)
-    // parent get's called with more definitions to try there.
-
-    // then also call get on parameters if it's a class
-
     
     $resource = $this->resourceCollection->getResource($name);
 
@@ -57,27 +44,11 @@ class Container implements ContainerInterface
       throw new NotFoundException("Resource {$name} not found in {$this->containerName}");
     }
 
-    // Does it have class dependencies?
-    // Call this->get on those.
-
-    // after that,
-    // resolve it.
-
     $resolvedResource = $this->resourceResolver->resolve($resource);
 
     $this->resolvedResources[$name] = $resolvedResource;
 
     return $resolvedResource;
-
-    // if ($resource == null) {
-    //   if ($this->parentContainer != null) {
-    //     $resource = $this->parentContainer->get($name);
-    //   } else {
-    //     throw new NotFoundException("Resource {$name} not found in {$this->containerName}");
-    //   }
-    // }
-
-    // After resource is returned, use a resolver to instantiate object
   }
   
   public function has(string $name): bool
@@ -88,11 +59,11 @@ class Container implements ContainerInterface
 
     $resource = $this->resourceCollection->getResource($name);
 
-    if ($resource == null && $this->parentContainer != null) {
-      return $this->parentContainer->has($name);
+    if ($resource == null) {
+      return false;
+    } else {
+      return true;
     }
-
-    return false;
   }
 
   public function setName(string $name): self

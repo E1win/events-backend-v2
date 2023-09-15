@@ -41,10 +41,6 @@ class ResourceResolver
       } else {
         $args[] = $value;
       }
-      echo "key: <br>";
-      var_dump($key);
-      echo "<br>value: <br>";
-      var_dump($value);
     }
 
     return $args;
