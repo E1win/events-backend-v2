@@ -42,9 +42,19 @@ echo '<br/>';
 
 $container = new Container($resourceCollection);
 
+$myClass = $container->get(TestClassFour::class);
+
+
+echo '<br><br>THE GOTTEN CLASS<br>';
 echo "<pre>";
-var_dump($container->get(TestClassThree::class));
+var_dump($myClass);
 echo "</pre>";
+
+echo 'test';
+$myClass = $container->get(TestClassThree::class);
+echo 'test';
+
+// $myClass->testMethod();
 // $resource = $resourceCollection->getResource(TestClassOne::class);
 
 // echo "<pre>";

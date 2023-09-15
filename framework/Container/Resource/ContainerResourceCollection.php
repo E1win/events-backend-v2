@@ -12,6 +12,11 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
    */
   protected array $resources;
 
+  /**
+   * @var ContainerResourceInterface[] $cachedResources
+   */
+  protected array $cachedResources = [];
+
   protected ?AutowiringInterface $autowiring;
 
   /**
@@ -26,22 +31,40 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
 
   public function getResource(string $name): ?ContainerResourceInterface
   {
+    echo "<br><br>RESOLVING: {$name}<br>";
+
+    if (array_key_exists($name, $this->cachedResources)) {
+
+      echo "<br><br>VALUE TAKEN FROM CACHE:<br>";
+      var_dump($this->cachedResources[$name]);
+      echo "<br><br><br>";
+
+      return $this->cachedResources[$name];
+    }
+
     if (array_key_exists($name, $this->resources)) {
-      return $this->resources[$name];
+
+      $resource = $this->resources[$name];
+
+      echo "<br><br>VALUE TAKEN FROM RESOURCES:<br>";
+      var_dump($this->resources[$name]);
+
+      $this->resolveUncachedDependencies($resource);
+      $this->cachedResources[$name] = $resource;
+
+      // Go through parameters and check if there's a class dependency in it.
+      // If there is, call getResource on that class.
+      // (don't forget to change the ContainerResource class)
+      return $this->cachedResources[$name];
     }
 
     $resource = $this->autowiring->autowire($name);
 
-    $this->resources[$name] = $resource;
+    if ($resource != null) {
+      $this->cachedResources[$name] = $resource;
+    }
 
     return $resource;
-
-    // Use autowire to get class and parameters
-
-    // call getResource on parameters if it's a dependency
-    // if not, throw error
-
-    return null;
   }
 
   public function getResources(): array
@@ -49,4 +72,13 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
     return $this->resources;
   }
 
+  private function resolveUncachedDependencies(ContainerResourceInterface $resource)
+  {
+    foreach ($resource->getParameters() as $key => $value) {
+      if (class_exists($value)) {
+        echo "UNCACHED DEPENDENCY: {$value}, key: {$key}";
+        $resource->setParameter($key, $this->getResource($value));
+      }
+    }
+  }
 }

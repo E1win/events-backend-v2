@@ -66,16 +66,7 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
     $parameters = [];
 
     foreach ($constructor->getParameters() as $index => $parameter) {
-      echo $parameter;
-      echo '<br/>';
-      
-      echo '<pre>';
-
       $dependency = class_exists($parameter->getType()) ? $parameter->getType() : null;
-
-      echo class_exists($parameter->getType());
-      // echo is_object($parameter->getType());
-      echo '</pre>';
 
       if ($dependency === null) {
         // Check if default value for a parameter is available
@@ -85,17 +76,11 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
           return null;
         }
       } else {
-        // resolve dependencies maybe?
-        // $parameters[$index] = $dependency->getName();
-
         if ($this->parent != null) {
           $parameters[$index] = $this->parent->getResource($dependency->getName());
         } else {
           $parameters[$index] = $this->getResource($dependency->getName());
         }
-
-
-        // HERE CALL ->GETRESOURCE IN PARENT (CONTAINERRESOURCECOLLECTION)
       }
     }
 

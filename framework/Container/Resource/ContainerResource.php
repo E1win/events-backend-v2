@@ -70,8 +70,3 @@ class ContainerResource implements ContainerResourceInterface
     }
   }
 }
-
-// container resource
-// so for example: 
-// new ContainerResource(Classname::class)
-//    ->parameter(key, value);  
