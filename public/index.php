@@ -1,5 +1,7 @@
 <?php
 
+use App\Model\Mapper\Event;
+use App\Model\Service\EventService;
 use App\Test\TestClassFour;
 use App\Test\TestClassOne;
 use App\Test\TestClassThree;
@@ -45,13 +47,16 @@ echo '<br/>';
 
 $container = new Container($resourceCollection);
 
-$myClass = $container->get(TestClassFour::class);
-$myClass = $container->get(TestClassThree::class);
+$mapperFactory = $container->get(MapperFactory::class);
 
+$mapper = $mapperFactory->create(Event::class);
 
-echo '<br><br>THE GOTTEN CLASS<br>';
-echo "<pre>";
-var_dump($myClass);
+$service = new EventService($mapper);
+
+// $event = $service->createEvent('My First Event');
+
+echo '<br><br>EVENT SUCCESFULLY CREATED:<pre>';
+var_dump($mapperFactory);
 echo "</pre>";
 
 // $myClass->testMethod();

@@ -21,6 +21,4 @@ abstract class DataMapper
     $this->connection = $connection;
     $this->table = $table;
   }
-
-  // hold connection
 }
