@@ -6,7 +6,6 @@ use Framework\Container\Contract\AutowiringInterface;
 use Framework\Container\Contract\ContainerResourceCollectionInterface;
 use Framework\Container\Contract\ContainerResourceInterface;
 use Framework\Container\Exception\ContainerException;
-use Framework\Container\Exception\NotFoundException;
 use ReflectionClass;
 
 class ReflectionAutowiring implements AutowiringInterface, ContainerResourceCollectionInterface
@@ -36,7 +35,7 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
     $parameters = $this->getResourceParameters($constructor);
 
     if ($parameters == null) {
-      throw new NotFoundException("Can't resolve parameters of class '{$name}' in Container");
+      throw new ContainerException("Can't resolve parameters of class '{$name}' in Container");
     }
 
     return new ContainerResource($name, $parameters);
@@ -63,7 +62,7 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
       $dependency = class_exists($parameter->getType()) || interface_exists($parameter->getType()) ? $parameter->getType() : null;
 
       if ($dependency === null) {
-        echo 'dependency === null';
+        echo "dependency {$parameter->getName()} === null";
         // Check if default value for a parameter is available
         if ($parameter->isDefaultValueAvailable()) {
           $parameters[$index] = $parameter->getDefaultValue();

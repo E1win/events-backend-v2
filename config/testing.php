@@ -13,17 +13,17 @@ return [
       ->addParameter(App\Test\TestClassOne::class)
       ->addParameter(22)
       ->addParameter(null),
-  PDO::class
-    => ContainerResource::create(PDO::class)
-      ->addParameter(sprintf(
-        "%s:host=%s;dbname=%s", 
-        $dbConfig['driver'], 
-        $dbConfig['host'], 
-        $dbConfig['name']
-        ) 
-      )
-      ->addParameter($dbConfig['user'])
-      ->addParameter($dbConfig['password']),
+  // PDO::class
+  //   => ContainerResource::create(PDO::class)
+  //     ->addParameter(sprintf(
+  //       "%s:host=%s;dbname=%s", 
+  //       $dbConfig['driver'], 
+  //       $dbConfig['host'], 
+  //       $dbConfig['name']
+  //       ) 
+  //     )
+  //     ->addParameter($dbConfig['user'])
+  //     ->addParameter($dbConfig['password']),
   Framework\model\Mapper\MapperFactory::class
     => ContainerResource::create(Framework\model\Mapper\MapperFactory::class)
       ->addParameter(PDO::class),

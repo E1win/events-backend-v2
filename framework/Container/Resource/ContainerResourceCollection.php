@@ -4,11 +4,12 @@ namespace Framework\Container\Resource;
 use Framework\Container\Contract\AutowiringInterface;
 use Framework\Container\Contract\ContainerResourceCollectionInterface;
 use Framework\Container\Contract\ContainerResourceInterface;
+use Framework\Container\Contract\MutableResourceCollection;
 use Framework\Container\Exception\NotFoundException;
 
-class ContainerResourceCollection implements ContainerResourceCollectionInterface
+class ContainerResourceCollection implements ContainerResourceCollectionInterface, MutableResourceCollection
 {
-  private array $unprocessedResources;
+  private array $unprocessedResources = [];
 
   private array $cachedResources = [];
 
@@ -20,8 +21,8 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
    * @param ContainerResourceInterface[] $resources
    */
   public function __construct(
-    array $unprocessedResources = [], 
-    ?AutowiringInterface $autowiring = null
+    array $unprocessedResources, 
+    AutowiringInterface $autowiring
   ) {
     $this->unprocessedResources = $unprocessedResources;
     $this->autowiring = $autowiring;
@@ -44,19 +45,15 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
       $resource = $this->processResource($name, $parameters);
       
       return $this->cacheAndReturnResource($resource);
-      // $this->cachedResources[$name] = $resource;
-      // return $this->cachedResources[$name];
     }
 
     $resource = $this->autowiring->autowire($name);
 
     if ($resource == null) {
       return null;
-      // $this->cachedResources[$name] = $resource;
     }
 
     return $this->cacheAndReturnResource($resource);
-    // return $resource;
   }
 
   public function getResources(): array
@@ -64,9 +61,9 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
     return $this->unprocessedResources;
   }
 
-  public function addResources(array $resources): self
+  public function addResources(array $resources = []): self
   {
-    $this->unprocessedResources[] += $resources;
+    $this->unprocessedResources += $resources;
 
     return $this;
   }
