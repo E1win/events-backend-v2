@@ -31,7 +31,7 @@ require __DIR__ . '/../vendor/autoload.php';
 // var_dump($config);
 // echo "<br>";
 // echo "<br>";
-$config = require __DIR__ . '/../config/testing.php';
+$config = require __DIR__ . '/../config/di/database.php';
 
 $resourceCollection = new ContainerResourceCollection(
   $config,
@@ -47,18 +47,24 @@ echo '<br/>';
 
 $container = new Container($resourceCollection);
 
-$mapperFactory = $container->get(MapperFactory::class);
+$eventService = $container->get(EventService::class);
 
-$mapper = $mapperFactory->create(Event::class);
+$event = $eventService->getEventById(1);
 
-$service = new EventService($mapper);
-
-// $event = $service->createEvent('My First Event');
-$event = $service->getEventById(1);
-
-echo '<br><br>EVENT SUCCESFULLY CREATED:<pre>';
+echo "<pre>";
 var_dump($event);
 echo "</pre>";
+
+
+// $mapper = $mapperFactory->create(Event::class);
+
+// $service = new EventService($mapper);
+
+// $event = $service->getEventById(1);
+
+// echo '<br><br>EVENT SUCCESFULLY CREATED:<pre>';
+// var_dump($event);
+// echo "</pre>";
 
 // $myClass->testMethod();
 // $resource = $resourceCollection->getResource(TestClassOne::class);
@@ -107,26 +113,6 @@ echo "</pre>";
 
 // $test1= new ContainerResourceCollection([], null);
 // $test2= new ContainerResourceCollection([], null);
-
-
-
-// $resourceCollectionOne = new ContainerResourceCollection(
-//   [
-//     ContainerResource::create(Response::class),
-//     ContainerResource::create(Request::class),
-//   ]
-// );
-
-// $resourceCollectionTwo = new ContainerResourceCollection(
-//   [
-//     ContainerResource::create(Response::class),
-//     ContainerResource::create(Request::class),
-//   ]
-// );
-
-// echo '<pre>';
-// var_dump($resourceCollectionOne);
-// echo '</pre>';
 
 // $resourceChain = new ContainerResourceCollectionChain([
 //   $resourceCollectionOne,

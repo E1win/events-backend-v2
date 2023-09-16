@@ -18,7 +18,6 @@ class ResourceResolver
 
     $args = $this->resolveParameters(
       $resource,
-      $reflectionClass->getConstructor()
     );
 
     
@@ -35,13 +34,11 @@ class ResourceResolver
 
   private function resolveParameters(
     ContainerResourceInterface $resource,
-    ReflectionMethod $reflectionConstructor
   ): array {
     $args = [];
 
     foreach ($resource->getParameters() as $key => $value) {
       if ($value instanceof ContainerResourceInterface) {
-        echo '<br><br>resolving dependency<br><br>';
         $args[] = $this->resolve($value);
       } else {
         $args[] = $value;

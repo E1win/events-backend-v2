@@ -8,14 +8,14 @@ class ContainerResource implements ContainerResourceInterface
 {
   protected string $className;
 
-  protected ?array $parameters = null;
+  protected array $parameters = [];
 
-  public static function create(string $className)
+  public static function create(string $className, array $parameters = [])
   {
-    return new ContainerResource($className);
+    return new ContainerResource($className, $parameters);
   }
 
-  public function __construct(string $className, ?array $parameters = null)
+  public function __construct(string $className, array $parameters = [])
   {
     $this->setClassNameIfExists($className);
     $this->parameters = $parameters;
@@ -39,6 +39,13 @@ class ContainerResource implements ContainerResourceInterface
 
     return $this;
   }
+
+  public function addParameters(array $parameters): self
+  {
+    $this->parameters[] += $parameters;
+
+    return $this;
+  }
   
   /**
    * Sets parameter, overrides if parameter
@@ -51,7 +58,7 @@ class ContainerResource implements ContainerResourceInterface
     return $this;
   }
 
-  public function getParameters(): array|null
+  public function getParameters(): array
   {
     return $this->parameters;
   }
