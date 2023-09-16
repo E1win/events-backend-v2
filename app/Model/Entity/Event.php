@@ -2,12 +2,13 @@
 namespace App\Model\Entity;
 
 use DateTimeImmutable;
+use Framework\Model\Entity\Entity;
 
-class Event
+class Event extends Entity
 {
-  private ?int $id;
-  private $name;
-  private $createdOn;
+  public ?int $id;
+  public $name;
+  public $createdOn;
 
   public function __construct(?int $id = null)
   {
@@ -36,11 +37,13 @@ class Event
 
   public function setCreatedOn(DateTimeImmutable $createdOn)
   {
-      $this->createdOn = $createdOn;
+    $this->createdOn = $createdOn;
   }
 
   public function getCreatedOn(): DateTimeImmutable
   {
-      return $this->createdOn;
+    return $this->createdOn;
   }
+
+  
 }
