@@ -5,10 +5,6 @@ use BadMethodCallException;
 
 abstract class Controller
 {
-  // . . .
-
-  // callAction function
-
   public function callAction($method, $parameters)
   {
     return $this->{$method}(...array_values($parameters));

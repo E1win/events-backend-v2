@@ -5,7 +5,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
 use Framework\Message\Message;
-
+use Framework\Message\Response\JsonResponse;
 use InvalidArgumentException;
 
 class Response extends Message implements ResponseInterface
@@ -81,6 +81,17 @@ class Response extends Message implements ResponseInterface
 
   protected int $statusCode = 200;
   protected string $reasonPhrase = self::STATUS_PHRASES[200];
+
+  static public function json(array $data = [], int $status = 200): ResponseInterface
+  {
+    // If it's entity,
+    // try this...
+    // have a toArray() method in them.
+
+    // https://www.php.net/manual/en/function.get-object-vars.php
+
+    return new JsonResponse($status, $data);
+  }
   
   public function __construct(
     int|null $statusCode = null, 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controller\EventController;
 use App\Model\Mapper\Event;
 use App\Model\Service\EventService;
 use App\Test\TestClassFour;
@@ -16,6 +17,7 @@ use Framework\Container\Resource\ContainerResourceCollectionChain;
 use Framework\Message\Request;
 use Framework\Message\Response;
 use Framework\Container\Resource\ReflectionAutowiring;
+use Framework\Message\ServerRequest;
 use Framework\Model\Mapper\MapperFactory;
 
 define('ROOT_PATH', __DIR__ . "/../");
@@ -33,6 +35,13 @@ require __DIR__ . '/../vendor/autoload.php';
 // echo "<br>";
 $config = require __DIR__ . '/../config/di/database.php';
 
+// Maybe still have tables array in Mapper classes
+// and then just have a getTable method in the abstract class
+// that automatically gets the name using static::class
+// which is the key in which they are stored
+// for other tables (ex: pivot tables), they can just
+// get them manually
+
 $resourceCollection = new ContainerResourceCollection(
   $config,
   new ReflectionAutowiring()
@@ -47,9 +56,13 @@ echo '<br/>';
 
 $container = new Container($resourceCollection);
 
-$eventService = $container->get(EventService::class);
+$eventController = $container->get(EventController::class);
 
-$event = $eventService->getEventById(1);
+$event = $eventController->show((new ServerRequest()), 1);
+
+// $eventService = $container->get(EventService::class);
+
+// $event = $eventService->getEventById(1);
 
 echo "<pre>";
 var_dump($event);
@@ -92,7 +105,6 @@ echo "</pre>";
 // $testing = $resourceCollection->getResource($resource->getParameters()['myClass']);
 // var_dump($testing);
 
-// require __DIR__ . '/../testing/testing.php';
 // echo '<br/>';
 // echo '<br/>';
 // echo '<br/>';
