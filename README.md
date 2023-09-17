@@ -1,3 +1,1 @@
-Learning backend / php
-
-Trying to create a CMS
+Creating a CMS for managing events.

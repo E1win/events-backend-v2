@@ -1,17 +1,17 @@
 <?php
 
-$dbConfig = require_once __DIR__ . '/../database.php';
+$databaseConfig = require_once __DIR__ . '/../database.php';
 
 return [
   PDO::class => [
     sprintf(
       "%s:host=%s;dbname=%s", 
-      $dbConfig['driver'], 
-      $dbConfig['host'], 
-      $dbConfig['name']
+      $databaseConfig['driver'], 
+      $databaseConfig['host'], 
+      $databaseConfig['name']
     ),
-    $dbConfig['user'],
-    $dbConfig['password']
+    $databaseConfig['user'],
+    $databaseConfig['password']
   ],
   App\Model\Mapper\Event::class => [
     PDO::class,

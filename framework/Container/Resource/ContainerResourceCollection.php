@@ -58,7 +58,7 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
 
   public function getResources(): array
   {
-    return $this->unprocessedResources;
+    return $this->cachedResources + $this->unprocessedResources;
   }
 
   public function addResources(array $resources = []): self

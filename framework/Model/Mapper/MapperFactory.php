@@ -5,6 +5,9 @@ use Framework\Model\Mapper\Contract\MapperFactoryInterface;
 use PDO;
 use RuntimeException;
 
+// TODO: Maybe delete? Is this deprecrated?
+// Find better way to input events to DataMappers
+
 class MapperFactory implements MapperFactoryInterface
 {
   private PDO $connection;
@@ -23,11 +26,6 @@ class MapperFactory implements MapperFactoryInterface
   public function __construct(PDO $connection, array $tables = [])
   {
     $this->connection = $connection;
-
-    if (count($tables) == 0) {
-      $tables = require ROOT_PATH . '/config/tables.php';
-    }
-
     $this->tables = $tables;
   }
 
