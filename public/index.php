@@ -47,7 +47,7 @@ $resourceCollection = new ContainerResourceCollection(
   new ReflectionAutowiring()
 );
 
-$resourceCollection->addAlias(TestInterface::class, TestClassOne::class);
+// $resourceCollection->addAlias(TestInterface::class, TestClassOne::class);
 
 
 echo '<br/>';
@@ -56,16 +56,16 @@ echo '<br/>';
 
 $container = new Container($resourceCollection);
 
-$eventController = $container->get(EventController::class);
+// $eventController = $container->get(EventController::class);
 
-$event = $eventController->show((new ServerRequest()), 1);
+// $event = $eventController->show((new ServerRequest()), 1);
 
-// $eventService = $container->get(EventService::class);
+$eventService = $container->get(EventService::class);
 
-// $event = $eventService->getEventById(1);
+$event = $eventService->getEventById(1);
 
 echo "<pre>";
-var_dump($event);
+var_dump($event->toArray());
 echo "</pre>";
 
 

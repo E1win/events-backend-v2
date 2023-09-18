@@ -6,9 +6,9 @@ use Framework\Model\Entity\Entity;
 
 class Event extends Entity
 {
-  public ?int $id;
-  public $name;
-  public $createdOn;
+  protected ?int $id;
+  protected $name;
+  protected $createdOn;
 
   public function __construct(?int $id = null)
   {
