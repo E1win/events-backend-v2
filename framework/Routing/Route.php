@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class Route implements RouteInterface, MiddlewareInterface
+class Route implements RouteInterface
 {
   /**
    * URI pattern the route responds to
@@ -44,11 +44,7 @@ class Route implements RouteInterface, MiddlewareInterface
    */
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
   {
-    try {
-      return $this->runController($request);
-    } catch (\Exception $e) {
-      // Return exception response
-    }
+    return $this->runController($request);
   }
 
   /**

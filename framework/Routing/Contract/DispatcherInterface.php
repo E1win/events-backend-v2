@@ -11,5 +11,5 @@ interface DispatcherInterface
   /**
    * Dispatch a request of a given route.
    */
-  public function dispatch(RouteInterface $route, ServerRequestInterface $request): ResponseInterface;
+  public function dispatch(ServerRequestInterface $request): ResponseInterface;
 }
