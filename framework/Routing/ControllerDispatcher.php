@@ -8,14 +8,21 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ControllerDispatcher implements DispatcherInterface
+class ControllerDispatcher
 {
   /**
    * The container instance
    */
 
+  public function __construct(private ContainerInterface $container)
+  {
+  }
+
   public function dispatch(RouteInterface $route, ServerRequestInterface $request): ResponseInterface
   {
+    $action = $route->getAction();
+
+    $this->container->get();
     // resolve controller / parameters (using container)
     // callAction
   }

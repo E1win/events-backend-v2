@@ -19,6 +19,7 @@ use Framework\Message\Response;
 use Framework\Container\Resource\ReflectionAutowiring;
 use Framework\Message\ServerRequest;
 use Framework\Model\Mapper\MapperFactory;
+use Framework\Routing\Router;
 
 define('ROOT_PATH', __DIR__ . "/../");
 
@@ -34,19 +35,19 @@ require __DIR__ . '/../vendor/autoload.php';
  * GET CONFIGURATION
  */
 
-$config = require_once __DIR__ . '/../config/di/database.php';
-$aliases = require_once __DIR__ . '/../config/di/alias.php';
+// $config = require_once __DIR__ . '/../config/di/database.php';
+// $aliases = require_once __DIR__ . '/../config/di/alias.php';
 
-$resourceCollection = new ContainerResourceCollection(
-  $config,
-  new ReflectionAutowiring()
-);
+// $resourceCollection = new ContainerResourceCollection(
+//   $config,
+//   new ReflectionAutowiring()
+// );
 
-$resourceCollection->addAliases($aliases);
+// $resourceCollection->addAliases($aliases);
 
-$container = new Container(
-  $resourceCollection
-);
+// $container = new Container(
+//   $resourceCollection
+// );
 
 /**
  * CREATE APPLICATION
@@ -55,7 +56,7 @@ $container = new Container(
  * Then, send appropiate response back to client.
  */
 
-$app = new App($container);
+// $app = new App($container);
 
 // var_dump($config);
 // echo "<br>";
@@ -69,31 +70,39 @@ $config = require __DIR__ . '/../config/di/database.php';
 // for other tables (ex: pivot tables), they can just
 // get them manually
 
-$resourceCollection = new ContainerResourceCollection(
-  $config,
-  new ReflectionAutowiring()
-);
+$messageFactory = new MessageFactory();
 
-// $resourceCollection->addAlias(TestInterface::class, TestClassOne::class);
+$request = $messageFactory->createServerRequestFromGlobals();
 
+echo '<pre>';
+var_dump($request->getRequestTarget());
+echo '</pre>';
 
-echo '<br/>';
-echo '<br/>';
-echo '<br/>';
+$router = new Router();
 
-$container = new Container($resourceCollection);
+echo '<br>';
+
+echo $router->parseRoutePath("api/events/{id:number}");
+echo $router->parseRoutePath("api/events/5");
+
+// $resourceCollection = new ContainerResourceCollection(
+//   $config,
+//   new ReflectionAutowiring()
+// );
+
+// $container = new Container($resourceCollection);
 
 // $eventController = $container->get(EventController::class);
 
 // $event = $eventController->show((new ServerRequest()), 1);
 
-$eventService = $container->get(EventService::class);
+// $eventService = $container->get(EventService::class);
 
-$event = $eventService->getEventById(1);
+// $event = $eventService->getEventById(1);
 
-echo "<pre>";
-var_dump($event->toArray());
-echo "</pre>";
+// echo "<pre>";
+// var_dump($event->toArray());
+// echo "</pre>";
 
 
 // $mapper = $mapperFactory->create(Event::class);

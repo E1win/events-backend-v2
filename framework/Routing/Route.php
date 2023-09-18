@@ -1,6 +1,7 @@
 <?php
 namespace Framework\Routing;
 
+use Framework\Application\App;
 use Framework\Routing\Contract\RouteInterface;
 
 use Psr\Http\Message\ResponseInterface;
@@ -13,7 +14,7 @@ class Route implements RouteInterface
   /**
    * URI pattern the route responds to
    */
-  protected string $uri;
+  protected string $pattern;
 
   /**
    * HTTP methods the route responds to (GET, POST, etc.)
@@ -30,9 +31,9 @@ class Route implements RouteInterface
    */
   protected mixed $controller;
 
-  public function __construct($methods, string $uri, $action)
+  public function __construct($methods, string $pattern, $action)
   {
-    $this->uri = $uri;
+    $this->pattern = $pattern;
     // TODO: Check if method(s) are valid
     $this->methods = (array) $methods;
     // TODO: Check if action is valid
@@ -52,8 +53,14 @@ class Route implements RouteInterface
    */
   protected function runController(ServerRequestInterface $request): ResponseInterface
   {
+    $container = App::getContainer();
     // use ControllerDispatcher to dispatch route
     // new ControllerDispatcher();
     // controllerDispatcher->dispatch($this, $request)
+  }
+
+  public function getAction(): array
+  {
+    return $this->action;
   }
 }

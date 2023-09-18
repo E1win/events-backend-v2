@@ -23,8 +23,8 @@ class App
     // routes
   }
 
-  public function getContainer(): ContainerInterface
+  public static function getContainer(): ContainerInterface
   {
-    return $this->container;
+    return App::$container;
   }
 }
