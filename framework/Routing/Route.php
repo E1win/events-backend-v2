@@ -2,6 +2,7 @@
 namespace Framework\Routing;
 
 use Framework\Application\App;
+use Framework\Message\Response;
 use Framework\Routing\Contract\RouteInterface;
 
 use Psr\Http\Message\ResponseInterface;
@@ -19,25 +20,42 @@ class Route implements RouteInterface
   /**
    * HTTP methods the route responds to (GET, POST, etc.)
    */
-  protected array $methods;
+  protected string $method;
 
   /**
    * Route action array
    */
-  protected array $action;
+  private $action;
 
-  /**
-   * Controller instance
-   */
-  protected mixed $controller;
+  private array $tokens;
 
-  public function __construct($methods, string $pattern, $action)
+  public function __construct($method, string $pattern, $action)
   {
     $this->pattern = $pattern;
     // TODO: Check if method(s) are valid
-    $this->methods = (array) $methods;
+    $this->method = $method;
     // TODO: Check if action is valid
     $this->action = $action;
+  }
+
+  public function getMethod(): string
+  {
+    return $this->method;
+  }
+
+  public function getPattern(): string
+  {
+    return $this->pattern;
+  }
+
+  public function addToken(string $name, mixed $value)
+  {
+    $this->tokens[$name] = $value;
+  }
+
+  public function getTokens(): array
+  {
+    return $this->tokens;
   }
 
   /**
@@ -57,9 +75,11 @@ class Route implements RouteInterface
     // use ControllerDispatcher to dispatch route
     // new ControllerDispatcher();
     // controllerDispatcher->dispatch($this, $request)
+
+    return new Response();
   }
 
-  public function getAction(): array
+  public function getAction(): callable
   {
     return $this->action;
   }

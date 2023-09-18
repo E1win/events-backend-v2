@@ -44,58 +44,91 @@ class Router implements RouterInterface
   private MiddlewareStackInterface $middlewareStack;
 
   protected $patternMatchers = [
-    '/{(.+?):number}/'        => '{$1:[0-9]+}',
-    '/{(.+?):word}/'          => '{$1:[a-zA-Z]+}',
+    // '/{(.+?):number}/'        => '{$1:[0-9]+}',
+    // '/{(.+?):word}/'          => '{$1:[a-zA-Z]+}',
+    '/{(.+?):number}/'        => '([0-9]{1,6})',
+    '/{(.+?):word}/'          => '([a-zA-Z]+)',
   ];
 
-  public function match(ServerRequestInterface $request): RouteInterface
+  protected $tokenPattern = '/\{([^:]+):[^}]+\}/';
+
+  public function match(ServerRequestInterface $request): ?RouteInterface
   {
-    $target = $request->getRequestTarget();
+    $path = $request->getUri()->getPath();
 
     foreach ($this->groups as $prefix => $router) {
       // Check if request target string starts with prefix
-      if (substr($target, 0, strlen($prefix)) === $prefix) {
+      if (substr($path, 0, strlen($prefix)) === $prefix) {
         // TODO: Maybe add middleware from current router
         // to route here???
         return $router->match($request);
       }
     }
 
-    foreach ($this->routes as $pattern => $route) {
-      # code...
+    echo '<pre>';
+    var_dump($this->routes);
+    echo '</pre>';
+    foreach ($this->routes as $route) {
+      if ($route->getMethod() != $request->getMethod()) {
+        continue;
+      }
+
+      preg_match("@^" . $this->parseRoutePath($route->getPattern()) . "$@", $path, $matches);
+
+      if ($matches) {
+        $tokens = $this->getTokenArray($route->getPattern());
+        
+        // TODO: This can definitely be refactored.
+        foreach($matches as $index => $match) {
+          // Not interested in the complete match, just the tokens
+          if ($index == 0) {
+            continue;
+          }
+
+          $route->addToken($tokens[$index - 1], $match);
+        }
+
+        return $route;
+      }
     }
+
+    return null;
   }
 
-  public function group(string $prefix, RouterInterface $router)
+  public function group(string $prefix, callable $callback)
   {
-    $this->groups[$prefix] = $router->addPrefix($prefix);
+    $subRouter = (new Router())->addPrefix($prefix);
+
+    call_user_func($callback, $subRouter);
+
+    $this->groups[$prefix] = $subRouter;
   }
 
   public function get(string $pattern, callable $callback): void
   {
-    $this->method('get', $pattern, $callback);
+    $this->method('GET', $pattern, $callback);
   }
 
   public function post(string $pattern, callable $callback): void
   {
-    $this->method('post', $pattern, $callback);
+    $this->method('POST', $pattern, $callback);
   }
 
   public function delete(string $pattern, callable $callback): void
   {
-    $this->method('delete', $pattern, $callback);
+    $this->method('DELETE', $pattern, $callback);
   }
 
   public function put(string $pattern, callable $callback): void
   {
-    $this->method('put', $pattern, $callback);
+    $this->method('PUT', $pattern, $callback);
   }
 
   public function method(string $method, string $pattern, callable $callback): void
   {
     // TODO: Check if method is valid
 
-    $this->routes[$pattern] = new Route($method, $this->prefix . $pattern, $callback);
+    $this->routes[] = new Route($method, $this->prefix . $pattern, $callback);
   }
 
   public function addPrefix(string $prefix): RouterInterface
@@ -116,8 +149,15 @@ class Router implements RouterInterface
   }
 
   // PUBLIC JUST TO TEST
-  public function parseRoutePath(string $path): string
+  private function parseRoutePath(string $path): string
   {
     return preg_replace(array_keys($this->patternMatchers), array_values($this->patternMatchers), $path);
+  }
+
+  private function getTokenArray(string $path): array
+  {
+    preg_match_all($this->tokenPattern, $path, $matches);
+
+    return $matches[1];
   }
 }

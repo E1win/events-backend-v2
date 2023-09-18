@@ -19,6 +19,7 @@ use Framework\Message\Response;
 use Framework\Container\Resource\ReflectionAutowiring;
 use Framework\Message\ServerRequest;
 use Framework\Model\Mapper\MapperFactory;
+use Framework\Routing\Contract\RouterInterface;
 use Framework\Routing\Router;
 
 define('ROOT_PATH', __DIR__ . "/../");
@@ -80,10 +81,29 @@ echo '</pre>';
 
 $router = new Router();
 
-echo '<br>';
+$router->get("/test", function() {
+  echo 'In function';
+});
 
-echo $router->parseRoutePath("api/events/{id:number}");
-echo $router->parseRoutePath("api/events/5");
+$router->get("/test/{id:number}", function() {
+  echo 'In function';
+});
+
+$router->get("/test/events/{id:number}/{num:number}", function() {
+  echo 'In function';
+});
+
+$router->group('/api', function(RouterInterface $router) {
+  $router->get('/test', function() {
+    // . . .
+  });
+});
+
+$route = $router->match($request);
+
+echo '<br>ROUTE FOUND:<pre>';
+var_dump($route);
+echo '</pre>';
 
 // $resourceCollection = new ContainerResourceCollection(
 //   $config,

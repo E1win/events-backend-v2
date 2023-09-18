@@ -9,9 +9,9 @@ interface RouterInterface
   /**
    * Match request to class routes
    */
-  public function match(ServerRequestInterface $request): RouteInterface;
+  public function match(ServerRequestInterface $request): ?RouteInterface;
 
-  public function group(string $prefix, RouterInterface $router);
+  public function group(string $prefix, callable $callback);
 
   // HTTP-methods
   public function get(string $pattern, callable $callback): void;
