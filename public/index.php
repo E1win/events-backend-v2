@@ -30,6 +30,33 @@ define('ROOT_PATH', __DIR__ . "/../");
 
 require __DIR__ . '/../vendor/autoload.php';
 
+/**
+ * GET CONFIGURATION
+ */
+
+$config = require_once __DIR__ . '/../config/di/database.php';
+$aliases = require_once __DIR__ . '/../config/di/alias.php';
+
+$resourceCollection = new ContainerResourceCollection(
+  $config,
+  new ReflectionAutowiring()
+);
+
+$resourceCollection->addAliases($aliases);
+
+$container = new Container(
+  $resourceCollection
+);
+
+/**
+ * CREATE APPLICATION
+ * 
+ * Let application handle incoming request.
+ * Then, send appropiate response back to client.
+ */
+
+$app = new App($container);
+
 // var_dump($config);
 // echo "<br>";
 // echo "<br>";
@@ -156,13 +183,7 @@ echo "</pre>";
 // var_dump($resource->getParameters());
 // echo '<br/>';
 
-/**
- * RUN APPLICATION
- * 
- * Let application handle incoming request.
- * Then, send appropiate response back to client.
- */
-// $app = new App();
+
 
 // commands to setup application here
 // set up container

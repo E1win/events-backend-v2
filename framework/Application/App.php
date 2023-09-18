@@ -1,6 +1,7 @@
 <?php
 namespace Framework\Application;
 
+use Framework\Container\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -8,9 +9,10 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class App
 {
-  // $router
-
-  // $dispatcher
+  public function __construct(Container $container)
+  {
+    
+  }
 
   public function handle(ServerRequestInterface $request): ResponseInterface
   {

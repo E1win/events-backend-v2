@@ -2,6 +2,7 @@
 namespace Framework\Container;
 
 use Framework\Container\Contract\ContainerResourceCollectionInterface;
+use Framework\Container\Contract\MutableResourceCollection;
 use Framework\Container\Exception\NotFoundException;
 use Framework\Container\Resource\ResourceResolver;
 use Psr\Container\ContainerInterface;
@@ -77,5 +78,10 @@ class Container implements ContainerInterface
   public function getName(): string
   {
     return $this->containerName;
+  }
+
+  public function getResourceCollection(): MutableResourceCollection
+  {
+    return $this->resourceCollection;
   }
 }
