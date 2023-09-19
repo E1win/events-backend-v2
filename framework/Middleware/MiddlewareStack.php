@@ -1,6 +1,7 @@
 <?php
 namespace Framework\Middleware;
 
+use Framework\Middleware\Contract\MiddlewareStackInterface;
 use Psr\Http\Server\MiddlewareInterface;
 
 class MiddlewareStack implements MiddlewareStackInterface

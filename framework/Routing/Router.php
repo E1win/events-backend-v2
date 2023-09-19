@@ -1,7 +1,8 @@
 <?php
 namespace Framework\Routing;
 
-use Framework\Middleware\MiddlewareStackInterface;
+use Framework\Middleware\Contract\MiddlewareStackInterface;
+use Framework\Middleware\MiddlewareStack;
 use Framework\Routing\Contract\RouteInterface;
 use Framework\Routing\Contract\RouterInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -52,6 +53,11 @@ class Router implements RouterInterface
 
   protected $tokenPattern = '/\{([^:]+):[^}]+\}/';
 
+  public function __construct(MiddlewareStackInterface $middlewareStack)
+  {
+    $this->middlewareStack = $middlewareStack;
+  }
+
   public function match(ServerRequestInterface $request): ?RouteInterface
   {
     $path = $request->getUri()->getPath();
@@ -61,13 +67,14 @@ class Router implements RouterInterface
       if (substr($path, 0, strlen($prefix)) === $prefix) {
         // TODO: Maybe add middleware from current router
         // to route here???
-        return $router->match($request);
+        $route = $router->match($request);
+
+        $this->prependMiddlewaresToRoute($route);
+
+        return $route;
       }
     }
 
-    echo '<pre>';
-    var_dump($this->routes);
-    echo '</pre>';
     foreach ($this->routes as $route) {
       if ($route->getMethod() != $request->getMethod()) {
         continue;
@@ -88,6 +95,8 @@ class Router implements RouterInterface
           $route->addToken($tokens[$index - 1], $match);
         }
 
+        $this->prependMiddlewaresToRoute($route);
+
         return $route;
       }
     }
@@ -97,7 +106,7 @@ class Router implements RouterInterface
 
   public function group(string $prefix, callable $callback)
   {
-    $subRouter = (new Router())->addPrefix($prefix);
+    $subRouter = (new Router(new MiddlewareStack()))->addPrefix($prefix);
 
     call_user_func($callback, $subRouter);
 
@@ -145,10 +154,18 @@ class Router implements RouterInterface
 
   public function addMiddlewares(array $middlewares)
   {
-    // . . .
+    $this->middlewareStack->appendArray($middlewares);
   }
 
-  // PUBLIC JUST TO TEST
+  private function prependMiddlewaresToRoute(RouteInterface $route): void
+  {
+    $routeMiddlewareStack = $route->getMiddlewareStack();
+
+    $middlewareArray = $this->middlewareStack->getStack();
+
+    $routeMiddlewareStack->prependArray($middlewareArray);
+  }
+
   private function parseRoutePath(string $path): string
   {
     return preg_replace(array_keys($this->patternMatchers), array_values($this->patternMatchers), $path);

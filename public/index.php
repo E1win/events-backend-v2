@@ -79,7 +79,9 @@ echo '<pre>';
 var_dump($request->getRequestTarget());
 echo '</pre>';
 
-$router = new Router();
+use Framework\Middleware\MiddlewareStack;
+
+$router = new Router(new MiddlewareStack());
 
 $router->get("/test", function() {
   echo 'In function';
@@ -95,6 +97,9 @@ $router->get("/test/events/{id:number}/{num:number}", function() {
 
 $router->group('/api', function(RouterInterface $router) {
   $router->get('/test', function() {
+    // . . .
+  });
+  $router->get('/test/{id:number}', function() {
     // . . .
   });
 });

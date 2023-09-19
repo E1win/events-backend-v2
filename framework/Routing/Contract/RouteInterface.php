@@ -1,6 +1,7 @@
 <?php
 namespace Framework\Routing\Contract;
 
+use Framework\Middleware\Contract\MiddlewareStackInterface;
 use Psr\Http\Server\MiddlewareInterface;
 
 interface RouteInterface extends MiddlewareInterface
@@ -12,4 +13,6 @@ interface RouteInterface extends MiddlewareInterface
   public function addToken(string $name, mixed $value);
 
   public function getTokens(): array;
+
+  public function getMiddlewareStack(): MiddlewareStackInterface;
 }

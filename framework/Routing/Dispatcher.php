@@ -1,7 +1,7 @@
 <?php
 namespace Framework\Routing;
 
-use Framework\Middleware\MiddlewareStackInterface;
+use Framework\Middleware\Contract\MiddlewareStackInterface;
 use Framework\Routing\Contract\DispatcherInterface;
 use Framework\Routing\Contract\RouteInterface;
 use Framework\Routing\Contract\RouterInterface;

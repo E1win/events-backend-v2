@@ -3,6 +3,8 @@ namespace Framework\Routing;
 
 use Framework\Application\App;
 use Framework\Message\Response;
+use Framework\Middleware\Contract\MiddlewareStackInterface;
+use Framework\Middleware\MiddlewareStack;
 use Framework\Routing\Contract\RouteInterface;
 
 use Psr\Http\Message\ResponseInterface;
@@ -28,6 +30,8 @@ class Route implements RouteInterface
   private $action;
 
   private array $tokens;
+
+  private ?MiddlewareStackInterface $middlewareStack = null;
 
   public function __construct($method, string $pattern, $action)
   {
@@ -82,5 +86,14 @@ class Route implements RouteInterface
   public function getAction(): callable
   {
     return $this->action;
+  }
+
+  public function getMiddlewareStack(): MiddlewareStackInterface
+  {
+    if ($this->middlewareStack == null) {
+      $this->middlewareStack = new MiddlewareStack();
+    }
+
+    return $this->middlewareStack;
   }
 }

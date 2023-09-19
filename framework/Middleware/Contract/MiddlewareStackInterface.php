@@ -1,5 +1,5 @@
 <?php
-namespace Framework\Middleware;
+namespace Framework\Middleware\Contract;
 
 use Psr\Http\Server\MiddlewareInterface;
 
