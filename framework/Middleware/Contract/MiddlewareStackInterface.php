@@ -16,22 +16,22 @@ interface MiddlewareStackInterface
   /**
    * Add to beginning of stack.
    */
-  public function prepend(string $middleware): self;
+  public function prepend(MiddlewareInterface $middleware): self;
 
   /**
    * Add to beginning of stack.
-   * @param string[] $middlewares;
+   * @param MiddlewareInterface[] $middlewares;
    */
   public function prependArray(array $middlewares): self;
 
   /**
    * Add to end of stack.
    */
-  public function append(string $middleware): self;
+  public function append(MiddlewareInterface $middleware): self;
 
   /**
    * Add to end of stack.
-   * @param string[] $middlewares;
+   * @param MiddlewareInterface[] $middlewares;
    */
   public function appendArray(array $middlewares): self;
 }

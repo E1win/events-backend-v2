@@ -104,9 +104,9 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
     }
 
     $resource = $this->getResource($resourceToRetrieve);
+
     // adding Interface as key for new resource too,
     // instead of just the actual class.
-
     return $this->cacheAndReturnResource($resource, $name);
   }
 
