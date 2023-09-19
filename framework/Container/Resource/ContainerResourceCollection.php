@@ -77,7 +77,11 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
 
   public function addAliases(array $aliases): self
   {
-    $this->resourceAliases[] += $aliases;
+    if (count($this->resourceAliases) == 0) {
+      $this->resourceAliases = $aliases;
+    } else {
+      $this->resourceAliases[] += $aliases;
+    }
 
     return $this;
   }
@@ -85,7 +89,6 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
   private function getResourceWithAlias(string $name): ?ContainerResourceInterface
   {
     if (!array_key_exists($name, $this->resourceAliases)) {
-      // TODO: Maybe throw NotFoundException here? 'Unaliased Interface'
       throw new NotFoundException("No alias found for interface: '{$name}'.");
     }
     

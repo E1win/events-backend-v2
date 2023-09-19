@@ -21,6 +21,7 @@ use Framework\Message\ServerRequest;
 use Framework\Model\Mapper\MapperFactory;
 use Framework\Routing\Contract\RouterInterface;
 use Framework\Routing\Router;
+use Framework\Middleware\MiddlewareStack;
 
 define('ROOT_PATH', __DIR__ . "/../");
 
@@ -36,19 +37,24 @@ require __DIR__ . '/../vendor/autoload.php';
  * GET CONFIGURATION
  */
 
-// $config = require_once __DIR__ . '/../config/di/database.php';
-// $aliases = require_once __DIR__ . '/../config/di/alias.php';
+$config = require_once __DIR__ . '/../config/di/database.php';
 
-// $resourceCollection = new ContainerResourceCollection(
-//   $config,
-//   new ReflectionAutowiring()
-// );
+echo '<pre>';
+var_dump($config);
+echo '</pre>';
 
-// $resourceCollection->addAliases($aliases);
+$aliases = require_once __DIR__ . '/../config/di/alias.php';
 
-// $container = new Container(
-//   $resourceCollection
-// );
+$resourceCollection = new ContainerResourceCollection(
+  $config,
+  new ReflectionAutowiring()
+);
+
+$resourceCollection->addAliases($aliases);
+
+$container = new Container(
+  $resourceCollection
+);
 
 /**
  * CREATE APPLICATION
@@ -62,7 +68,6 @@ require __DIR__ . '/../vendor/autoload.php';
 // var_dump($config);
 // echo "<br>";
 // echo "<br>";
-$config = require __DIR__ . '/../config/di/database.php';
 
 // Maybe still have tables array in Mapper classes
 // and then just have a getTable method in the abstract class
@@ -79,9 +84,9 @@ echo '<pre>';
 var_dump($request->getRequestTarget());
 echo '</pre>';
 
-use Framework\Middleware\MiddlewareStack;
 
-$router = new Router(new MiddlewareStack());
+// $router = new Router(new MiddlewareStack());
+$router = $container->get(Router::class);
 
 $router->get("/test", function() {
   echo 'In function';

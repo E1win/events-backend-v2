@@ -5,5 +5,5 @@
  */
 
 return [
-
+  Framework\Middleware\Contract\MiddlewareStackInterface::class => Framework\Middleware\MiddlewareStack::class
 ];

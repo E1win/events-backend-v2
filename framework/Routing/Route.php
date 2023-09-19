@@ -29,11 +29,11 @@ class Route implements RouteInterface
    */
   private $action;
 
-  private array $tokens;
+  private array $tokens = [];
 
   private ?MiddlewareStackInterface $middlewareStack = null;
 
-  public function __construct($method, string $pattern, $action)
+  public function __construct($method, string $pattern, callable $action)
   {
     $this->pattern = $pattern;
     // TODO: Check if method(s) are valid

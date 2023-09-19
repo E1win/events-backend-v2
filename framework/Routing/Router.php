@@ -106,6 +106,8 @@ class Router implements RouterInterface
 
   public function group(string $prefix, callable $callback)
   {
+    // TODO: Maybe make this a container->get call?
+    // This is probably a lot quicker though
     $subRouter = (new Router(new MiddlewareStack()))->addPrefix($prefix);
 
     call_user_func($callback, $subRouter);

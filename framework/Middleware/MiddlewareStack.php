@@ -11,11 +11,6 @@ class MiddlewareStack implements MiddlewareStackInterface
    */
   protected array $stack = [];
 
-  public function __construct(MiddlewareInterface ...$middlewares)
-  {
-    $this->stack = (array) $middlewares ?? [];
-  }
-
   public function getStack(): array
   {
     return $this->stack;

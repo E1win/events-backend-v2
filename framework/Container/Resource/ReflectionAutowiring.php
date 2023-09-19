@@ -71,6 +71,8 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
         }
       } else {
         if ($this->parent != null) {
+          // TODO: First check here if dependency has primitive values.
+          // To avoid unnecessarily going back up the chain.
           $parameters[$index] = $this->parent->getResource($dependency->getName());
         } else {
           $parameters[$index] = $this->getResource($dependency->getName());
