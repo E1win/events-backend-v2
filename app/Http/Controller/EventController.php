@@ -20,10 +20,7 @@ class EventController extends Controller
   {
     $event = $this->eventService->getEventById($id);
 
-    // return Response::json(
-    //   $event->toArray()
-    // );
-
+    var_dump($event->toArray());
     return Response::json(
       $event->toArray()
     );

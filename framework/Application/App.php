@@ -8,11 +8,11 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class App
 {
-  private static ContainerInterface $container;
+  public static ContainerInterface $container;
 
   public function __construct(Container $container)
   {
-    $this->container = $container;
+    App::$container = $container;
 
     // add middlewares, etc.
   }

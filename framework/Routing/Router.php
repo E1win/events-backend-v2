@@ -104,7 +104,7 @@ class Router implements RouterInterface
     return null;
   }
 
-  public function group(string $prefix, callable $callback)
+  public function group(string $prefix, callable $callback): RouterInterface
   {
     // TODO: Maybe make this a container->get call?
     // This is probably a lot quicker though
@@ -113,29 +113,31 @@ class Router implements RouterInterface
     call_user_func($callback, $subRouter);
 
     $this->groups[$prefix] = $subRouter;
+
+    return $subRouter;
   }
 
-  public function get(string $pattern, callable $callback): void
+  public function get(string $pattern, mixed $callback): void
   {
     $this->method('GET', $pattern, $callback);
   }
 
-  public function post(string $pattern, callable $callback): void
+  public function post(string $pattern, mixed $callback): void
   {
     $this->method('POST', $pattern, $callback);
   }
 
-  public function delete(string $pattern, callable $callback): void
+  public function delete(string $pattern, mixed $callback): void
   {
     $this->method('DELETE', $pattern, $callback);
   }
 
-  public function put(string $pattern, callable $callback): void
+  public function put(string $pattern, mixed $callback): void
   {
     $this->method('PUT', $pattern, $callback);
   }
 
-  public function method(string $method, string $pattern, callable $callback): void
+  public function method(string $method, string $pattern, mixed $callback): void
   {
     // TODO: Check if method is valid
 
@@ -149,7 +151,7 @@ class Router implements RouterInterface
     return $this;
   }
 
-  public function addMiddleware(MiddlewareInterface $middleware)
+  public function addMiddleware(string $middleware)
   {
     $this->middlewareStack->append($middleware);
   }

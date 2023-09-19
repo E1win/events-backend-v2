@@ -22,7 +22,15 @@ class ControllerDispatcher
   {
     $action = $route->getAction();
 
-    $this->container->get();
+    $controllerName = $action[0];
+    $method = $action[1];
+
+    $controller = $this->container->get($controllerName);
+
+    var_dump($route->getTokens());
+
+    return $controller->callAction($method, [$request, ...$route->getTokens()]);
+
     // resolve controller / parameters (using container)
     // callAction
   }

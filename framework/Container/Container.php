@@ -40,12 +40,6 @@ class Container implements ContainerInterface
       throw new NotFoundException("Resource {$name} not found in {$this->containerName}");
     }
 
-    echo "<br><br>now resolving: {$name}<br><br>";
-
-    echo '<pre>';
-    var_dump($resource);
-    echo '</pre>';
-
     $resolvedResource = $this->resourceResolver->resolve($resource);
 
     $this->resolvedResources[$name] = $resolvedResource;
@@ -59,7 +53,11 @@ class Container implements ContainerInterface
       return true;
     }
 
-    $resource = $this->resourceCollection->getResource($name);
+    try {
+      $resource = $this->resourceCollection->getResource($name);
+    } catch (\Throwable $th) {
+      return false;
+    }
 
     if ($resource == null) {
       return false;

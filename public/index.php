@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controller\EventController;
+use App\Http\Middleware\ExampleMiddleware;
+use App\Http\Middleware\ExampleMiddlewareTwo;
 use App\Model\Mapper\Event;
 use App\Model\Service\EventService;
 use App\Test\TestClassFour;
@@ -46,8 +48,7 @@ echo '</pre>';
 $aliases = require_once __DIR__ . '/../config/di/alias.php';
 
 $resourceCollection = new ContainerResourceCollection(
-  $config,
-  new ReflectionAutowiring()
+  $config
 );
 
 $resourceCollection->addAliases($aliases);
@@ -63,7 +64,11 @@ $container = new Container(
  * Then, send appropiate response back to client.
  */
 
-// $app = new App($container);
+$app = new App($container);
+
+// $app->handle(
+//   Request::capture()
+// )->send();
 
 // var_dump($config);
 // echo "<br>";
@@ -88,6 +93,8 @@ echo '</pre>';
 // $router = new Router(new MiddlewareStack());
 $router = $container->get(Router::class);
 
+$router->addMiddleware(ExampleMiddleware::class);
+
 $router->get("/test", function() {
   echo 'In function';
 });
@@ -107,13 +114,20 @@ $router->group('/api', function(RouterInterface $router) {
   $router->get('/test/{id:number}', function() {
     // . . .
   });
-});
+  $router->get('/event/{id:number}', [EventController::class, 'show']);
+})->addMiddleware(ExampleMiddlewareTwo::class);
 
 $route = $router->match($request);
+
+$request = $request->withAttribute('route', $route);
 
 echo '<br>ROUTE FOUND:<pre>';
 var_dump($route);
 echo '</pre>';
+
+$response = $route->runController($request);
+
+$response->send();
 
 // $resourceCollection = new ContainerResourceCollection(
 //   $config,

@@ -14,5 +14,7 @@ interface RouteInterface extends MiddlewareInterface
 
   public function getTokens(): array;
 
+  public function getAction();
+
   public function getMiddlewareStack(): MiddlewareStackInterface;
 }

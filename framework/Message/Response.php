@@ -1,6 +1,7 @@
 <?php
 namespace Framework\Message;
 
+use Framework\Message\Contract\SendableResponseInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -8,7 +9,7 @@ use Framework\Message\Message;
 use Framework\Message\Response\JsonResponse;
 use InvalidArgumentException;
 
-class Response extends Message implements ResponseInterface
+class Response extends Message implements SendableResponseInterface
 {
   // Maybe refactor this to separate Status enum or class
   public const STATUS_PHRASES = [
@@ -169,5 +170,42 @@ class Response extends Message implements ResponseInterface
     if (preg_match('/[^\x09\x0a\x0d\x20-\x7E\x80-\xFE]/', $reasonPhrase)) {
       throw new InvalidArgumentException('HTTP reason phrase must be printable ASCII characters');
     }
+  }
+
+  public function send(): void
+  {
+    $this->sendStatusLine($this);
+    $this->sendHeaders($this);
+    $this->sendBody($this);
+  }
+
+  private function sendStatusLine(ResponseInterface $response): void
+  {
+    $statusLine = sprintf(
+      'HTTP/%s %s %s',
+      $response->getProtocolVersion(),
+      $response->getStatusCode(),
+      $response->getReasonPhrase()
+    );
+
+    header($statusLine, true);
+  }
+
+  private function sendHeaders(ResponseInterface $response): void
+  {
+    foreach ($response->getHeaders() as $name => $value) {
+      $responseHeader = sprintf(
+        '%s: %s',
+        $name,
+        $response->getHeaderLine($name)
+      );
+
+      header($responseHeader, false);
+    }
+  }
+
+  private function sendBody(ResponseInterface $response): void
+  {
+    echo $response->getBody();
   }
 }

@@ -33,7 +33,7 @@ class Route implements RouteInterface
 
   private ?MiddlewareStackInterface $middlewareStack = null;
 
-  public function __construct($method, string $pattern, callable $action)
+  public function __construct($method, string $pattern, $action)
   {
     $this->pattern = $pattern;
     // TODO: Check if method(s) are valid
@@ -72,18 +72,26 @@ class Route implements RouteInterface
 
   /**
    * Run the route controller action and return the response
+   * 
+   * TODO: make private, temp public for testing
    */
-  protected function runController(ServerRequestInterface $request): ResponseInterface
+  public function runController(ServerRequestInterface $request): ResponseInterface
   {
+    
+
+
+
     $container = App::getContainer();
     // use ControllerDispatcher to dispatch route
-    // new ControllerDispatcher();
+    $dispatcher = new ControllerDispatcher($container);
+
+    return $dispatcher->dispatch($this, $request);
     // controllerDispatcher->dispatch($this, $request)
 
-    return new Response();
+    // return new Response();
   }
 
-  public function getAction(): callable
+  public function getAction()
   {
     return $this->action;
   }

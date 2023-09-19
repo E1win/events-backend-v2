@@ -21,7 +21,7 @@ class MiddlewareStack implements MiddlewareStackInterface
     return array_shift($this->stack);
   }
 
-  public function prepend(MiddlewareInterface $middleware): self
+  public function prepend(string $middleware): self
   {
     array_unshift($this->stack, $middleware);
 
@@ -35,7 +35,7 @@ class MiddlewareStack implements MiddlewareStackInterface
     return $this;
   }
 
-  public function append(MiddlewareInterface $middleware): self
+  public function append(string $middleware): self
   {
     $this->stack[] = $middleware;
 

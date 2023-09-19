@@ -13,7 +13,7 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
 
   private array $cachedResources = [];
 
-  private ?AutowiringInterface $autowiring;
+  private AutowiringInterface $autowiring;
 
   private array $resourceAliases = [];
 
@@ -22,11 +22,16 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
    */
   public function __construct(
     array $unprocessedResources, 
-    AutowiringInterface $autowiring
+    ?AutowiringInterface $autowiring = null
   ) {
     $this->unprocessedResources = $unprocessedResources;
-    $this->autowiring = $autowiring;
-    $this->autowiring->setParent($this);
+
+    if ($autowiring == null) {
+      $this->autowiring = new ReflectionAutowiring($this);
+    } else {
+      $this->autowiring = $autowiring;
+      $this->autowiring->setParent($this);
+    }
   }
 
   public function getResource(string $name): ?ContainerResourceInterface
