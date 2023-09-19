@@ -3,12 +3,10 @@ namespace Framework\Middleware;
 
 use Psr\Http\Server\MiddlewareInterface;
 
-class MiddlewareStack
+class MiddlewareStack implements MiddlewareStackInterface
 {
   /**
    * Array containing all middleware in stack
-   * 
-   * @var MiddlewareInterface[]
    */
   protected array $stack = [];
 
@@ -34,9 +32,23 @@ class MiddlewareStack
     return $this;
   }
 
+  public function prependArray(array $middlewares): self
+  {
+    array_unshift($this->stack, $middlewares);
+
+    return $this;
+  }
+
   public function append(MiddlewareInterface $middleware): self
   {
     $this->stack[] = $middleware;
+
+    return $this;
+  }
+
+  public function appendArray(array $middlewares): self
+  {
+    $this->stack[] += $middlewares;
 
     return $this;
   }
