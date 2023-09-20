@@ -34,20 +34,14 @@ use Framework\Middleware\MiddlewareStack;
  */
 
 require_once __DIR__ . '/../framework/bootstrap.php';
- 
 
 /**
- * GET CONFIGURATION
+ * CREATE CONTAINER
  */
 
 $config = config('di/');
-
-echo '<pre>';
-var_dump($config);
-echo '</pre>';
-
 $aliases = config('aliases.php');
-
+ 
 $resourceCollection = new ContainerResourceCollection(
   $config
 );

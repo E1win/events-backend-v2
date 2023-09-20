@@ -117,6 +117,13 @@ class Router implements RouterInterface
     return $subRouter;
   }
 
+  public function groupRouter(string $prefix, RouterInterface $router): RouterInterface
+  {
+    $this->groups[$prefix] = $router;
+    
+    return $router;
+  }
+
   public function get(string $pattern, mixed $callback): void
   {
     $this->method('GET', $pattern, $callback);

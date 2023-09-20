@@ -12,6 +12,7 @@ interface RouterInterface
   public function match(ServerRequestInterface $request): ?RouteInterface;
 
   public function group(string $prefix, callable $callback): RouterInterface;
+  public function groupRouter(string $prefix, RouterInterface $router): RouterInterface;
 
   // HTTP-methods
   public function get(string $pattern, mixed $callback): void;

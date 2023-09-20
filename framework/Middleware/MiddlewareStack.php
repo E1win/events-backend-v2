@@ -1,6 +1,7 @@
 <?php
 namespace Framework\Middleware;
 
+use Framework\Application\App;
 use Framework\Middleware\Contract\MiddlewareStackInterface;
 use Psr\Http\Server\MiddlewareInterface;
 
@@ -18,10 +19,15 @@ class MiddlewareStack implements MiddlewareStackInterface
 
   public function shift(): MiddlewareInterface
   {
-    return array_shift($this->stack);
+    $middleware = array_shift($this->stack);
+
+    if ($middleware instanceof MiddlewareInterface)
+      return $middleware;
+
+    return App::getContainer()->get($middleware);
   }
 
-  public function prepend(MiddlewareInterface $middleware): self
+  public function prepend(MiddlewareInterface|string $middleware): self
   {
     array_unshift($this->stack, $middleware);
 
@@ -35,7 +41,7 @@ class MiddlewareStack implements MiddlewareStackInterface
     return $this;
   }
 
-  public function append(MiddlewareInterface $middleware): self
+  public function append(MiddlewareInterface|string $middleware): self
   {
     $this->stack[] = $middleware;
 

@@ -5,6 +5,8 @@ use Framework\Routing\Router;
 
 $router = new Router((new MiddlewareStack));
 
+$router->addPrefix('/api');
+
 $router->get("/test", function() {
   echo 'In function';
 });
