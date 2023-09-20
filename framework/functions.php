@@ -21,6 +21,8 @@ if (! function_exists('config')) {
       return loadAllConfigFromDirectory($path);
     } else if (is_file($path)) {
       return include($path);
+    } else {
+      throw new Exception("Trying to get invalid configuration: '{$name}'");
     }
   }
 
