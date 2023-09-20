@@ -53,6 +53,8 @@ class Router implements RouterInterface
 
   protected $tokenPattern = '/\{([^:]+):[^}]+\}/';
 
+  // TODO: loadRoutes function.
+
   public function __construct(MiddlewareStackInterface $middlewareStack)
   {
     $this->middlewareStack = $middlewareStack;

@@ -2,6 +2,8 @@
 namespace Framework\Application;
 
 use Framework\Container\Container;
+use Framework\Routing\Contract\DispatcherInterface;
+use Framework\Routing\Contract\RouterInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -10,6 +12,10 @@ class App
 {
   public static ContainerInterface $container;
 
+  private RouterInterface $router;
+
+  private DispatcherInterface $dispatcher;
+
   public function __construct(Container $container)
   {
     App::$container = $container;
@@ -17,10 +23,13 @@ class App
     // add middlewares, etc.
   }
 
-  public function handle(ServerRequestInterface $request): ResponseInterface
+  public function run(?RouterInterface $router = null)
   {
-    // dispatcher
-    // routes
+    if ($router == null) {
+      // $this->loadRoutes();
+    }
+    // loadRoutes().
+    // . . .
   }
 
   public static function getContainer(): ContainerInterface
