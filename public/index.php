@@ -39,18 +39,7 @@ require_once __DIR__ . '/../framework/bootstrap.php';
  * CREATE CONTAINER
  */
 
-$config = config('di/');
-$aliases = config('aliases.php');
- 
-$resourceCollection = new ContainerResourceCollection(
-  $config
-);
-
-$resourceCollection->addAliases($aliases);
-
-$container = new Container(
-  $resourceCollection
-);
+$container = Container::createWithDefaultConfiguration();
 
 /**
  * CREATE APPLICATION

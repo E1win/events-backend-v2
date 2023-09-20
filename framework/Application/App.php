@@ -25,6 +25,11 @@ class App
 
   public static function getContainer(): ContainerInterface
   {
+    if (App::$container == null) {
+      App::$container = Container::createWithDefaultConfiguration();
+    }
+    
     return App::$container;
   }
+
 }

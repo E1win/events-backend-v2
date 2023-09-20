@@ -4,6 +4,7 @@ namespace Framework\Container;
 use Framework\Container\Contract\ContainerResourceCollectionInterface;
 use Framework\Container\Contract\MutableResourceCollection;
 use Framework\Container\Exception\NotFoundException;
+use Framework\Container\Resource\ContainerResourceCollection;
 use Framework\Container\Resource\ResourceResolver;
 use Psr\Container\ContainerInterface;
 
@@ -20,12 +21,27 @@ class Container implements ContainerInterface
   
   protected array $resolvedResources = [];
 
+  static public function createWithDefaultConfiguration()
+  {
+    $config = config('di/');
+    $aliases = config('aliases.php');
+
+    $resourceCollection = new ContainerResourceCollection($config);
+
+    $resourceCollection->addAliases($aliases);
+
+    return new Container($resourceCollection);
+  }
+
   public function __construct(
     ContainerResourceCollectionInterface $resourceCollection,
   ) {
     $this->resourceCollection = $resourceCollection;
 
     $this->resourceResolver = new ResourceResolver();
+
+    $this->resolvedResources[Container::class] = $this;
+    $this->resolvedResources[ContainerInterface::class] = $this;
   }
 
   public function get(string $name)
