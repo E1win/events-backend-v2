@@ -1,13 +1,17 @@
 <?php
 
-use App\Http\Controller\EventController;
+use Framework\Middleware\MiddlewareStack;
+use Framework\Routing\Router;
 
-return [
-  "/" => [
-    "methods" => ['GET', 'POST'],
-    "action" => [
-      App\Http\Controller\EventController::class,
-      "show"
-    ],
-  ],
-];
+$router = new Router((new MiddlewareStack));
+
+$router->get("/test", function() {
+  echo 'In function';
+});
+
+// Then maybe in app:
+// $routerGroup->config('routes-web');
+
+// $router->group('/api', $routerGroup);
+
+return $router;

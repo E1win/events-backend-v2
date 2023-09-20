@@ -1,6 +1,6 @@
 <?php
 
-$databaseConfig = require_once __DIR__ . '/../database.php';
+$databaseConfig = require __DIR__ . '/../database.php';
 
 return [
   PDO::class => [

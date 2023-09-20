@@ -1,9 +1,5 @@
 <?php
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
-
-$dotenv->load();
-
 return [
   'driver' => 'mysql',
   'host' => $_ENV['DB_HOST'],

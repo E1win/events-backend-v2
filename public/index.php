@@ -25,27 +25,28 @@ use Framework\Routing\Contract\RouterInterface;
 use Framework\Routing\Router;
 use Framework\Middleware\MiddlewareStack;
 
-define('ROOT_PATH', __DIR__ . "/../");
 
 /**
- * ADDING COMPOSER AUTOLOADER
+ * BOOTSTRAP APPLICATION
  * 
- * So we no longer have to manually load our classes.
+ * Loads autoloader, environment variables
+ * and helper functions
  */
 
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../framework/bootstrap.php';
+ 
 
 /**
  * GET CONFIGURATION
  */
 
-$config = require_once __DIR__ . '/../config/di/database.php';
+$config = config('di/');
 
 echo '<pre>';
 var_dump($config);
 echo '</pre>';
 
-$aliases = require_once __DIR__ . '/../config/di/alias.php';
+$aliases = config('aliases.php');
 
 $resourceCollection = new ContainerResourceCollection(
   $config
@@ -84,11 +85,6 @@ $app = new App($container);
 $messageFactory = new MessageFactory();
 
 $request = $messageFactory->createServerRequestFromGlobals();
-
-echo '<pre>';
-var_dump($request->getRequestTarget());
-echo '</pre>';
-
 
 // $router = new Router(new MiddlewareStack());
 $router = $container->get(Router::class);
