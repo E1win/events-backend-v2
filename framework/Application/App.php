@@ -37,8 +37,11 @@ class App
   public function run(ServerRequestInterface $request, ?RouterInterface $router = null)
   {
     $this->router = $this->loadRoutes($router);
+    $this->loadGlobalMiddlewareIntoRouter($this->router);
+
     $this->loadDispatcher($this->router);
     $response = $this->dispatcher->dispatch($request);
+    
     $this->sendResponse($response);
   }
 
@@ -49,6 +52,13 @@ class App
     }
 
     return $router;
+  }
+
+  private function loadGlobalMiddlewareIntoRouter(RouterInterface $router)
+  {
+    $middleware = config('middleware.php');
+
+    $router->addMiddlewares($middleware);
   }
 
   private function loadDispatcher(RouterInterface $router)
