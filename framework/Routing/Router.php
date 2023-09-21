@@ -55,6 +55,11 @@ class Router implements RouterInterface
 
   // TODO: loadRoutes function.
 
+  public static function create()
+  {
+    return new Router((new MiddlewareStack()));
+  }
+
   public function __construct(MiddlewareStackInterface $middlewareStack)
   {
     $this->middlewareStack = $middlewareStack;
@@ -110,7 +115,7 @@ class Router implements RouterInterface
   {
     // TODO: Maybe make this a container->get call?
     // This is probably a lot quicker though
-    $subRouter = (new Router(new MiddlewareStack()))->addPrefix($prefix);
+    $subRouter = Router::create()->addPrefix($prefix);
 
     call_user_func($callback, $subRouter);
 

@@ -24,7 +24,7 @@ use Framework\Model\Mapper\MapperFactory;
 use Framework\Routing\Contract\RouterInterface;
 use Framework\Routing\Router;
 use Framework\Middleware\MiddlewareStack;
-
+use Framework\Routing\RouteGatherer;
 
 /**
  * BOOTSTRAP APPLICATION
@@ -70,31 +70,39 @@ $messageFactory = new MessageFactory();
 $request = $messageFactory->createServerRequestFromGlobals();
 
 // $router = new Router(new MiddlewareStack());
-$router = $container->get(Router::class);
-
-$router->addMiddleware(ExampleMiddleware::class);
+$routeGatherer = new RouteGatherer();
+$router = $routeGatherer->load();
 
 $router->get("/test", function() {
   echo 'In function';
 });
 
-$router->get("/test/{id:number}", function() {
-  echo 'In function';
-});
+echo '<pre>';
+var_dump($router);
+echo '</pre>';
+// $router = $container->get(Router::class);
 
-$router->get("/test/events/{id:number}/{num:number}", function() {
-  echo 'In function';
-});
+// $router->addMiddleware(ExampleMiddleware::class);
 
-$router->group('/api', function(RouterInterface $router) {
-  $router->get('/test', function() {
-    // . . .
-  });
-  $router->get('/test/{id:number}', function() {
-    // . . .
-  });
-  $router->get('/event/{id:number}', [EventController::class, 'show']);
-})->addMiddleware(ExampleMiddlewareTwo::class);
+
+
+// $router->get("/test/{id:number}", function() {
+//   echo 'In function';
+// });
+
+// $router->get("/test/events/{id:number}/{num:number}", function() {
+//   echo 'In function';
+// });
+
+// $router->group('/api', function(RouterInterface $router) {
+//   $router->get('/test', function() {
+//     // . . .
+//   });
+//   $router->get('/test/{id:number}', function() {
+//     // . . .
+//   });
+//   $router->get('/event/{id:number}', [EventController::class, 'show']);
+// })->addMiddleware(ExampleMiddlewareTwo::class);
 
 $route = $router->match($request);
 
