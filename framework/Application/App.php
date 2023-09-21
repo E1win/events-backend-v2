@@ -8,7 +8,6 @@ use Framework\Routing\Contract\RouteGathererInterface;
 use Framework\Routing\Contract\RouterInterface;
 use Framework\Routing\Dispatcher;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class App
@@ -30,6 +29,11 @@ class App
     // add middlewares, etc.
   }
 
+  /**
+   * @param ServerRequestInterface $request
+   * @param RouterInterface|null $router Optional router, probably used for testing purposes.
+   * If unset, will take routes from configuration.
+   */
   public function run(ServerRequestInterface $request, ?RouterInterface $router = null)
   {
     $this->router = $this->loadRoutes($router);

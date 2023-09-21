@@ -169,6 +169,11 @@ class Router implements RouterInterface
     return $this;
   }
 
+  public function getPrefix(): string
+  {
+    return $this->prefix;
+  }
+
   public function addMiddleware(string $middleware)
   {
     $this->middlewareStack->append($middleware);
