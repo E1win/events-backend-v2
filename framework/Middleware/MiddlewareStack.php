@@ -36,7 +36,7 @@ class MiddlewareStack implements MiddlewareStackInterface
 
   public function prependArray(array $middlewares): self
   {
-    array_unshift($this->stack, $middlewares);
+    array_unshift($this->stack, ...$middlewares);
 
     return $this;
   }
@@ -50,7 +50,7 @@ class MiddlewareStack implements MiddlewareStackInterface
 
   public function appendArray(array $middlewares): self
   {
-    $this->stack[] += $middlewares;
+    array_push($this->stack, ...$middlewares);
 
     return $this;
   }
