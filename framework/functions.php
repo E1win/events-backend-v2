@@ -14,14 +14,16 @@ if (! function_exists('config')) {
   /**
    * Helper function for getting configuration
    */
-  function config(string $name) {
+  function config(string $name, bool $throwExceptionIfNotFound = false) {
     $path = ROOT_PATH . "config/" . $name;
 
     if (is_dir($path)) {
       return loadAllConfigFromDirectory($path);
     } else if (is_file($path)) {
       return include($path);
-    } else {
+    }
+
+    if ($throwExceptionIfNotFound) {
       throw new Exception("Trying to get invalid configuration: '{$name}'");
     }
   }

@@ -23,8 +23,8 @@ class Container implements ContainerInterface
 
   static public function createWithDefaultConfiguration()
   {
-    $config = config('di/');
-    $aliases = config('aliases.php');
+    $config = config('di/', true);
+    $aliases = config('aliases.php', true);
 
     $resourceCollection = new ContainerResourceCollection($config);
 
