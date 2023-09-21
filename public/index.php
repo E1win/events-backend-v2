@@ -48,7 +48,11 @@ $container = Container::createWithDefaultConfiguration();
  * Then, send appropiate response back to client.
  */
 
-$app = new App($container);
+$app = new App($container, new RouteGatherer());
+
+$app->run(
+  (new MessageFactory())->createServerRequestFromGlobals()
+);
 
 // $app->handle(
 //   Request::capture()
@@ -65,21 +69,21 @@ $app = new App($container);
 // for other tables (ex: pivot tables), they can just
 // get them manually
 
-$messageFactory = new MessageFactory();
+// $messageFactory = new MessageFactory();
 
-$request = $messageFactory->createServerRequestFromGlobals();
+// $request = $messageFactory->createServerRequestFromGlobals();
 
 // $router = new Router(new MiddlewareStack());
-$routeGatherer = new RouteGatherer();
-$router = $routeGatherer->load();
+// $routeGatherer = new RouteGatherer();
+// $router = $routeGatherer->load();
 
-$router->get("/test", function() {
-  echo 'In function';
-});
+// $router->get("/test", function() {
+//   echo 'In function';
+// });
 
-echo '<pre>';
-var_dump($router);
-echo '</pre>';
+// echo '<pre>';
+// var_dump($router);
+// echo '</pre>';
 // $router = $container->get(Router::class);
 
 // $router->addMiddleware(ExampleMiddleware::class);
@@ -104,17 +108,17 @@ echo '</pre>';
 //   $router->get('/event/{id:number}', [EventController::class, 'show']);
 // })->addMiddleware(ExampleMiddlewareTwo::class);
 
-$route = $router->match($request);
+// $route = $router->match($request);
 
-$request = $request->withAttribute('route', $route);
+// $request = $request->withAttribute('route', $route);
 
-echo '<br>ROUTE FOUND:<pre>';
-var_dump($route);
-echo '</pre>';
+// echo '<br>ROUTE FOUND:<pre>';
+// var_dump($route);
+// echo '</pre>';
 
-$response = $route->runController($request);
+// $response = $route->runController($request);
 
-$response->send();
+// $response->send();
 
 // $resourceCollection = new ContainerResourceCollection(
 //   $config,
@@ -223,14 +227,3 @@ $response->send();
 // var_dump($resource->getParameters());
 // echo '<br/>';
 
-
-
-// commands to setup application here
-// set up container
-// get data from config / .env to database
-
-// $response = $app->handle(
-//  (new MessageFactory)->createServerRequestFromGlobals()
-// );
-
-// send response with ResponseSender

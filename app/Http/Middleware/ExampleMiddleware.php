@@ -9,6 +9,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 class ExampleMiddleware implements MiddlewareInterface {
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
   {
+    echo '<br> In exampleMiddleware start<br>';
+
     $response = $handler->handle($request);
 
     echo '<br>In ExampleMiddleware<br>';

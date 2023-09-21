@@ -2,6 +2,7 @@
 namespace Framework\Routing;
 
 use Framework\Middleware\Contract\MiddlewareStackInterface;
+use Framework\Middleware\MiddlewareStack;
 use Framework\Routing\Contract\DispatcherInterface;
 use Framework\Routing\Contract\RouteInterface;
 use Framework\Routing\Contract\RouterInterface;
@@ -14,6 +15,11 @@ class Dispatcher implements DispatcherInterface, RequestHandlerInterface
   protected RouterInterface $router;
   protected MiddlewareStackInterface $middlewareStack;
 
+  public static function create(RouterInterface $router)
+  {
+    return new Dispatcher($router, new MiddlewareStack());
+  }
+
   public function __construct(RouterInterface $router, MiddlewareStackInterface $middlewareStack)
   {
     $this->router = $router;
@@ -23,7 +29,12 @@ class Dispatcher implements DispatcherInterface, RequestHandlerInterface
   public function dispatch(ServerRequestInterface $request): ResponseInterface
   {
     $route = $this->router->match($request);
-    // add all middleware from route middleware to stack
+    
+    $routeMiddlewareStack = $route->getMiddlewareStack();
+
+    $this->middlewareStack->appendArray(
+      $routeMiddlewareStack->getStack()
+    );
 
     // add route to end of middleware stack
     $this->middlewareStack->append($route);
