@@ -30,4 +30,7 @@ interface RouterInterface
   // Add prefix to router
   public function addPrefix(string $prefix): self;
   public function getPrefix(): string;
+
+  /** @return RouteInterface[] */
+  public function getRoutes(): array;
 }

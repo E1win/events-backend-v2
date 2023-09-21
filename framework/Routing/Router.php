@@ -184,6 +184,11 @@ class Router implements RouterInterface
     $this->middlewareStack->appendArray($middlewares);
   }
 
+  public function getRoutes(): array
+  {
+    return $this->routes;
+  }
+
   private function prependMiddlewaresToRoute(RouteInterface $route): void
   {
     $routeMiddlewareStack = $route->getMiddlewareStack();
