@@ -30,8 +30,6 @@ class Event extends DataMapper
 
     $timestamp = $event->getCreatedOn()->format('Y-m-d H:i:s');
 
-    echo $timestamp;
-
     $statement->bindValue(':name', $event->getName(), PDO::PARAM_STR);
     $statement->bindValue(':timestamp', $timestamp, PDO::PARAM_STR);
     $statement->execute();

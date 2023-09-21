@@ -23,12 +23,6 @@ class ResourceResolver
     
     $instance = $reflectionClass->newInstanceArgs($args);
     
-    echo "<br><br>in resolver: {$className}, instance:";
-    echo "<pre>";
-    var_dump($instance);
-    echo "</pre>";
-    echo "<br><br>";
-
     return $reflectionClass->newInstanceArgs($args);
   }
 

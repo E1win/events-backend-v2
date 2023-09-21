@@ -27,8 +27,6 @@ class ControllerDispatcher
 
     $controller = $this->container->get($controllerName);
 
-    var_dump($route->getTokens());
-
     return $controller->callAction($method, [$request, ...$route->getTokens()]);
 
     // resolve controller / parameters (using container)
