@@ -1,6 +1,7 @@
 <?php
 namespace Framework\Routing;
 
+use Framework\Message\Response;
 use Framework\Middleware\Contract\MiddlewareStackInterface;
 use Framework\Middleware\MiddlewareStack;
 use Framework\Routing\Contract\DispatcherInterface;
@@ -29,15 +30,12 @@ class Dispatcher implements DispatcherInterface, RequestHandlerInterface
   public function dispatch(ServerRequestInterface $request): ResponseInterface
   {
     $route = $this->router->match($request);
+
+    if ($route == null) {
+      return new Response(404);
+    }
     
-    $routeMiddlewareStack = $route->getMiddlewareStack();
-
-    $this->middlewareStack->appendArray(
-      $routeMiddlewareStack->getStack()
-    );
-
-    // add route to end of middleware stack
-    $this->middlewareStack->append($route);
+    $this->addRouteMiddlewaresToStack($route);
 
     return $this->handle($request);
   } 
@@ -46,5 +44,17 @@ class Dispatcher implements DispatcherInterface, RequestHandlerInterface
   {
     $middleware = $this->middlewareStack->shift();
     return $middleware->process($request, $this);
+  }
+
+  private function addRouteMiddlewaresToStack(RouteInterface $route)
+  {
+    $routeMiddlewareStack = $route->getMiddlewareStack();
+
+    $this->middlewareStack->appendArray(
+      $routeMiddlewareStack->getStack()
+    );
+
+    // add route to end of middleware stack
+    $this->middlewareStack->append($route);
   }
 }

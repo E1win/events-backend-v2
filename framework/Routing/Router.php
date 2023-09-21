@@ -76,7 +76,9 @@ class Router implements RouterInterface
         // to route here???
         $route = $router->match($request);
 
-        $this->prependMiddlewaresToRoute($route);
+        if ($route) {
+          $this->prependMiddlewaresToRoute($route);
+        }
 
         return $route;
       }
@@ -101,8 +103,10 @@ class Router implements RouterInterface
 
           $route->addToken($tokens[$index - 1], $match);
         }
-
-        $this->prependMiddlewaresToRoute($route);
+        
+        if ($route) {
+          $this->prependMiddlewaresToRoute($route);
+        }
 
         return $route;
       }
