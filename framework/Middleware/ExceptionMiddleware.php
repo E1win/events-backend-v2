@@ -18,7 +18,8 @@ class ExceptionMiddleware implements MiddlewareInterface
     try {
       return $handler->handle($request);
     } catch (\Throwable $e) {
-      //throw $th;
+      // Return exception as response
+      // formatting here
     }
   }
 }
