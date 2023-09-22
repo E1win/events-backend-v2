@@ -15,7 +15,6 @@ use Framework\Message\Request;
 use Framework\Message\Response;
 use Framework\Container\Resource\ReflectionAutowiring;
 use Framework\Message\ServerRequest;
-use Framework\Model\Mapper\MapperFactory;
 use Framework\Routing\Contract\RouterInterface;
 use Framework\Routing\Router;
 use Framework\Middleware\MiddlewareStack;
