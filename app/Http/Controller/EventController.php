@@ -9,7 +9,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class EventController extends Controller
 {
-
   public function __construct(
     private JsonResponseFactoryInterface $responseFactory,
     private EventService $eventService
