@@ -1,6 +1,8 @@
 <?php
 namespace Framework\Message;
 
+use Framework\Message\Contract\HtmlResponseFactoryInterface;
+use Framework\Message\Contract\JsonResponseFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
@@ -11,13 +13,25 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
 use Framework\Message\Response;
+use Framework\Message\Response\HtmlResponse;
+use Framework\Message\Response\JsonResponse;
 use Framework\Message\Uri;
 use Framework\Message\ServerRequest;
 use Framework\Message\Stream\FileStream;
 use Framework\Message\Stream\InputStream;
 
-class Factory implements ResponseFactoryInterface, ServerRequestFactoryInterface, UriFactoryInterface, StreamFactoryInterface 
+class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterface, ResponseFactoryInterface, ServerRequestFactoryInterface, UriFactoryInterface, StreamFactoryInterface 
 {
+  public function createJsonResponse(array $data = [], int $status = 200): ResponseInterface
+  {
+    return new JsonResponse($status, $data);
+  }
+
+  public function createHtmlResponse(int $statusCode, $html): ResponseInterface
+  {
+    return new HtmlResponse($statusCode, $html);
+  }
+
   public function createResponse(int $code = 200, string $reasonPhrase = ""): ResponseInterface
   {
     return new Response($code, $reasonPhrase);
