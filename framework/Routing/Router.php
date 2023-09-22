@@ -67,22 +67,41 @@ class Router implements RouterInterface
 
   public function match(ServerRequestInterface $request): ?RouteInterface
   {
+    $route = $this->matchGroups($request);
+
+    if ($route != null) {
+      return $route;
+    }
+
+    $route = $this->matchRoutes($request);
+
+    return $route;
+  }
+
+  private function matchGroups(ServerRequestInterface $request): ?RouteInterface
+  {
     $path = $request->getUri()->getPath();
 
     foreach ($this->groups as $prefix => $router) {
       // Check if request target string starts with prefix
       if (substr($path, 0, strlen($prefix)) === $prefix) {
-        // TODO: Maybe add middleware from current router
-        // to route here???
         $route = $router->match($request);
 
-        if ($route) {
-          $this->prependMiddlewaresToRoute($route);
+        if ($route == null) {
+          continue;
         }
-
+        
+        $this->prependMiddlewaresToRoute($route);
         return $route;
       }
     }
+
+    return null;
+  }
+
+  private function matchRoutes(ServerRequestInterface $request): ?RouteInterface
+  {
+    $path = $request->getUri()->getPath();
 
     foreach ($this->routes as $route) {
       if ($route->getMethod() != $request->getMethod()) {

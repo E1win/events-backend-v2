@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 interface DispatcherInterface
 {
   /**
-   * Dispatch a request of a given route.
+   * Dispatch a request
    */
   public function dispatch(ServerRequestInterface $request): ResponseInterface;
 }
