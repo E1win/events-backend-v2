@@ -2,9 +2,9 @@
 namespace Framework\Model\Entity;
 
 use Framework\Model\Entity\Contract\HasId;
-use Framework\Model\Entity\Contract\ToArray;
+use Framework\Model\Entity\Contract\Arrayable;
 
-abstract class Collection implements \Iterator, \ArrayAccess, \Countable, ToArray
+abstract class Collection implements \Iterator, \ArrayAccess, \Countable, Arrayable
 {
   abstract protected function buildEntity(): HasId; 
 

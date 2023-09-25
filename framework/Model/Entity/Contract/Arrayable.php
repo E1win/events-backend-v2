@@ -1,7 +1,7 @@
 <?php
 namespace Framework\Model\Entity\Contract;
 
-interface ToArray
+interface Arrayable
 {
   public function toArray(): array;
 }

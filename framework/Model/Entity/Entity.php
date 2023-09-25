@@ -2,9 +2,9 @@
 namespace Framework\Model\Entity;
 
 use Framework\Model\Entity\Contract\HasId;
-use Framework\Model\Entity\Contract\ToArray;
+use Framework\Model\Entity\Contract\Arrayable;
 
-abstract class Entity implements HasId, ToArray
+abstract class Entity implements HasId, Arrayable
 {
   public function toArray(): array
   {
