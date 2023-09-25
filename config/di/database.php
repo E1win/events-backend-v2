@@ -17,6 +17,10 @@ return [
     PDO::class,
     'events'
   ],
+  App\Model\Mapper\EventCollection::class => [
+    PDO::class,
+    'events'
+  ],
 ];
 
 

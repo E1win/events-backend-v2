@@ -1,7 +1,10 @@
 <?php
 namespace Framework\Model\Entity;
 
-abstract class Entity
+use Framework\Model\Entity\Contract\HasId;
+use Framework\Model\Entity\Contract\ToArray;
+
+abstract class Entity implements HasId, ToArray
 {
   public function toArray(): array
   {

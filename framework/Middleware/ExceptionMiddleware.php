@@ -15,9 +15,10 @@ class ExceptionMiddleware implements MiddlewareInterface
 
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
   {
+    return $handler->handle($request);
     try {
-      return $handler->handle($request);
     } catch (\Throwable $e) {
+      throw new $e;
       // Return exception as response
       // formatting here
     }

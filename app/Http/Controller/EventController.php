@@ -14,6 +14,15 @@ class EventController extends Controller
     private EventService $eventService
   ) {}
 
+  public function index(ServerRequestInterface $request): ResponseInterface
+  {
+    $events = $this->eventService->getAllEvents();
+
+    return $this->responseFactory->createJsonResponse(
+      $events->toArray()
+    );
+  }
+
   public function show(ServerRequestInterface $request, int $id): ResponseInterface
   {
     $event = $this->eventService->getEventById($id);

@@ -8,6 +8,7 @@ $router = Router::create();
 $router->addPrefix('/api');
 $router->addMiddleware(ExampleMiddleware::class);
 
-$router->get('/event/{id:number}', [EventController::class, 'show']);
+$router->get('/events/{id:number}', [EventController::class, 'show']);
+$router->get('/events', [EventController::class, 'index']);
 
 return $router;

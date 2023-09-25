@@ -2,17 +2,17 @@
 namespace App\Model\Service;
 
 use App\Model\Entity\Event;
+use App\Model\Entity\EventCollection;
 use App\Model\Mapper\Event as EventMapper;
+use App\Model\Mapper\EventCollection as EventCollectionMapper;
 use DateTimeImmutable;
 
 class EventService
 {
-  private $mapper;
-
-  public function __construct(EventMapper $mapper)
-  {
-    $this->mapper = $mapper;
-  }
+  public function __construct(
+    private EventMapper $mapper,
+    private EventCollectionMapper $collectionMapper
+  ) { }
 
   public function createEvent(string $name): Event
   {
@@ -32,5 +32,13 @@ class EventService
     $this->mapper->fetch($event);
 
     return $event;
+  }
+
+  public function getAllEvents(): EventCollection
+  {
+    $collection = new EventCollection();
+    $this->collectionMapper->fetch($collection);
+
+    return $collection;
   }
 }
