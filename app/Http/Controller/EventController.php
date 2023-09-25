@@ -19,7 +19,7 @@ class EventController extends Controller
     $events = $this->eventService->getAllEvents();
 
     return $this->responseFactory->createJsonResponse(
-      $events->toArray()
+      $events
     );
   }
 
@@ -28,7 +28,7 @@ class EventController extends Controller
     $event = $this->eventService->getEventById($id);
 
     return $this->responseFactory->createJsonResponse(
-      $event->toArray()
+      $event
     );
   }
 }

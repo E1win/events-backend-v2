@@ -22,7 +22,7 @@ use Framework\Message\Stream\InputStream;
 
 class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterface, ResponseFactoryInterface, ServerRequestFactoryInterface, UriFactoryInterface, StreamFactoryInterface 
 {
-  public function createJsonResponse(array $data = [], int $status = 200): ResponseInterface
+  public function createJsonResponse(mixed $data = [], int $status = 200): ResponseInterface
   {
     return new JsonResponse($status, $data);
   }

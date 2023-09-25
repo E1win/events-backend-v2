@@ -4,7 +4,7 @@ namespace Framework\Model\Entity;
 use Framework\Model\Entity\Contract\HasId;
 use Framework\Model\Entity\Contract\Arrayable;
 
-abstract class Collection implements \Iterator, \ArrayAccess, \Countable, Arrayable
+abstract class Collection implements \Iterator, \ArrayAccess, \Countable, \JsonSerializable, Arrayable
 {
   abstract protected function buildEntity(): HasId; 
 
@@ -118,5 +118,12 @@ abstract class Collection implements \Iterator, \ArrayAccess, \Countable, Arraya
     return array_map(function(Entity $entity) {
       return $entity->toArray();
     }, $this->pool);
+  }
+
+  // Test
+
+  public function jsonSerialize(): mixed
+  {
+    return $this->pool;
   }
 }

@@ -5,5 +5,5 @@ use Psr\Http\Message\ResponseInterface;
 
 interface JsonResponseFactoryInterface
 {
-  public function createJsonResponse(array $data = [], int $status = 200): ResponseInterface;
+  public function createJsonResponse(mixed $data = [], int $status = 200): ResponseInterface;
 }
