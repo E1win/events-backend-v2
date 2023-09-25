@@ -14,6 +14,6 @@ abstract class Entity implements HasId, Arrayable, JsonSerializable
 
   public function jsonSerialize(): mixed
   {
-    return $this->toArray();
+    return get_object_vars($this);
   }
 }

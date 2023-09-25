@@ -120,7 +120,7 @@ abstract class Collection implements \Iterator, \ArrayAccess, \Countable, \JsonS
     }, $this->pool);
   }
 
-  // Test
+  // Implementing JsonSerializable
 
   public function jsonSerialize(): mixed
   {

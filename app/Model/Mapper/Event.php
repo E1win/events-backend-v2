@@ -48,11 +48,14 @@ class Event extends DataMapper
 
     $data = $statement->fetch();
 
-    if ($data) {
-      $event->setName($data['name']);
+    $data['created_on'] = new DateTimeImmutable($data['created_on']);
 
-      $datetime = new DateTimeImmutable($data['created_on']);
-      $event->setCreatedOn($datetime);
+    if ($data) {
+      // $event->setName($data['name']);
+
+      // $datetime = new DateTimeImmutable($data['created_on']);
+      // $event->setCreatedOn($datetime);
+      $this->applyValues($event, $data);
     }
   }
 }
