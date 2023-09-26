@@ -20,7 +20,7 @@ class EventService
     $event->setCreatedOn(new DateTimeImmutable);
     $event->setName($name);
 
-    $this->mapper->store($event);
+    $this->mapper->create($event);
 
     return $event;
   }
@@ -29,7 +29,7 @@ class EventService
   {
     $event = new Event($id);
 
-    $this->mapper->fetch($event);
+    $this->mapper->read($event);
 
     return $event;
   }

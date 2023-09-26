@@ -19,6 +19,7 @@ use Framework\Routing\Contract\RouterInterface;
 use Framework\Routing\Router;
 use Framework\Middleware\MiddlewareStack;
 use Framework\Routing\RouteGatherer;
+use Framework\View\TemplateLoader;
 
 /**
  * BOOTSTRAP APPLICATION
@@ -44,9 +45,13 @@ $container = Container::createWithDefaultConfiguration();
 
 $app = new App($container, new RouteGatherer());
 
-$app->run(
-  (new MessageFactory())->createServerRequestFromGlobals()
-);
+// $app->run(
+//   (new MessageFactory())->createServerRequestFromGlobals()
+// );
+
+$templateLoader = new TemplateLoader();
+
+$template = $templateLoader->load('index.html');
 
 // $app->handle(
 //   Request::capture()
