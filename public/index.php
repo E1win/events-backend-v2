@@ -45,13 +45,13 @@ $container = Container::createWithDefaultConfiguration();
 
 $app = new App($container, new RouteGatherer());
 
-// $app->run(
-//   (new MessageFactory())->createServerRequestFromGlobals()
-// );
+$app->run(
+  (new MessageFactory())->createServerRequestFromGlobals()
+);
 
-$templateLoader = new TemplateLoader();
+// $templateLoader = new TemplateLoader();
 
-$template = $templateLoader->load('index.html');
+// $template = $templateLoader->load('index.html');
 
 // $app->handle(
 //   Request::capture()

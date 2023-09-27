@@ -37,7 +37,7 @@ class EventService
   public function getAllEvents(): EventCollection
   {
     $collection = new EventCollection();
-    $this->collectionMapper->fetch($collection);
+    $this->collectionMapper->read($collection);
 
     return $collection;
   }

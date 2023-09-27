@@ -39,6 +39,8 @@ class Template implements TemplateInterface
    */
   public function render(array $parameters = []): string
   {
+    // $tokenStream = $this->tokenize($this->source)
+    // ?? $this->parse($tokenStream)
     // First have lexer tokenize rawCode (lexer returns TokenStream)
     // Parses goes through TokenStream
     // ...
