@@ -1,10 +1,12 @@
 <?php
 
 use Framework\Routing\Router;
+use App\Http\Controller\Web\EventController;
+
 
 $router = Router::create();
 
-$router->get('/events', [App\Http\Controller\Web\EventController::class, 'index']);
-$router->get('/events/{id:number}', [App\Http\Controller\Web\EventController::class, 'show']);
+$router->get('/events', [EventController::class, 'index']);
+$router->get('/events/{id:number}', [EventController::class, 'show']);
 
 return $router;
