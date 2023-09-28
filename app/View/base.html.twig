@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css"/>
+  <title>{% block title %}{% endblock %}</title>
+  {% endblock %}
+</head>
+<body>
+  {% block navigation %}
+    <header>
+      <p>The header</p>
+    </header>
+  {% endblock %}
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  {% block footer %}
+    <footer id="footer">
+      &copy; Copyright 2023 by Elwin Jukema.
+    </footer>
+  {% endblock %}
+</body>
+</html>
