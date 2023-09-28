@@ -22,7 +22,7 @@ class Event extends DataMapper
     return empty($data) === false;
   }
 
-  public function create(EntityEvent $event)
+  public function store(EntityEvent $event)
   {
     $sql = "INSERT INTO {$this->table} (name, created_on) VALUES (:name, :timestamp)";
     
@@ -37,7 +37,7 @@ class Event extends DataMapper
     $event->setId($this->connection->lastInsertId());
   }
 
-  public function read(EntityEvent $event)
+  public function fetch(EntityEvent $event)
   {
     $sql = "SELECT * FROM {$this->table} WHERE id = :id";
 

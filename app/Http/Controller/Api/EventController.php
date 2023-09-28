@@ -31,4 +31,13 @@ class EventController extends Controller
       $event
     );
   }
+
+  public function participants(ServerRequestInterface $request, int $id): ResponseInterface
+  {
+    $participants = $this->eventService->getParticipantsByEventId($id);
+
+    return $this->responseFactory->createJsonResponse(
+      $participants
+    );
+  }
 }

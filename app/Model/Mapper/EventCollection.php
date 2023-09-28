@@ -9,7 +9,7 @@ use PDOStatement;
 
 class EventCollection extends DataMapper
 {
-  public function read(EntityEventCollection $collection)
+  public function fetch(EntityEventCollection $collection)
   {
     $sql = "SELECT * FROM {$this->table}";
 
