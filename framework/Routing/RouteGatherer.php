@@ -7,25 +7,25 @@ use Framework\Routing\Contract\RouterInterface;
 
 class RouteGatherer implements RouteGathererInterface
 {
-  private string $routesDirectory = ROOT_PATH . 'config/routes/';
-
   public function load(): RouterInterface
   {
     $config = config('routes.php');
 
+    $routesDirectory = $config['directory'];
+
     $router = Router::create();
 
-    foreach ($config as $file => $prefix) {
-      $router->groupRouter($prefix, $this->loadFromFile($file));
+    foreach ($config['routes'] as $file) {
+      $subRouter = $this->loadFromFile($routesDirectory . $file);
+      $prefix = $subRouter->getPrefix();
+      $router->groupRouter($prefix, $subRouter);
     }
 
     return $router;
   }
 
-  private function loadFromFile(string $fileName): RouterInterface
+  private function loadFromFile(string $path): RouterInterface
   {
-    $path = $this->routesDirectory . $fileName;
-
     if (is_file($path)) {
       return include($path);
     }

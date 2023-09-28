@@ -7,6 +7,11 @@
 
 // "file" => "prefix"
 return [
-  "api.php" => '/api',
-  "web.php" => '',
+  'directory' => __DIR__ . '/routes/',
+  'routes' => [
+    'api.php',
+    'web.php'
+  ]
+  // "api.php" => '/api',
+  // "web.php" => '',
 ];
