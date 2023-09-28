@@ -28,7 +28,7 @@ class ExceptionMiddleware implements MiddlewareInterface
     } catch (\Throwable $error) {
       // todo: Get better way to add debug information
       if ($_ENV['APP_DEBUG'] == "true") {
-        throw new $error;
+        throw $error;
       }
 
       return $this->generateResponse($request, $error);
