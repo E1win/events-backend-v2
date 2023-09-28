@@ -46,7 +46,6 @@ class ParticipantCollection extends DataMapper
     $statement->execute();
 
     foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $parameters) {
-      $parameters["created_on"] = new \DateTimeImmutable($parameters['created_on']);
       $collection->addBlueprint($parameters);
     }
   }
