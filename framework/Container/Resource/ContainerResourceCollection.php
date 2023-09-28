@@ -131,7 +131,7 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
   private function resolveUnprocessedDependencies(ContainerResourceInterface $resource)
   {
     foreach ($resource->getParameters() as $key => $value) {
-      if (class_exists($value)) {
+      if (is_string($value) && class_exists($value)) {
         $resource->setParameter($key, $this->getResource($value));
       }
     }

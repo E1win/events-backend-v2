@@ -10,6 +10,7 @@ class HtmlResponse extends Response
 {
   public function __construct(int $statusCode, $html)
   {
+
     parent::__construct($statusCode);
 
     $this->setBody($this->createBody($html));
