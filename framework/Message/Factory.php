@@ -19,8 +19,10 @@ use Framework\Message\Uri;
 use Framework\Message\ServerRequest;
 use Framework\Message\Stream\FileStream;
 use Framework\Message\Stream\InputStream;
+use Psr\Http\Message\UploadedFileFactoryInterface;
+use Psr\Http\Message\UploadedFileInterface;
 
-class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterface, ResponseFactoryInterface, ServerRequestFactoryInterface, UriFactoryInterface, StreamFactoryInterface 
+class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterface, ResponseFactoryInterface, ServerRequestFactoryInterface, UriFactoryInterface, StreamFactoryInterface, UploadedFileFactoryInterface 
 {
   public function createJsonResponse(mixed $data = [], int $status = 200): ResponseInterface
   {
@@ -118,6 +120,22 @@ class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterf
     return new Stream($resource);
   }
 
+  public function createUploadedFile(
+    StreamInterface $stream,
+    ?int $size = null,
+    int $error = UPLOAD_ERR_OK,
+    ?string $clientFilename = null,
+    ?string $clientMediaType = null
+  ): UploadedFileInterface 
+  {
+    return new UploadedFile(
+      $stream,
+      $size,
+      $error,
+      $clientFilename,
+      $clientMediaType
+    );
+  }
 
   private function createHeaders(array|null $serverParams = null): array {
     $serverParams ??= $_SERVER;

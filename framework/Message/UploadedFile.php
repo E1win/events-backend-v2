@@ -1,8 +1,11 @@
 <?php
 namespace Framework\Message;
 
+use Framework\Message\Stream\FileStream;
+use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
+use RuntimeException;
 
 class UploadedFile implements UploadedFileInterface
 {
@@ -46,4 +49,136 @@ class UploadedFile implements UploadedFileInterface
    * The client's file media type
    */
   private ?string $clientMediaType;
+
+  public function __construct(
+    ?StreamInterface $stream,
+    ?int $size = null,
+    int $error = UPLOAD_ERR_OK,
+    ?string $clientFilename = null,
+    ?string $clientMediaType = null
+  ) {
+    // It doesn't make sense to keep the stream
+    // if the file wasn't successfully uploaded...
+    if (UPLOAD_ERR_OK === $error) {
+      $this->stream = $stream;
+    }
+
+    $this->size = $size;
+    $this->errorCode = $error;
+    $this->errorMessage = self::UPLOAD_ERRORS[$error] ?? 'Unknown error';
+    $this->clientFilename = $clientFilename;
+    $this->clientMediaType = $clientMediaType;
+  }
+
+  public function getStream(): StreamInterface
+  {
+    if (UPLOAD_ERR_OK <> $this->errorCode) {
+      throw new RuntimeException(sprintf(
+        'Uploaded file has no a stream due to the error #%d (%s)',
+        $this->errorCode,
+        $this->errorMessage
+      ));
+    }
+
+    if (!isset($this->stream)) {
+      throw new RuntimeException(
+        'Uploaded file has no a stream because it was already moved'
+      );
+    }
+
+    return $this->stream;
+  }
+
+  /**
+   * Moves the file to the given path
+   */
+  public function moveTo($targetPath): void
+  {
+    if (UPLOAD_ERR_OK <> $this->errorCode) {
+      throw new RuntimeException(sprintf(
+        'Uploaded file cannot be moved due to the error #%d (%s)',
+        $this->errorCode,
+        $this->errorMessage
+      ));
+    }
+
+    if (!isset($this->stream)) {
+      throw new RuntimeException(
+        'Uploaded file cannot be moved because it was already moved'
+      );
+    }
+
+    if (!$this->stream->isReadable()) {
+      throw new RuntimeException(
+        'Uploaded file cannot be moved because it is not readable'
+      );
+    }
+
+    try {
+      $targetStream = new FileStream($targetPath, 'wb');
+    } catch (InvalidArgumentException $e) {
+      throw new InvalidArgumentException(sprintf(
+        'Uploaded file cannot be moved due to the error: %s',
+        $e->getMessage()
+      ));
+    }
+
+    if ($this->stream->isSeekable()) {
+      $this->stream->rewind();
+    }
+
+    while (!$this->stream->eof()) {
+      $targetStream->write($this->stream->read(4096));
+    }
+
+    $targetStream->close();
+
+    /** @var string|null */
+    $sourcePath = $this->stream->getMetadata('uri');
+
+    $this->stream->close();
+    $this->stream = null;
+
+    if (isset($sourcePath) && is_file($sourcePath)) {
+      $sourceDir = dirname($sourcePath);
+      if (is_writable($sourceDir)) {
+        unlink($sourcePath);
+      }
+    }
+  }
+
+  public function getSize(): ?int
+  {
+    return $this->size;
+  }
+
+  /**
+   * Gets the file's error code
+   *
+   * @return int
+   */
+  public function getError(): int
+  {
+    return $this->errorCode;
+  }
+
+  /**
+   * Gets the client's file name
+   *
+   * @return string|null
+   */
+  public function getClientFilename(): ?string
+  {
+    return $this->clientFilename;
+  }
+
+  /**
+   * Gets the client's file media type
+   *
+   * @return string|null
+   */
+  public function getClientMediaType(): ?string
+  {
+    return $this->clientMediaType;
+  }
 }
