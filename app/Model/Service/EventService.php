@@ -8,6 +8,7 @@ use App\Model\Entity\UserCollection;
 use App\Model\Mapper\Event as EventMapper;
 use App\Model\Mapper\EventCollection as EventCollectionMapper;
 use DateTimeImmutable;
+use Psr\Http\Message\UploadedFileInterface;
 
 class EventService
 {
@@ -16,13 +17,19 @@ class EventService
     private EventCollectionMapper $collectionMapper,
     private ParticipantService $participantService,
     private UserService $userService,
+    private ImageService $imageService
   ) { }
 
-  public function createEvent(string $name): Event
+  public function createEvent(string $name, ?UploadedFileInterface $image = null): Event
   {
     $event = new Event();
     $event->setCreatedOn(new DateTimeImmutable);
     $event->setName($name);
+
+    if ($image !== null) {
+      $image = $this->imageService->uploadImage($image);
+      $event->setImageId($image->getId());
+    }
 
     $this->mapper->store($event);
 

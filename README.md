@@ -17,6 +17,7 @@ modules used in this project are:
   - id
   - name
   - created_on
+  - image_id
 - users
   - id
   - name
@@ -25,3 +26,7 @@ modules used in this project are:
   - id
   - event_id
   - user_id
+- images
+  - id
+  - name
+  - file_extension

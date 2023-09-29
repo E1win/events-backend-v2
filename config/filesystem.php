@@ -1,5 +1,9 @@
 <?php
 
 return [
-  'root' => ROOT_PATH . 'storage/',
+  'directory' => ROOT_PATH . 'storage/',
+  'allowed_file_extensions' => [
+    'image/jpg' => 'jpg',
+    'image/png' => 'png',
+  ],
 ];

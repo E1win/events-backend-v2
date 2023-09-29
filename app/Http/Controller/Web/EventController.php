@@ -41,11 +41,21 @@ class EventController extends Controller
 
   public function store(ServerRequestInterface $request): ResponseInterface
   {
-    echo '<pre>';
-    var_dump($request->getUploadedFiles());
-    echo '</pre>';
+    /**
+     * TODO: Function to verify form data
+     */
+
+    $body = $request->getParsedBody();
+
+    $files = $request->getUploadedFiles();
+
+    $image = null;
+    if (count($files) !== 0) {
+      $image = $files[0];
+    }
+
+    $event = $this->eventService->createEvent($body['name'], $image);
 
     return $this->responseFactory->createHtmlResponse(200, '');
-    // . . .
   }
 }

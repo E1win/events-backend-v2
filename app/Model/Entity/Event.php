@@ -9,6 +9,7 @@ class Event extends Entity
   protected ?int $id;
   protected $name;
   protected $createdOn;
+  protected ?int $imageId;
 
   public function __construct(?int $id = null)
   {
@@ -45,5 +46,13 @@ class Event extends Entity
     return $this->createdOn;
   }
 
-  
+  public function setImageId(?int $id)
+  {
+    $this->imageId = $id;
+  }
+
+  public function getImageId(): ?int
+  {
+    return $this->imageId;
+  }
 }

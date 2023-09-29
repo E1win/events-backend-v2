@@ -94,7 +94,7 @@ class UploadedFile implements UploadedFileInterface
    */
   public function moveTo($targetPath): void
   {
-    if (UPLOAD_ERR_OK <> $this->errorCode) {
+    if (UPLOAD_ERR_OK !== $this->errorCode) {
       throw new RuntimeException(sprintf(
         'Uploaded file cannot be moved due to the error #%d (%s)',
         $this->errorCode,

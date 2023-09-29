@@ -4,6 +4,7 @@ $databaseConfig = require __DIR__ . '/../database.php';
 
 use App\Model\Mapper\Event;
 use App\Model\Mapper\EventCollection;
+use App\Model\Mapper\Image;
 use App\Model\Mapper\ParticipantCollection;
 use App\Model\Mapper\User;
 
@@ -34,6 +35,10 @@ return [
     PDO::class,
     'users'
   ],
+  Image::class => [
+    PDO::class,
+    'images'
+  ]
 ];
 
 
