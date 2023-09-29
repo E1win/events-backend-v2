@@ -4,6 +4,7 @@ namespace App\Model\Service;
 use App\Model\Entity\Event;
 use App\Model\Entity\EventCollection;
 use App\Model\Entity\ParticipantCollection;
+use App\Model\Entity\UserCollection;
 use App\Model\Mapper\Event as EventMapper;
 use App\Model\Mapper\EventCollection as EventCollectionMapper;
 use DateTimeImmutable;
@@ -13,7 +14,8 @@ class EventService
   public function __construct(
     private EventMapper $mapper,
     private EventCollectionMapper $collectionMapper,
-    private ParticipantService $participantService
+    private ParticipantService $participantService,
+    private UserService $userService,
   ) { }
 
   public function createEvent(string $name): Event
@@ -44,8 +46,18 @@ class EventService
     return $collection;
   }
 
-  public function getParticipantsByEventId(int $id): ParticipantCollection
+  public function getParticipantsByEventId(int $id): UserCollection
   {
-    return $this->participantService->getParticipantsByEventId($id);
+    $participants = $this->participantService->getParticipantsByEventId($id);
+
+    $users = new UserCollection();
+
+    foreach ($participants as $participant) {
+      $id = $participant->getUserId();
+      $user = $this->userService->getUserById($id);
+      $users->addEntity($user);
+    }
+
+    return $users;
   }
 }

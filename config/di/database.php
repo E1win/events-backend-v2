@@ -2,6 +2,11 @@
 
 $databaseConfig = require __DIR__ . '/../database.php';
 
+use App\Model\Mapper\Event;
+use App\Model\Mapper\EventCollection;
+use App\Model\Mapper\ParticipantCollection;
+use App\Model\Mapper\User;
+
 return [
   PDO::class => [
     sprintf(
@@ -13,17 +18,21 @@ return [
     $databaseConfig['user'],
     $databaseConfig['password']
   ],
-  App\Model\Mapper\Event::class => [
+  Event::class => [
     PDO::class,
     'events'
   ],
-  App\Model\Mapper\EventCollection::class => [
+  EventCollection::class => [
     PDO::class,
     'events'
   ],
-  App\Model\Mapper\ParticipantCollection::class => [
+  ParticipantCollection::class => [
     PDO::class,
     'participants'
+  ],
+  User::class => [
+    PDO::class,
+    'users'
   ],
 ];
 

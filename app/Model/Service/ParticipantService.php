@@ -10,14 +10,14 @@ class ParticipantService
     private ParticipantCollectionMapper $mapper,
   ) { }
 
-  public function getParticipantsByEventId(int $id)
+  public function getParticipantsByEventId(int $id): ParticipantCollection
   {
-    $collection = new ParticipantCollection();
+    $participants = new ParticipantCollection();
 
-    $collection->forEventId($id);
+    $participants->forEventId($id);
 
-    $this->mapper->fetch($collection);
+    $this->mapper->fetch($participants);
 
-    return $collection;
+    return $participants;
   }
 }
