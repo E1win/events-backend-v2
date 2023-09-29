@@ -38,4 +38,14 @@ class EventController extends Controller
     
     return $this->responseFactory->createHtmlResponse(200, $html);
   }
+
+  public function store(ServerRequestInterface $request): ResponseInterface
+  {
+    echo '<pre>';
+    var_dump($request->getUploadedFiles());
+    echo '</pre>';
+
+    return $this->responseFactory->createHtmlResponse(200, '');
+    // . . .
+  }
 }

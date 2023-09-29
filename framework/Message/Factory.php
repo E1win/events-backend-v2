@@ -50,7 +50,7 @@ class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterf
       '1.1',
       $method, 
       $uri,
-      $this->createHeaders($serverParams),
+      $this->createServerRequestHeaders($serverParams),
       null,
       $serverParams,
     );
@@ -69,6 +69,8 @@ class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterf
     $uploadedFiles ??= $_FILES;
     $parsedBody ??= $_POST;
 
+    
+
     $body = new InputStream();
 
     if (!empty($_POST)) {
@@ -84,12 +86,12 @@ class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterf
       '1.1',
       strtoupper($serverParams['REQUEST_METHOD']) ?? 'GET',
       $serverParams['REQUEST_URI'] ?? '/',
-      $this->createHeaders($serverParams),
+      $this->createServerRequestHeaders($serverParams),
       $body,
       $serverParams,
       $queryParams,
       $cookieParams,
-      $uploadedFiles,
+      $this->createServerRequestFiles($uploadedFiles),
       $parsedBody,
     );
   }
@@ -137,7 +139,7 @@ class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterf
     );
   }
 
-  private function createHeaders(array|null $serverParams = null): array {
+  private function createServerRequestHeaders(array|null $serverParams = null): array {
     $serverParams ??= $_SERVER;
 
     if (!isset($serverParams['HTTP_CONTENT_LENGTH']) && isset($serverParams['CONTENT_LENGTH'])) {
@@ -159,5 +161,27 @@ class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterf
     }
 
     return $headers;
+  }
+
+  private function createServerRequestFiles(?array $files = null): array
+  {
+    $files ??= $_FILES;
+    
+    $results = [];
+    foreach ($files as $key => $file) {
+      if ($file['error'] == UPLOAD_ERR_OK) {
+        $stream = $this->createStreamFromFile($file['tmp_name']);
+
+        $results[] = $this->createUploadedFile(
+          $stream,
+          $file['size'],
+          $file['error'],
+          $file['name'],
+          $file['type'],
+        );
+      }
+    }
+
+    return $results;
   }
 }

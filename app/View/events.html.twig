@@ -6,7 +6,20 @@
   <title>Events</title>
 </head>
 <body>
-  <h1>Events:</h1>
+  <h1>Create Event</h1>
+  <form method="post" enctype="multipart/form-data">  
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name">
+    <br>
+    <br>
+    <label for="name">Image</label>
+    <input type="file" id="image" name="image">
+    <br>
+    <br>
+
+    <input type="submit" value="Create event">
+  </form>
+  <h1>Events</h1>
   {% for event in events %}
     <div>
       <h2>{{event.id}}: {{event.name}}</h2>
