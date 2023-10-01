@@ -24,7 +24,7 @@ class Event extends DataMapper
 
   public function store(EntityEvent $event)
   {
-    $sql = "INSERT INTO {$this->table} (name, created_on) VALUES (:name, :timestamp)";
+    $sql = "INSERT INTO {$this->table} (name, created_on, image_id) VALUES (:name, :timestamp, :image_id)";
     
     $statement = $this->connection->prepare($sql);
 
@@ -32,6 +32,7 @@ class Event extends DataMapper
 
     $statement->bindValue(':name', $event->getName(), PDO::PARAM_STR);
     $statement->bindValue(':timestamp', $timestamp, PDO::PARAM_STR);
+    $statement->bindValue(':image_id', $event->getImageId(), PDO::PARAM_INT);
     $statement->execute();
 
     $event->setId($this->connection->lastInsertId());

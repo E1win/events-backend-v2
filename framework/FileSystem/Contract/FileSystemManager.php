@@ -7,5 +7,5 @@ interface FileSystemManager
 {
   public function upload(UploadedFileInterface $file, string $fileName, string $directory = "");
 
-  public function retrieve($path): UploadedFileInterface;
+  public function load($path): UploadedFileInterface;
 }

@@ -21,7 +21,7 @@ class ImageService
 
     $path = $image->getId() . '.' . $image->getFileExtension();
 
-    $file = $this->fileSystemManager->retrieve($path);
+    $file = $this->fileSystemManager->load($path);
 
     return $file;
   }
@@ -34,8 +34,6 @@ class ImageService
     $image->setFileExtension($file->getClientMediaType());
 
     $this->mapper->store($image);
-
-    var_dump($image);
 
     $this->fileSystemManager->upload($file, $image->getId(), 'images/');
 

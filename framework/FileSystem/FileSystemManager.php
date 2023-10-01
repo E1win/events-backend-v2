@@ -39,7 +39,7 @@ class FileSystemManager implements ContractFileSystemManager
     $file->moveTo($path);
   }
 
-  public function retrieve($path): UploadedFileInterface
+  public function load($path): UploadedFileInterface
   {
     return new UploadedFile(new Stream('t'));
   }

@@ -42,7 +42,9 @@ class EventController extends Controller
   public function store(ServerRequestInterface $request): ResponseInterface
   {
     /**
-     * TODO: Function to verify form data
+     * TODO: Function to verify form data.
+     * Maybe also function to verify/retrieve images
+     * Probably avoid logic in Controllers
      */
 
     $body = $request->getParsedBody();
