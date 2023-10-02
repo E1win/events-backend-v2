@@ -2,6 +2,7 @@
 namespace App\Http\Controller\Web;
 
 use App\Model\Service\EventService;
+use App\Model\Service\ImageService;
 use Framework\Controller\Controller;
 use Framework\Message\Contract\HtmlResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -12,6 +13,7 @@ class EventController extends Controller
 {
   public function __construct(
     private EventService $eventService,
+    private ImageService $imageService,
     private Environment $view,
     private HtmlResponseFactoryInterface $responseFactory,
   ) {}
@@ -32,8 +34,16 @@ class EventController extends Controller
   {
     $event = $this->eventService->getEventById($id);
 
+    if ($event->getImageId() != null) {
+      $image = $this->imageService->loadBase64EncodedImageById($event->getImageId());
+    }
+
+    echo $image;
+    echo '<br>';
+
     $html = $this->view->render('event.html.twig', [
       'event' => $event,
+      'image' => $image
     ]);
     
     return $this->responseFactory->createHtmlResponse(200, $html);

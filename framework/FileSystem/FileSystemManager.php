@@ -5,6 +5,8 @@ use Dotenv\Exception\InvalidFileException;
 use Framework\FileSystem\Contract\FileSystemManager as ContractFileSystemManager;
 use Framework\Message\Stream;
 use Framework\Message\UploadedFile;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
 /**
@@ -14,18 +16,20 @@ class FileSystemManager implements ContractFileSystemManager
 {
   private string $storageDir = '';
   private array $allowedFileExtensions = [];
+  private StreamFactoryInterface $streamFactory;
 
-  // public function __construct()
-  // {
-    
-  // }
+  public function __construct(StreamFactoryInterface $streamFactory) {
+    $this->streamFactory = $streamFactory;
 
-  public function upload(UploadedFileInterface $file, string $fileName, string $directory = "")
-  {
     $config = config('filesystem.php');
 
     $this->storageDir = $config['directory'];
     $this->allowedFileExtensions = $config['allowed_file_extensions'];
+  }
+
+  public function upload(UploadedFileInterface $file, string $fileName, string $directory = "")
+  {
+    
 
     if (!key_exists($file->getClientMediaType(), $this->allowedFileExtensions)) {
       throw new InvalidFileException("File extension '{$file->getClientMediaType()}' not allowed");
@@ -39,8 +43,11 @@ class FileSystemManager implements ContractFileSystemManager
     $file->moveTo($path);
   }
 
-  public function load($path): UploadedFileInterface
+  public function load(string $fileName, string $fileExtension, string $directory = ""): StreamInterface
   {
-    return new UploadedFile(new Stream('t'));
+    $fileExtension = $this->allowedFileExtensions[$fileExtension];
+    $path = $this->storageDir . $directory . $fileName . ".". $fileExtension;
+    $stream = $this->streamFactory->createStreamFromFile($path);
+    return $stream;
   }
 }

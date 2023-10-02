@@ -6,11 +6,17 @@
 
 use Framework\FileSystem\Contract\FileSystemManager as ContractFileSystemManager;
 use Framework\FileSystem\FileSystemManager;
+use Framework\Message\Contract\HtmlResponseFactoryInterface;
+use Framework\Message\Contract\JsonResponseFactoryInterface;
+use Framework\Message\Factory;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 return [
   Framework\Middleware\Contract\MiddlewareStackInterface::class => Framework\Middleware\MiddlewareStack::class,
-  Psr\Http\Message\ResponseFactoryInterface::class => Framework\Message\Factory::class,
-  Framework\Message\Contract\JsonResponseFactoryInterface::class => Framework\Message\Factory::class,
-  Framework\Message\Contract\HtmlResponseFactoryInterface::class => Framework\Message\Factory::class,
+  ResponseFactoryInterface::class => Factory::class,
+  JsonResponseFactoryInterface::class => Factory::class,
+  HtmlResponseFactoryInterface::class => Factory::class,
+  StreamFactoryInterface::class => Factory::class,
   ContractFileSystemManager::class => FileSystemManager::class,
 ];

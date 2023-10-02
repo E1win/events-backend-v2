@@ -8,22 +8,28 @@ use Psr\Http\Message\UploadedFileInterface;
 
 class ImageService
 {
+  private string $imagesDir = "images/";
+
   public function __construct(
     private ImageMapper $mapper,
     private FileSystemManager $fileSystemManager
   ) { }
 
-  public function getImageById(int $id): UploadedFileInterface
+  public function loadBase64EncodedImageById(int $id): string
   {
     $image = new Image($id);
 
     $this->mapper->fetch($image);
 
-    $path = $image->getId() . '.' . $image->getFileExtension();
+    $fileStream = $this->fileSystemManager->load($image->getId(), $image->getFileExtension(), $this->imagesDir);
 
-    $file = $this->fileSystemManager->load($path);
+    $imageData = $fileStream->getContents();
 
-    return $file;
+    $base64Data = base64_encode($imageData);
+
+    $imageSource = "data:{$image->getFileExtension()};base64,{$base64Data}";
+
+    return $imageSource;
   }
 
   public function uploadImage(UploadedFileInterface $file): Image
@@ -35,7 +41,7 @@ class ImageService
 
     $this->mapper->store($image);
 
-    $this->fileSystemManager->upload($file, $image->getId(), 'images/');
+    $this->fileSystemManager->upload($file, $image->getId(), $this->imagesDir);
 
     return $image;
   }
