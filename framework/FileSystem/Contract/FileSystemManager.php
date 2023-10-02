@@ -8,5 +8,5 @@ interface FileSystemManager
 {
   public function upload(UploadedFileInterface $file, string $fileName, string $directory = "");
 
-  public function load(string $fileName, string $fileExtension, string $directory = ""): StreamInterface;
+  public function load(string $fileName, string $fileMediaType, string $directory = ""): StreamInterface;
 }

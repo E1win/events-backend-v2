@@ -18,7 +18,8 @@ class FileSystemManager implements ContractFileSystemManager
   private array $allowedFileExtensions = [];
   private StreamFactoryInterface $streamFactory;
 
-  public function __construct(StreamFactoryInterface $streamFactory) {
+  public function __construct(StreamFactoryInterface $streamFactory) 
+  {
     $this->streamFactory = $streamFactory;
 
     $config = config('filesystem.php');
@@ -37,8 +38,8 @@ class FileSystemManager implements ContractFileSystemManager
   public function load(string $fileName, string $fileMediaType, string $directory = ""): StreamInterface
   {
     $path = $this->formatPath($fileName, $fileMediaType, $directory);
-    $stream = $this->streamFactory->createStreamFromFile($path);
-    return $stream;
+    
+    return $this->streamFactory->createStreamFromFile($path);
   }
 
   private function formatPath(string $fileName, string $fileMediaType, string $directory = ""): string

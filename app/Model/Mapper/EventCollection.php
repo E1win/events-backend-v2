@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Mapper;
 
-use App\Model\Entity\Event as EntityEvent;
 use App\Model\Entity\EventCollection as EntityEventCollection;
 use Framework\Model\Mapper\DataMapper;
 use PDO;
