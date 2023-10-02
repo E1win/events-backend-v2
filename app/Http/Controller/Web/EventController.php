@@ -38,9 +38,6 @@ class EventController extends Controller
       $image = $this->imageService->loadBase64EncodedImageById($event->getImageId());
     }
 
-    echo $image;
-    echo '<br>';
-
     $html = $this->view->render('event.html.twig', [
       'event' => $event,
       'image' => $image

@@ -29,25 +29,27 @@ class FileSystemManager implements ContractFileSystemManager
 
   public function upload(UploadedFileInterface $file, string $fileName, string $directory = "")
   {
-    
-
-    if (!key_exists($file->getClientMediaType(), $this->allowedFileExtensions)) {
-      throw new InvalidFileException("File extension '{$file->getClientMediaType()}' not allowed");
-    }
-
-    $fileExtension = $this->allowedFileExtensions[$file->getClientMediaType()];
-
-    $path = $this->storageDir . $directory . $fileName . "." . $fileExtension;
-
+    $path = $this->formatPath($fileName, $file->getClientMediaType(), $directory);
 
     $file->moveTo($path);
   }
 
-  public function load(string $fileName, string $fileExtension, string $directory = ""): StreamInterface
+  public function load(string $fileName, string $fileMediaType, string $directory = ""): StreamInterface
   {
-    $fileExtension = $this->allowedFileExtensions[$fileExtension];
-    $path = $this->storageDir . $directory . $fileName . ".". $fileExtension;
+    $path = $this->formatPath($fileName, $fileMediaType, $directory);
     $stream = $this->streamFactory->createStreamFromFile($path);
     return $stream;
+  }
+
+  private function formatPath(string $fileName, string $fileMediaType, string $directory = ""): string
+  {
+    if (!key_exists($fileMediaType, $this->allowedFileExtensions)) {
+      throw new InvalidFileException("File extension '{$fileMediaType}' not allowed");
+    }
+
+    $fileExtension = $this->allowedFileExtensions[$fileMediaType];
+    $path = $this->storageDir . $directory . $fileName . ".". $fileExtension;
+
+    return $path;
   }
 }
