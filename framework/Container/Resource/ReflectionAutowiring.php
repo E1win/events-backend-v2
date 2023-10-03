@@ -34,6 +34,8 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
 
     $parameters = $this->getResourceParameters($constructor);
 
+    // TODO: Fix error when constructer exists
+    // but has no parameters
     if ($parameters == null) {
       throw new ContainerException("Can't resolve parameters of class '{$name}' in Container");
     }
