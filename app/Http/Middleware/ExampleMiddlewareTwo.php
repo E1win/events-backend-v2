@@ -11,8 +11,6 @@ class ExampleMiddlewareTwo implements MiddlewareInterface {
   {
     $response = $handler->handle($request);
 
-    echo '<br>In ExampleMiddlewareTwo<br>';
-
     return $response;
   }
 }

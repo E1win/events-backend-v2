@@ -11,6 +11,7 @@ namespace App\Model\Service;
  */
 
 use App\Model\Entity\User;
+use App\Model\Exception\UserNotFoundException;
 use App\Model\Mapper\User as UserMapper;
 
 class UserService
@@ -35,6 +36,10 @@ class UserService
     $user->setEmail($email);
 
     $this->mapper->fetch($user);
+
+    if ($user->getId() === null) {
+      throw new UserNotFoundException();
+    }
 
     return $user;
   }

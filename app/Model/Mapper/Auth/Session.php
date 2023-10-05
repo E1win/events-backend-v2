@@ -71,8 +71,6 @@ class Session extends DataMapper
 
     $data = $statement->fetch();
 
-    var_dump($data);
-
     if ($data) {
       $this->applyValues($session, $data);
     }
