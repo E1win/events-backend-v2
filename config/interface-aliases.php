@@ -8,6 +8,7 @@ use Framework\FileSystem\Contract\FileSystemManager as ContractFileSystemManager
 use Framework\FileSystem\FileSystemManager;
 use Framework\Message\Contract\HtmlResponseFactoryInterface;
 use Framework\Message\Contract\JsonResponseFactoryInterface;
+use Framework\Message\Contract\RedirectResponseFactoryInterface;
 use Framework\Message\Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -17,6 +18,7 @@ return [
   ResponseFactoryInterface::class => Factory::class,
   JsonResponseFactoryInterface::class => Factory::class,
   HtmlResponseFactoryInterface::class => Factory::class,
+  RedirectResponseFactoryInterface::class => Factory::class,
   StreamFactoryInterface::class => Factory::class,
   ContractFileSystemManager::class => FileSystemManager::class,
 ];

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Middleware;
 
+use App\Exception\UnauthenticatedException;
 use App\Model\Entity\User;
 use App\Model\Service\Auth\AuthService;
 use App\Model\Service\Auth\SessionService;
@@ -20,31 +21,25 @@ class AuthMiddleware implements MiddlewareInterface
 
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
   {
-    // Does Session-Uuid exist in header?
     if ($this->sessionService->sessionExistsInRequest($request)) {
       $sessionUuid = $this->sessionService->getSessionUuidFromRequest($request);
 
       $session = $this->sessionService->getSessionByUuid($sessionUuid);
 
       $user = $this->authService->loginWithSession($session);
-      // use SessionService to get session by uuid
-  
-      // $user = AuthService->loginWithSession(session)
-  
-      // add user to request
-  
-      // $request = $this->addUserToRequest($request, $user);
 
-      // if session does not exist, or invalid: 
+      // if session does not exist, or invalid:
       // maybe redirect to /login probably
       return $handler->handle($request->withAttribute('user', $user));
     }
 
-    throw new ValidationException('Not authorized.');
+    throw new UnauthenticatedException();
   }
 
-  private function addUserToRequest(ServerRequestInterface $request): ServerRequestInterface
+  public function requestToApiRoute(ServerRequestInterface $request): bool
   {
-    return $request;
+    var_dump($request);
+
+    return false;
   }
 }
