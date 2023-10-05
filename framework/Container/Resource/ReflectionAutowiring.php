@@ -64,7 +64,6 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
       $dependency = class_exists($parameter->getType()) || interface_exists($parameter->getType()) ? $parameter->getType() : null;
 
       if ($dependency === null) {
-        echo "dependency {$parameter->getName()} === null";
         // Check if default value for a parameter is available
         if ($parameter->isDefaultValueAvailable()) {
           $parameters[$index] = $parameter->getDefaultValue();

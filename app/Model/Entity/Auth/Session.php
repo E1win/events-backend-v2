@@ -53,6 +53,9 @@ class Session extends Entity
 
   public function isExpired(): bool
   {
+    echo time();
+    echo '<br>';
+    echo $this->expiresOn;
     return time() > $this->expiresOn;
   }
 }

@@ -2,6 +2,7 @@
 
 $databaseConfig = require __DIR__ . '/../database.php';
 
+use App\Model\Mapper\Auth\Session;
 use App\Model\Mapper\Event;
 use App\Model\Mapper\EventCollection;
 use App\Model\Mapper\Image;
@@ -38,6 +39,10 @@ return [
   Image::class => [
     PDO::class,
     'images'
+  ],
+  Session::class => [
+    PDO::class,
+    'sessions'
   ]
 ];
 

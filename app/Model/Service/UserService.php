@@ -27,4 +27,15 @@ class UserService
 
     return $user;
   }
+
+  public function getUserByEmail(string $email): User
+  {
+    $user = new User;
+
+    $user->setEmail($email);
+
+    $this->mapper->fetch($user);
+
+    return $user;
+  }
 }

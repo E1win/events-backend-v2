@@ -64,6 +64,29 @@ class SessionService
     );
   }
 
+  public function removeSessionByUuid(string $uuid)
+  {
+    $session = new Session;
+
+    $session->setSessionUuid($uuid);
+
+    $this->mapper->remove($session);
+
+    $this->unsetSessionCookie();
+  }
+
+  private function unsetSessionCookie()
+  {
+    setcookie(
+      $this->sessionCookieName,
+      "",
+      array(
+        'expires' => 404,
+        'httponly' => true,
+      )
+    );
+  }
+
   public function sessionExistsInRequest(ServerRequestInterface $request): bool
   {
     $cookies = $request->getCookieParams();
@@ -75,6 +98,7 @@ class SessionService
   {
     return $request->getCookieParams()[$this->sessionCookieName];
   }
+
 
   private function generateUuid(): string
   {

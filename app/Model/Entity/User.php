@@ -6,8 +6,8 @@ use Framework\Model\Entity\Entity;
 class User extends Entity
 {
   protected ?int $id;
-  protected string $name;
-  protected string $email;
+  protected ?string $name = null;
+  protected ?string $email = null;
 
   public function __construct(?int $id = null)
   {
@@ -19,7 +19,7 @@ class User extends Entity
     $this->id = $id;
   }
 
-  public function getId(): int
+  public function getId()
   {
     return $this->id;
   }
@@ -29,7 +29,7 @@ class User extends Entity
     $this->name = $name;
   }
 
-  public function getName(): string
+  public function getName()
   {
     return $this->name;
   }
@@ -39,8 +39,13 @@ class User extends Entity
     $this->email = $email;
   }
 
-  public function getEmail(): string
+  public function getEmail()
   {
     return $this->email;
+  }
+
+  public function matchPassword(string $password): bool
+  {
+    return true;
   }
 }
