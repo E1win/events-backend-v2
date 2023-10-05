@@ -3,6 +3,7 @@ namespace Framework\Message;
 
 use Framework\Message\Contract\HtmlResponseFactoryInterface;
 use Framework\Message\Contract\JsonResponseFactoryInterface;
+use Framework\Message\Contract\RedirectResponseFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
@@ -15,6 +16,7 @@ use Psr\Http\Message\StreamInterface;
 use Framework\Message\Response;
 use Framework\Message\Response\HtmlResponse;
 use Framework\Message\Response\JsonResponse;
+use Framework\Message\Response\RedirectResponse;
 use Framework\Message\Uri;
 use Framework\Message\ServerRequest;
 use Framework\Message\Stream\FileStream;
@@ -22,8 +24,13 @@ use Framework\Message\Stream\InputStream;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
-class Factory implements HtmlResponseFactoryInterface, JsonResponseFactoryInterface, ResponseFactoryInterface, ServerRequestFactoryInterface, UriFactoryInterface, StreamFactoryInterface, UploadedFileFactoryInterface 
+class Factory implements RedirectResponseFactoryInterface, HtmlResponseFactoryInterface, JsonResponseFactoryInterface, ResponseFactoryInterface, ServerRequestFactoryInterface, UriFactoryInterface, StreamFactoryInterface, UploadedFileFactoryInterface 
 {
+  public function createRedirectResponse(string $url, int $statusCode = 302, array $headers = []): ResponseInterface
+  {
+    return new RedirectResponse($url, $statusCode, $headers);
+  }
+
   public function createJsonResponse(mixed $data = [], int $status = 200): ResponseInterface
   {
     return new JsonResponse($status, $data);
