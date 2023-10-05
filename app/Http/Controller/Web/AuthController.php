@@ -40,6 +40,13 @@ class AuthController extends Controller
     return $this->redirectResponseFactory->createRedirectResponse("/auth");
   }
 
+  public function logout(ServerRequestInterface $request): ResponseInterface
+  {
+    $this->authService->logout(/* */);
+
+    return $this->redirectResponseFactory->createRedirectResponse("/login");
+  }
+
   public function authRoute(ServerRequestInterface $request): ResponseInterface
   {
     $user = $request->getAttribute('user');

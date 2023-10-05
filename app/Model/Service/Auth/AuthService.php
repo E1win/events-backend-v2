@@ -45,6 +45,9 @@ class AuthService
     return $user;
   }
 
+  /**
+   * TODO: This needs to be by user instead of session
+   */
   public function logout(Session $session)
   {
     $this->sessionService->removeSessionByUuid($session->getSessionUuid());
@@ -58,5 +61,4 @@ class AuthService
     // . . .
   }
 
-  
 }
