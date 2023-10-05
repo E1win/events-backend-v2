@@ -6,6 +6,7 @@ use Framework\Controller\Controller;
 use Framework\Message\Contract\HtmlResponseFactoryInterface;
 use Framework\Message\Contract\RedirectResponseFactoryInterface;
 use Framework\Message\ServerRequest;
+use Framework\View\Contract\ViewRenderer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Twig\Environment;
@@ -14,16 +15,13 @@ class AuthController extends Controller
 {
   public function __construct(
     private AuthService $authService,
-    private Environment $view,
-    private HtmlResponseFactoryInterface $responseFactory,
+    private ViewRenderer $view,
     private RedirectResponseFactoryInterface $redirectResponseFactory,
   ) {}
 
   public function showLogin(ServerRequestInterface $request): ResponseInterface
   {
-    $html = $this->view->render('login.html.twig');
-    
-    return $this->responseFactory->createHtmlResponse(200, $html);
+    return $this->view->load('login.html.twig');
   }
 
   public function login(ServerRequestInterface $request): ResponseInterface
@@ -42,7 +40,7 @@ class AuthController extends Controller
 
   public function logout(ServerRequestInterface $request): ResponseInterface
   {
-    $this->authService->logout(/* */);
+    // $this->authService->logout(/* */);
 
     return $this->redirectResponseFactory->createRedirectResponse("/login");
   }
@@ -51,10 +49,8 @@ class AuthController extends Controller
   {
     $user = $request->getAttribute('user');
 
-    $html = $this->view->render('auth.html.twig', [
+    return $this->view->load('auth.html.twig', [
       'user' => $user,
     ]);
-    
-    return $this->responseFactory->createHtmlResponse(200, $html);
   }
 }

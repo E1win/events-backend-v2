@@ -4,30 +4,25 @@ namespace App\Http\Controller\Web;
 use App\Model\Service\EventService;
 use App\Model\Service\ImageService;
 use Framework\Controller\Controller;
-use Framework\Message\Contract\HtmlResponseFactoryInterface;
+use Framework\View\Contract\ViewRenderer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Twig\Environment;
 
 class EventController extends Controller
 {
   public function __construct(
     private EventService $eventService,
     private ImageService $imageService,
-    private Environment $view,
-    private HtmlResponseFactoryInterface $responseFactory,
+    private ViewRenderer $view,
   ) {}
 
   public function index(ServerRequestInterface $request): ResponseInterface
   {
     $events = $this->eventService->getAllEvents();
 
-
-    $html = $this->view->render('events.html.twig', [
+    return $this->view->load('events.html.twig', [
       'events' => $events->toArray(),
     ]);
-
-    return $this->responseFactory->createHtmlResponse(200, $html);
   }
 
   public function show(ServerRequestInterface $request, int $id): ResponseInterface
@@ -38,12 +33,10 @@ class EventController extends Controller
       $image = $this->imageService->loadBase64EncodedImageById($event->getImageId());
     }
 
-    $html = $this->view->render('event.html.twig', [
+    return $this->view->load('event.html.twig', [
       'event' => $event,
       'image' => $image
     ]);
-    
-    return $this->responseFactory->createHtmlResponse(200, $html);
   }
 
   public function store(ServerRequestInterface $request): ResponseInterface
@@ -65,6 +58,6 @@ class EventController extends Controller
 
     $event = $this->eventService->createEvent($body['name'], $image);
 
-    return $this->responseFactory->createHtmlResponse(200, '');
+    return $this->view->load('events.html.twig');
   }
 }

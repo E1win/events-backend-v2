@@ -10,6 +10,8 @@ use Framework\Message\Contract\HtmlResponseFactoryInterface;
 use Framework\Message\Contract\JsonResponseFactoryInterface;
 use Framework\Message\Contract\RedirectResponseFactoryInterface;
 use Framework\Message\Factory;
+use Framework\View\Contract\ViewRenderer as ContractViewRenderer;
+use Framework\View\ViewRenderer;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -21,4 +23,5 @@ return [
   RedirectResponseFactoryInterface::class => Factory::class,
   StreamFactoryInterface::class => Factory::class,
   ContractFileSystemManager::class => FileSystemManager::class,
+  ContractViewRenderer::class => ViewRenderer::class,
 ];
