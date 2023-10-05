@@ -5,5 +5,5 @@
  */
 
 return [
-  Framework\Middleware\ExceptionMiddleware::class,
+  Framework\Exception\ExceptionMiddleware::class,
 ];

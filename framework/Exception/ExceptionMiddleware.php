@@ -1,5 +1,5 @@
 <?php
-namespace Framework\Middleware;
+namespace Framework\Exception;
 
 use Framework\Message\Contract\HtmlResponseFactoryInterface;
 use Framework\Message\Contract\JsonResponseFactoryInterface;
@@ -27,9 +27,9 @@ class ExceptionMiddleware implements MiddlewareInterface
       return $handler->handle($request);
     } catch (\Throwable $error) {
       // todo: Get better way to add debug information
-      if ($_ENV['APP_DEBUG'] == "true") {
-        throw $error;
-      }
+      // if ($_ENV['APP_DEBUG'] == "true") {
+      //   throw $error;
+      // }
 
       return $this->generateResponse($request, $error);
     }
@@ -37,12 +37,16 @@ class ExceptionMiddleware implements MiddlewareInterface
 
   private function generateResponse(ServerRequestInterface $request, Throwable $error): ResponseInterface
   {
-    $response = $this->jsonResponseFactory->createJsonResponse($error->getMessage(), $error->getCode());
+    $statusCode = $error->getCode() ?? 500;
+
+    $response = $this->jsonResponseFactory->createJsonResponse($error->getMessage(), $statusCode);
     
     $accept = $request->getHeaderLine('Accept');
 
     if (!array_key_exists($accept, self::CONTENT_TYPE_CONVERSION)) {
       return $response;
+    } else {
+      echo 'valid type';
     }
 
     return $response->withAddedHeader(

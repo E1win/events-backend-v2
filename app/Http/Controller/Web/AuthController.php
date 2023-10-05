@@ -4,6 +4,7 @@ namespace App\Http\Controller\Web;
 use App\Model\Service\Auth\AuthService;
 use Framework\Controller\Controller;
 use Framework\Message\Contract\HtmlResponseFactoryInterface;
+use Framework\Message\Contract\RedirectResponseFactoryInterface;
 use Framework\Message\ServerRequest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,6 +16,7 @@ class AuthController extends Controller
     private AuthService $authService,
     private Environment $view,
     private HtmlResponseFactoryInterface $responseFactory,
+    private RedirectResponseFactoryInterface $redirectResponseFactory,
   ) {}
 
   public function showLogin(ServerRequestInterface $request): ResponseInterface
@@ -35,11 +37,7 @@ class AuthController extends Controller
 
     $user = $this->authService->loginWithEmailAndPassword($email, $password);
 
-    $html = $this->view->render('auth.html.twig', [
-      'user' => $user,
-    ]);
-    
-    return $this->responseFactory->createHtmlResponse(200, $html);
+    return $this->redirectResponseFactory->createRedirectResponse("/auth");
   }
 
   public function authRoute(ServerRequestInterface $request): ResponseInterface
