@@ -37,7 +37,7 @@ class ExceptionMiddleware implements MiddlewareInterface
 
   private function generateResponse(ServerRequestInterface $request, Throwable $error): ResponseInterface
   {
-    $statusCode = $error->getCode() ?? 500;
+    $statusCode =  $error->getCode() === 0 ? 500 : $error->getCode();
 
     $response = $this->jsonResponseFactory->createJsonResponse($error->getMessage(), $statusCode);
     
