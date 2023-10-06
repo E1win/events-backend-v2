@@ -6,8 +6,11 @@ use Framework\Model\Entity\Entity;
 class User extends Entity
 {
   protected ?int $id;
-  protected ?string $name = null;
   protected ?string $email = null;
+  protected ?string $password = null;
+
+  protected ?string $sessionUuid = null;
+  protected ?int $expiresOn = null;
 
   public function __construct(?int $id = null)
   {
@@ -24,16 +27,6 @@ class User extends Entity
     return $this->id;
   }
 
-  public function setName(string $name)
-  {
-    $this->name = $name;
-  }
-
-  public function getName()
-  {
-    return $this->name;
-  }
-
   public function setEmail(string $email)
   {
     $this->email = $email;
@@ -44,8 +37,43 @@ class User extends Entity
     return $this->email;
   }
 
+  public function setPassword(string $password)
+  {
+    $this->password = $password;
+  }
+
+  public function getPassword()
+  {
+    return $this->password;
+  }
+
   public function matchPassword(string $password): bool
   {
     return true;
+  }
+
+  public function setSessionUuid(string $sessionUuid)
+  {
+    $this->sessionUuid = $sessionUuid;
+  }
+
+  public function getSessionUuid()
+  {
+    return $this->sessionUuid;
+  }
+
+  public function setExpiresOn(int $expiresOn)
+  {
+    $this->expiresOn = $expiresOn;
+  }
+
+  public function getExpiresOn()
+  {
+    return $this->expiresOn;
+  }
+
+  public function isExpired(): bool
+  {
+    return time() > $this->expiresOn;
   }
 }

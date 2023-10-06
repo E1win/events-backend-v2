@@ -17,7 +17,8 @@ class ViewRenderer implements ContractViewRenderer
 
   public function load(string $url, array $context = [], ?ServerRequestInterface $request = null): ResponseInterface
   {
-    // Add others here like user.
+    // Add things like user to context here.
+    // and a view bools like loggedIn maybe.
 
     $html = $this->view->render($url, $context);
 
