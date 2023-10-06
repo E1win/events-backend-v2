@@ -72,7 +72,7 @@ class User extends Entity
     return $this->expiresOn;
   }
 
-  public function isExpired(): bool
+  public function isSessionExpired(): bool
   {
     return time() > $this->expiresOn;
   }

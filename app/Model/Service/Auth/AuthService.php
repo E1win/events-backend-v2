@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Service\Auth;
 
-use App\Model\Entity\Auth\Session;
 use App\Model\Entity\User;
 use App\Model\Exception\InvalidPasswordException;
 use App\Model\Exception\SessionExpiredException;
@@ -12,19 +11,18 @@ use App\Model\Service\UserService;
 class AuthService
 {
   public function __construct(
-    private SessionService $sessionService,
     private UserService $userService,
   ) { }
 
-  public function loginWithSession(Session $session): User
+  public function loginWithSessionUuid(string $sessionUuid): User
   {
-    if ($session->isExpired()) {
-      $this->sessionService->removeSessionByUuid($session->getSessionUuid());
+    $user = $this->userService->getUserBySessionUuid($sessionUuid);
 
+    if ($user->isSessionExpired()) {
       throw new SessionExpiredException();
     }
 
-    return $this->userService->getUserById($session->getUserId());
+    return $user;
   }
 
   public function loginWithEmailAndPassword(string $email, string $password): User
@@ -40,20 +38,18 @@ class AuthService
       throw new InvalidPasswordException();
     }
 
-    $this->sessionService->createSessionAndSetCookie($user->getId());
+    // Current session isn't expired yet, 
+    // probably logging in from different device.
+    if (! $user->isSessionExpired()) {
+      return $this->userService->updateSession($user);
+    }
 
-    return $user;
+    return $this->userService->createSession($user);
   }
 
-  /**
-   * TODO: This needs to be by user instead of session
-   */
-  public function logout(Session $session)
+  public function logout(User $user)
   {
-    $this->sessionService->removeSessionByUuid($session->getSessionUuid());
-    // delete session from database
-
-    // . . .
+    $this->userService->removeSession($user);
   }
 
   public function register()

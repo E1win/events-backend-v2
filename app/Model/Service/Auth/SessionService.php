@@ -81,7 +81,7 @@ class SessionService
       $this->sessionCookieName,
       "",
       array(
-        'expires' => 404,
+        'expires' => time() - 4400,
         'httponly' => true,
       )
     );

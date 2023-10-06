@@ -9,6 +9,15 @@ use App\Model\Mapper\Image;
 use App\Model\Mapper\ParticipantCollection;
 use App\Model\Mapper\User;
 
+/**
+ * TODO: Some mappers can also just find out their default
+ * class by getting their classname tolowercase - s
+ * so there's no need to put them in here.
+ * 
+ * set default value of tableName to null
+ * and if no name is set, get name like that
+ */
+
 return [
   PDO::class => [
     sprintf(
@@ -45,6 +54,7 @@ return [
     'sessions'
   ]
 ];
+
 
 
 // alternative to this:
