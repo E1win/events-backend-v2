@@ -40,13 +40,19 @@ class AuthController extends Controller
 
   public function logout(ServerRequestInterface $request): ResponseInterface
   {
-    // $this->authService->logout(/* */);
+    $user = $request->getAttribute('user');
+
+    $this->authService->logout($user);
 
     return $this->redirectResponseFactory->createRedirectResponse("/login");
   }
 
   public function authRoute(ServerRequestInterface $request): ResponseInterface
   {
+    /**
+     * TODO: Maybe just a getUser method on the request?
+     * returns null if no user is there
+     */
     $user = $request->getAttribute('user');
 
     return $this->view->load('auth.html.twig', [

@@ -13,10 +13,10 @@ $router->get('/events/{id:number}', [EventController::class, 'show']);
 
 $router->get('/login', [AuthController::class, 'showLogin']);
 $router->post('/login', [AuthController::class, 'login']);
-$router->post('/logout', [AuthController::class, 'logout']);
 
 $router->group('', function(Router $router) {
   $router->get('/auth', [AuthController::class, 'authRoute']);
+  $router->post('/logout', [AuthController::class, 'logout']);
 })->addMiddleware(AuthMiddleware::class);
 
 return $router;

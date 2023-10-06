@@ -9,11 +9,11 @@ class User extends DataMapper
 {
   public function fetch(UserEntity $entity)
   {
-    if (! is_null($entity->getEmail())) {
+    if ($entity->getEmail() !== null) {
       $this->fetchByEmail($entity);
-    } else if (! is_null($entity->getEmail())) {
+    } else if ($entity->getSessionUuid() !== null) {
       $this->fetchBySessionUuid($entity);
-    } else if (! is_null($entity->getId())) {
+    } else if ($entity->getId() !== null) {
       $this->fetchById($entity);
     }
   }
