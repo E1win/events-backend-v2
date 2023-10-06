@@ -20,8 +20,10 @@ modules used in this project are:
   - image_id
 - users
   - id
-  - name
   - email
+  - password
+  - session_uuid
+  - expires_on
 - participants (pivot table)
   - id
   - event_id
