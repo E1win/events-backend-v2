@@ -12,7 +12,10 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+# Opcache speeds up loads time significantly, might need to be setup
+RUN docker-php-ext-install mysqli pdo pdo_mysql opcache
+
+# Xdebug setup
 RUN pecl install xdebug; \
     docker-php-ext-enable xdebug \
     && echo "zend_extension=xdebug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
