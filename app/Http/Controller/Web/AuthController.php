@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controller\Web;
 
-use App\Model\Service\Auth\AuthService;
+use Framework\Auth\Model\Service\AuthService;
 use Framework\Controller\Controller;
 use Framework\Message\Contract\HtmlResponseFactoryInterface;
 use Framework\Message\Contract\RedirectResponseFactoryInterface;

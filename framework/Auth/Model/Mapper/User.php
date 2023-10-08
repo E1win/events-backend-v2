@@ -1,7 +1,7 @@
 <?php
-namespace App\Model\Mapper;
+namespace Framework\Auth\Model\Mapper;
 
-use App\Model\Entity\User as UserEntity;
+use Framework\Auth\Model\Entity\User as UserEntity;
 use Framework\Model\Mapper\DataMapper;
 use PDO;
 

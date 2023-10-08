@@ -3,11 +3,11 @@ namespace App\Model\Service;
 
 use App\Model\Entity\Event;
 use App\Model\Entity\EventCollection;
-use App\Model\Entity\ParticipantCollection;
-use App\Model\Entity\UserCollection;
 use App\Model\Mapper\Event as EventMapper;
 use App\Model\Mapper\EventCollection as EventCollectionMapper;
 use DateTimeImmutable;
+use Framework\Auth\Model\Entity\UserCollection;
+use Framework\Auth\Model\Service\UserService;
 use Psr\Http\Message\UploadedFileInterface;
 
 class EventService

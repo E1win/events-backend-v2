@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Service;
+namespace Framework\Auth\Model\Service;
 
 /**
  * Handles things like: 
@@ -10,10 +10,9 @@ namespace App\Model\Service;
  * does not handle: creating sessions
  */
 
-use App\Model\Entity\User;
-use App\Model\Exception\UserNotFoundException;
-use App\Model\Mapper\User as UserMapper;
-
+use Framework\Auth\Model\Entity\User;
+use Framework\Auth\Model\Mapper\User as UserMapper;
+use Framework\Auth\Exception\UserNotFoundException;
 use Ramsey\Uuid\Uuid;
 
 class UserService

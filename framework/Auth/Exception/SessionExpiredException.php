@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Exception;
+namespace Framework\Auth\Exception;
 
 use Exception;
 

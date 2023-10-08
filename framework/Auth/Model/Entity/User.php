@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Entity;
+namespace Framework\Auth\Model\Entity;
 
 use Framework\Model\Entity\Entity;
 

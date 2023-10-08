@@ -1,13 +1,9 @@
 <?php
-namespace App\Http\Middleware;
+namespace Framework\Auth\Middleware;
 
-use App\Exception\UnauthenticatedException;
-use App\Model\Entity\User;
-use App\Model\Service\Auth\AuthService;
-use App\Model\Service\Auth\SessionService;
-use App\Model\Service\UserService;
-use Dotenv\Exception\ValidationException;
-use Exception;
+use Framework\Auth\Model\Service\UserService;
+use Framework\Auth\Exception\UnauthenticatedException;
+use Framework\Auth\Model\Service\AuthService;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -17,7 +13,6 @@ class AuthMiddleware implements MiddlewareInterface
 {
   public function __construct(
     private AuthService $authService,
-    private SessionService $sessionService,
   ) { }
 
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

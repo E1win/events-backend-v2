@@ -1,12 +1,9 @@
 <?php
-namespace App\Model\Service\Auth;
+namespace Framework\Auth\Model\Service;
 
-use App\Model\Entity\User;
-use App\Model\Exception\InvalidPasswordException;
-use App\Model\Exception\SessionExpiredException;
-use App\Model\Service\UserService;
-
-// TODO: Maybe session data should be in user table
+use Framework\Auth\Model\Entity\User;
+use Framework\Auth\Exception\InvalidPasswordException;
+use Framework\Auth\Exception\SessionExpiredException;
 
 class AuthService
 {

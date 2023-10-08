@@ -3,7 +3,7 @@
 use App\Http\Controller\Web\AuthController;
 use Framework\Routing\Router;
 use App\Http\Controller\Web\EventController;
-use App\Http\Middleware\AuthMiddleware;
+use Framework\Auth\Middleware\AuthMiddleware;
 
 $router = Router::create();
 
