@@ -18,6 +18,13 @@ class AuthService
   {
     $user = $this->userService->getUserBySessionUuid($sessionUuid);
 
+    return $this->loginWithUser($user);
+  }
+
+  // Maybe for if user is already retrieved previously in
+  // UserMiddleware? 
+  public function loginWithUser(User $user): User
+  {
     if ($user->isSessionExpired()) {
       throw new SessionExpiredException();
     }
