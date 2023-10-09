@@ -7,7 +7,8 @@ use App\Model\Mapper\Event;
 use App\Model\Mapper\EventCollection;
 use App\Model\Mapper\Image;
 use App\Model\Mapper\ParticipantCollection;
-use App\Model\Mapper\User;
+
+use Framework\Auth\Model\Mapper\User;
 
 /**
  * TODO: Some mappers can also just find out their default

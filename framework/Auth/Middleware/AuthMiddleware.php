@@ -1,8 +1,8 @@
 <?php
 namespace Framework\Auth\Middleware;
 
-use Framework\Auth\Model\Service\UserService;
 use Framework\Auth\Exception\UnauthenticatedException;
+use Framework\Auth\Model\Entity\User;
 use Framework\Auth\Model\Service\AuthService;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -17,31 +17,21 @@ class AuthMiddleware implements MiddlewareInterface
 
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
   {
-    if ($this->sessionExistsInRequest($request)) {
-      $sessionUuid = $this->getSessionUuidFromRequest($request);
+    $user = $this->getUserFromRequest($request);
 
-      $user = $this->authService->loginWithSessionUuid($sessionUuid);
-
-      // if session does not exist, or invalid:
-      // maybe redirect to /login probably
-      return $handler->handle($request->withAttribute('user', $user));
+    if ($user === null) {
+      throw new UnauthenticatedException();
     }
 
-    throw new UnauthenticatedException();
+    $this->authService->loginWithUser($user);
+
+    return $handler->handle($request);
   }
 
-  private function sessionExistsInRequest(ServerRequestInterface $request): bool
+  private function getUserFromRequest(ServerRequestInterface $request): ?User
   {
-    $cookies = $request->getCookieParams();
-
-    return isset($cookies[UserService::SESSION_COOKIE_NAME]);
+    return $request->getAttribute('user');
   }
-
-  private function getSessionUuidFromRequest(ServerRequestInterface $request): string
-  {
-    return $request->getCookieParams()[UserService::SESSION_COOKIE_NAME];
-  }
-
 
   public function requestToApiRoute(ServerRequestInterface $request): bool
   {
