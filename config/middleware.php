@@ -4,10 +4,10 @@
  * Array of global middleware
  */
 
-use Framework\Auth\Middleware\UserMiddleware;
+use Framework\Auth\Middleware\UserInRequestMiddleware;
 use Framework\Exception\ExceptionMiddleware;
 
 return [
   ExceptionMiddleware::class,
-  UserMiddleware::class,
+  UserInRequestMiddleware::class,
 ];

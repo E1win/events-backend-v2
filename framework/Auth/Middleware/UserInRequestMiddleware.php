@@ -11,7 +11,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  * Adds user to request attributes,
  * if session uuid is in cookies.
  */
-class UserMiddleware implements MiddlewareInterface
+class UserInRequestMiddleware implements MiddlewareInterface
 {
   public function __construct(
     private UserService $userService,

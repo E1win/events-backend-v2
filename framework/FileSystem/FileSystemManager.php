@@ -1,7 +1,7 @@
 <?php
 namespace Framework\FileSystem;
 
-use Dotenv\Exception\InvalidFileException;
+use Exception;
 use Framework\FileSystem\Contract\FileSystemManager as ContractFileSystemManager;
 use Framework\Message\Stream;
 use Framework\Message\UploadedFile;
@@ -45,7 +45,7 @@ class FileSystemManager implements ContractFileSystemManager
   private function formatPath(string $fileName, string $fileMediaType, string $directory = ""): string
   {
     if (!key_exists($fileMediaType, $this->allowedFileExtensions)) {
-      throw new InvalidFileException("File extension '{$fileMediaType}' not allowed");
+      throw new Exception("File extension '{$fileMediaType}' not allowed");
     }
 
     $fileExtension = $this->allowedFileExtensions[$fileMediaType];
