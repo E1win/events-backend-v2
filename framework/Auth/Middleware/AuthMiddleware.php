@@ -32,11 +32,4 @@ class AuthMiddleware implements MiddlewareInterface
   {
     return $request->getAttribute('user');
   }
-
-  public function requestToApiRoute(ServerRequestInterface $request): bool
-  {
-    var_dump($request);
-
-    return false;
-  }
 }
