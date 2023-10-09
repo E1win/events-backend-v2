@@ -20,9 +20,6 @@ class ResourceResolver
       $resource,
     );
 
-    
-    $instance = $reflectionClass->newInstanceArgs($args);
-    
     return $reflectionClass->newInstanceArgs($args);
   }
 

@@ -13,10 +13,12 @@ use Psr\Http\Server\RequestHandlerInterface;
  * When on a page with a form, create CSRF token server-side and put it somewhere
  * in the page (in a form or something), then store it in the database (probably with user)
  * When a POST request is send, check if token sent matches with token in database
- * If it doesn't, it probably means request is compromised
+ * If it doesn't, it probably means request is compromised.
+ * 
+ * But that wouldn't work for people browsing multiple tabs
  */
 
-class CSRFMiddleware implements MiddlewareInterface
+class AntiCsrf implements MiddlewareInterface
 {
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
   {
