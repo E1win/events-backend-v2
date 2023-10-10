@@ -21,7 +21,7 @@ class AuthController extends Controller
 
   public function showLogin(ServerRequestInterface $request): ResponseInterface
   {
-    return $this->view->load('login.html.twig');
+    return $this->view->load('login.html');
   }
 
   public function login(ServerRequestInterface $request): ResponseInterface
@@ -55,8 +55,8 @@ class AuthController extends Controller
      */
     $user = $request->getAttribute('user');
 
-    return $this->view->load('auth.html.twig', [
+    return $this->view->load('auth.html', [
       'user' => $user,
-    ]);
+    ], $request);
   }
 }

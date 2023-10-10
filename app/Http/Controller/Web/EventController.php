@@ -20,7 +20,7 @@ class EventController extends Controller
   {
     $events = $this->eventService->getAllEvents();
 
-    return $this->view->load('events.html.twig', [
+    return $this->view->load('events.html', [
       'events' => $events->toArray(),
     ]);
   }
@@ -33,7 +33,7 @@ class EventController extends Controller
       $image = $this->imageService->loadBase64EncodedImageById($event->getImageId());
     }
 
-    return $this->view->load('event.html.twig', [
+    return $this->view->load('event.html', [
       'event' => $event,
       'image' => $image
     ]);
@@ -58,6 +58,6 @@ class EventController extends Controller
 
     $event = $this->eventService->createEvent($body['name'], $image);
 
-    return $this->view->load('events.html.twig');
+    return $this->view->load('events.html');
   }
 }
