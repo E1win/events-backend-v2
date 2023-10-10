@@ -58,15 +58,21 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
 
   private function getResourceParameters(\ReflectionMethod $constructor)
   {
-    $parameters = [];
+    $resourceParameters = [];
 
-    foreach ($constructor->getParameters() as $index => $parameter) {
+    $constructorParameters = $constructor->getParameters();
+
+    if (count($constructorParameters) === 0) {
+      return [];
+    }
+
+    foreach ($constructorParameters as $index => $parameter) {
       $dependency = class_exists($parameter->getType()) || interface_exists($parameter->getType()) ? $parameter->getType() : null;
 
       if ($dependency === null) {
         // Check if default value for a parameter is available
         if ($parameter->isDefaultValueAvailable()) {
-          $parameters[$index] = $parameter->getDefaultValue();
+          $resourceParameters[$index] = $parameter->getDefaultValue();
         } else {
           return null;
         }
@@ -74,14 +80,14 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
         if ($this->parent != null) {
           // TODO: First check here if dependency has primitive values.
           // To avoid unnecessarily going back up the chain.
-          $parameters[$index] = $this->parent->getResource($dependency->getName());
+          $resourceParameters[$index] = $this->parent->getResource($dependency->getName());
         } else {
-          $parameters[$index] = $this->getResource($dependency->getName());
+          $resourceParameters[$index] = $this->getResource($dependency->getName());
         }
       }
     }
 
-    return $parameters;
+    return $resourceParameters;
   }
 
   public function setParent(ContainerResourceCollectionInterface $parent)
