@@ -23,7 +23,7 @@ class EventService
   public function createEvent(string $name, ?UploadedFileInterface $image = null): Event
   {
     $event = new Event();
-    $event->setCreatedOn(new DateTimeImmutable);
+    $event->setDate(new DateTimeImmutable);
     $event->setName($name);
 
     if ($image !== null) {

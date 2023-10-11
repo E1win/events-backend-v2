@@ -8,13 +8,13 @@ use PDO;
 
 class Event extends DataMapper
 {
-  public function exists(EntityEvent $event)
+  public function exists(EntityEvent $entity)
   {
     $sql = "SELECT 1 FROM {$this->table} WHERE id = :id";
 
     $statement = $this->connection->prepare($sql);
 
-    $statement->bindValue(":id", $event->getId(), PDO::PARAM_INT);
+    $statement->bindValue(":id", $entity->getId(), PDO::PARAM_INT);
     $statement->execute();
 
     $data = $statement->fetch();
@@ -22,37 +22,42 @@ class Event extends DataMapper
     return empty($data) === false;
   }
 
-  public function store(EntityEvent $event)
+  public function store(EntityEvent $entity)
   {
-    $sql = "INSERT INTO {$this->table} (name, created_on, image_id) VALUES (:name, :timestamp, :image_id)";
+    $sql = "INSERT INTO {$this->table} 
+      (name, description, date, start_time, end_time, location, image_id, completed) VALUES 
+      (:name, :description, :date, :start_time, :end_time, :location, :image_id, :completed)";
     
     $statement = $this->connection->prepare($sql);
 
-    $timestamp = $event->getCreatedOn()->format('Y-m-d H:i:s');
-
-    $statement->bindValue(':name', $event->getName(), PDO::PARAM_STR);
-    $statement->bindValue(':timestamp', $timestamp, PDO::PARAM_STR);
-    $statement->bindValue(':image_id', $event->getImageId(), PDO::PARAM_INT);
+    $statement->bindValue(':name', $entity->getName());
+    $statement->bindValue(':description', $entity->getDescription());
+    $statement->bindValue(':date', $entity->getDate()->format('Y-m-d'));
+    $statement->bindValue(':start_time', $entity->getStartTime());
+    $statement->bindValue(':end_time', $entity->getEndTime());
+    $statement->bindValue(':location', $entity->getLocation());
+    $statement->bindValue(':image_id', $entity->getImageId());
+    $statement->bindValue(':completed', $entity->getCompleted());
     $statement->execute();
 
-    $event->setId($this->connection->lastInsertId());
+    $entity->setId($this->connection->lastInsertId());
   }
 
-  public function fetch(EntityEvent $event)
+  public function fetch(EntityEvent $entity)
   {
     $sql = "SELECT * FROM {$this->table} WHERE id = :id";
 
     $statement = $this->connection->prepare($sql);
 
-    $statement->bindValue(":id", $event->getId(), PDO::PARAM_INT);
+    $statement->bindValue(":id", $entity->getId());
     $statement->execute();
 
     $data = $statement->fetch();
 
-    $data['created_on'] = new DateTimeImmutable($data['created_on']);
+    $data['date'] = new DateTimeImmutable($data['date']);
 
     if ($data) {
-      $this->applyValues($event, $data);
+      $this->applyValues($entity, $data);
     }
   }
 }

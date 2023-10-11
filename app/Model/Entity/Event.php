@@ -8,8 +8,15 @@ class Event extends Entity
 {
   protected ?int $id;
   protected $name;
-  protected $createdOn;
+  protected $description;
+  protected ?string $location;
+
+  protected ?DateTimeImmutable $date;
+  protected ?string $startTime;
+  protected ?string $endTime;
+
   protected ?int $imageId;
+  protected ?bool $completed;
 
   public function __construct(?int $id = null)
   {
@@ -21,7 +28,7 @@ class Event extends Entity
     $this->id = $id;
   }
 
-  public function getId(): int
+  public function getId(): ?int
   {
     return $this->id;
   }
@@ -36,14 +43,54 @@ class Event extends Entity
     return $this->name;
   }
 
-  public function setCreatedOn(DateTimeImmutable $createdOn)
+  public function setDescription(string $description)
   {
-    $this->createdOn = $createdOn;
+    $this->description = $description;
   }
 
-  public function getCreatedOn(): DateTimeImmutable
+  public function getDescription()
   {
-    return $this->createdOn;
+    return $this->description;
+  }
+
+  public function setLocation(string $location)
+  {
+    $this->location = $location;
+  }
+
+  public function getLocation()
+  {
+    return $this->location;
+  }
+
+  public function setDate(DateTimeImmutable $date)
+  {
+    $this->date = $date;
+  }
+
+  public function getDate(): DateTimeImmutable
+  {
+    return $this->date;
+  }
+
+  public function setStartTime(string $startTime)
+  {
+    $this->startTime = $startTime;
+  }
+
+  public function getStartTime()
+  {
+    return $this->startTime;
+  }
+
+  public function setEndTime(string $endTime)
+  {
+    $this->endTime = $endTime;
+  }
+
+  public function getEndTime()
+  {
+    return $this->endTime;
   }
 
   public function setImageId(?int $id)
@@ -54,5 +101,15 @@ class Event extends Entity
   public function getImageId(): ?int
   {
     return $this->imageId;
+  }
+
+  public function setCompleted(bool $completed)
+  {
+    $this->completed = $completed;
+  }
+
+  public function getCompleted()
+  {
+    return $this->completed;
   }
 }
