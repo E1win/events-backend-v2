@@ -3,6 +3,7 @@
 use App\Http\Controller\Web\AuthController;
 use Framework\Routing\Router;
 use App\Http\Controller\Web\EventController;
+use App\Http\Controller\Web\ViewController;
 use Framework\Auth\Middleware\AuthMiddleware;
 use Framework\Auth\Middleware\LoginRedirectMiddleware;
 
@@ -11,6 +12,8 @@ $router = Router::create();
 $router->addMiddlewares([
   LoginRedirectMiddleware::class
 ]);
+
+$router->get('/', [ViewController::class, 'home']);
 
 $router->get('/events', [EventController::class, 'index']);
 $router->post('/events', [EventController::class, 'store']);

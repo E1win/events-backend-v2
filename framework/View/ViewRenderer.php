@@ -16,7 +16,7 @@ class ViewRenderer implements ContractViewRenderer
     private HtmlResponseFactoryInterface $responseFactory,
   ) { }
 
-  public function load(string $url, array $context = [], ?ServerRequestInterface $request = null): ResponseInterface
+  public function load(string $url, ?ServerRequestInterface $request = null, array $context = []): ResponseInterface
   {
     // Add things like user to context here.
     // and a view bools like loggedIn maybe.

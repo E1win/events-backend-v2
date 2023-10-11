@@ -55,8 +55,8 @@ class AuthController extends Controller
      */
     $user = $request->getAttribute('user');
 
-    return $this->view->load('auth.html', [
+    return $this->view->load('auth.html', $request, [
       'user' => $user,
-    ], $request);
+    ]);
   }
 }

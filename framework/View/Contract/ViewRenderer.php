@@ -6,5 +6,5 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface ViewRenderer
 {
-  public function load(string $url, array $context = [], ?ServerRequestInterface $request = null): ResponseInterface;
+  public function load(string $url, ?ServerRequestInterface $request = null, array $context = []): ResponseInterface;
 }
