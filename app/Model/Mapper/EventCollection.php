@@ -22,7 +22,7 @@ class EventCollection extends DataMapper
     $statement->execute();
 
     foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $parameters) {
-      $parameters["created_on"] = new \DateTimeImmutable($parameters['created_on']);
+      $parameters["date"] = new \DateTimeImmutable($parameters['date']);
       $collection->addBlueprint($parameters);
     }
   }
