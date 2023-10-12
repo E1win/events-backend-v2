@@ -26,8 +26,7 @@ $_ENV['DB_USER'] = "root";
 $_ENV['DB_PASS'] = "root";
 
 
-// https://prototype.php.net/manual/en/function.date-default-timezone-set.php
-// Maybe use later for setting timezone
+date_default_timezone_set('Europe/Amsterdam');
 
 // Load helper functions
 require __DIR__ . '/functions.php';
