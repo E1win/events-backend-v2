@@ -6,20 +6,21 @@
 {% import "components/forms.html" as forms %}
 
 {% block content %}
-  {{ button.primary('testing')}}
-
-  <form method="post" accept-charset="UTF-8">
-    <h3><label for="email">Email</label></h3>
-    <input id="email" type="text" name="email">
-  
-    <h3><label for="password">Password</label></h3>
-    <input id="password" type="password" name="password">
-  
-    <!-- <input type="submit" value="Login"> -->
-    {{ forms.submit('Login') }}
-  
-    {# {% if errorMessage is defined %}
-      <p>{{ errorMessage }}</p>
-    {% endif %} #}
-  </form>
+  <div class="login">
+    <h1>EventStack</h1>
+    <form class="form-login" method="post" accept-charset="UTF-8">
+      <h2>Login</h2>
+      
+      <div>
+        {{ forms.input("email", "", "Email", "email") }}
+        {{ forms.input("password", "", "Password", "password") }}
+        {{ forms.submit('Login') }}
+      </div>
+    
+    
+      {# {% if errorMessage is defined %}
+        <p>{{ errorMessage }}</p>
+      {% endif %} #}
+    </form>
+  </div>
 {% endblock %}

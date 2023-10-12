@@ -1,13 +1,59 @@
-
-
-.btn {
-  padding: 0.8em 1.6em;
-  background-color: #222;
-  border: none;
-  border-radius: 0.3rem;
-  color: #fdfdfd;
+/* *,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.btn:hover {
-  cursor: pointer;
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+} */
+
+.btn {
+  border: none;
+}
+
+.btn-primary {
+  background-color: #222;
+}
+
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-weight: 700;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  padding: 1rem 0.7rem;
+  background-color: #eee;
+
+  border-radius: .5rem;
+
+  width: 24rem;
+  max-width: 100%;
+
 }

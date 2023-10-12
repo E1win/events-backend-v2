@@ -1,5 +1,17 @@
-{% macro primary(label, classes = []) %}
+{% macro primary(label, classes = "") %}
   <button class="btn btn-primary {{ classes.class }}">
-    {{label}}
+    <span>{{label}}</span>
   </button>
+{% endmacro %}
+
+{% macro secondary(label, classes = "") %}
+  <button class="btn btn-secondary {{ classes.class }}">
+    <span>{{label}}</span>
+  </button>
+{% endmacro %}
+
+{% macro primaryLink(label, to="/", classes = "") %}
+  <a href="{{to}}" class="btn btn-primary {{ classes.class }}">
+    <span>{{label}}</span>
+  </a>
 {% endmacro %}
