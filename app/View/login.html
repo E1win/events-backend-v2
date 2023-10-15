@@ -11,6 +11,10 @@
     <form class="form-login" method="post" accept-charset="UTF-8">
       <h2>Login</h2>
       
+      {# {% if error is defined %}
+        <p>{{ error }}</p>
+      {% endif %} #}
+      
       <div>
         {{ forms.input("email", "", "Email", "email") }}
         {{ forms.input("password", "", "Password", "password") }}
@@ -18,9 +22,6 @@
       </div>
     
     
-      {# {% if errorMessage is defined %}
-        <p>{{ errorMessage }}</p>
-      {% endif %} #}
     </form>
   </div>
 {% endblock %}
