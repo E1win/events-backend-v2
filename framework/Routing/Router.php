@@ -138,7 +138,7 @@ class Router implements RouterInterface
   {
     // TODO: Maybe make this a container->get call?
     // This is probably a lot quicker though
-    $subRouter = Router::create()->addPrefix($prefix);
+    $subRouter = Router::create()->addPrefix($this->prefix . $prefix);
 
     call_user_func($callback, $subRouter);
 
