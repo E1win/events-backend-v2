@@ -112,7 +112,7 @@ class UserService
       UserService::SESSION_COOKIE_NAME,
       "",
       array(
-        'expires' => time() - 4400,
+        'expires' => 404,
         'httponly' => true,
       )
     );
