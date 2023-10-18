@@ -26,4 +26,27 @@ class AuthController extends Controller
       ['status' => 'success']
     );
   }
+
+  public function login(ServerRequestInterface $request): ResponseInterface
+  {
+    $body = $request->getParsedBody();
+
+    $email = $body['email'];
+    $password = $body['password'];
+
+    $user = $this->authService->loginWithEmailAndPassword($email, $password);
+
+    // maybe set session token in header here
+    // but also maybe not necessary, since client should
+    // save token and everything in storage and set
+    // authorization headers
+
+    return $this->responseFactory->createJsonResponse(
+      [
+        'user' => $user,
+        'status' => 'success'
+      ]
+    );
+    // )->withAddedHeader('Authorization', $user->getSessionUuid());
+  }
 }

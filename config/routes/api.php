@@ -14,6 +14,7 @@ $router->get('/events', [EventController::class, 'index']);
 
 $router->group('', function(Router $router) {
   $router->post('/logout', [AuthController::class, 'logout']);
+  $router->post('/login', [AuthController::class, 'login']);
 })->addMiddleware(AuthMiddleware::class);
 
 return $router;
