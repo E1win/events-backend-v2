@@ -3,6 +3,10 @@
 
 const BASE_URL = "http://localhost:80";
 const API_URL = BASE_URL + "/api";
+const TOKEN_NAME = 'EventsCMSSession';
+
+const loginForm = document.getElementById('form-login');
+
 
 async function doRequest(url, method = "GET", body = {}, headers = {}) {
   // Fetch not setting cookies for some reason.
@@ -10,11 +14,12 @@ async function doRequest(url, method = "GET", body = {}, headers = {}) {
   // 
 
   const response = await fetch(API_URL + url, {
-    credentials: "include",
+    credentials: "same-origin",
     method: method,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      ...addAuthHeaders(),
       ...headers
     },
     // body: JSON.stringify(body)
@@ -24,6 +29,17 @@ async function doRequest(url, method = "GET", body = {}, headers = {}) {
   console.log(response);
 
   return response.json();
+}
+
+function addAuthHeaders() {
+  let headers = {};
+  const token = localStorage.getItem(TOKEN_NAME);
+
+  if (token !== null) {
+    headers['Authorization'] = token;
+  }
+
+  return headers;
 }
 
 function createBody(body, method) {
@@ -45,8 +61,9 @@ async function logout() {
     if (response.hasOwnProperty("error")) {
       console.error(response['error']);
     } else {
-      console.log(response);
-      // window.location = BASE_URL + "/login";
+      localStorage.removeItem(TOKEN_NAME);
+      document.cookie = TOKEN_NAME + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location = BASE_URL + "/login";
     }
   } catch (error) {
     console.error(error);
@@ -54,8 +71,33 @@ async function logout() {
 
 }
 
-async function login(formData = {}) {
-  const response = await doRequest('/login', "POST", formData);
+async function login() {
+  let formData = new FormData(loginForm);
+
+  console.log(Object.fromEntries(formData));
+
+  try {
+    const response = await doRequest('/login', "POST", Object.fromEntries(formData));
+
+    console.log(response);
+
+    if (response.hasOwnProperty("error")) {
+      console.error(response['error']);
+    } else {
+      localStorage.setItem(TOKEN_NAME, response['token']);
+      document.cookie = TOKEN_NAME + '=' + response['token'];
+
+      console.log('set token: ' + response['token']);
+
+      // Cookie is not set, even though it's a web route...
+      // can you set cookie from here?
+      // or set header
+
+      window.location = BASE_URL + "/";
+    }
+  } catch (error) {
+    console.error(error);
+  }
 
   // depending on response
 
@@ -75,3 +117,8 @@ async function login(formData = {}) {
 
   // return response.json();
 }
+
+
+// loginForm.addEventListener("submit", function(e) {
+//   login(e);
+// })

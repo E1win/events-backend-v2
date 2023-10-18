@@ -19,26 +19,14 @@ class UserInRequestMiddleware implements MiddlewareInterface
 
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
   {
-    if ($this->sessionExistsInRequest($request)) {
-      $sessionUuid = $this->getSessionUuidFromRequest($request);
+    if ($this->userService->sessionTokenInRequest($request)) {
+      $token = $this->userService->getSessionTokenFromRequest($request);
 
-      $user = $this->userService->getUserBySessionUuid($sessionUuid);
+      $user = $this->userService->getUserByToken($token);
 
       return $handler->handle($request->withAttribute('user', $user));
     }
 
     return $handler->handle($request);
-  }
-
-  private function sessionExistsInRequest(ServerRequestInterface $request): bool
-  {
-    $cookies = $request->getCookieParams();
-
-    return isset($cookies[UserService::SESSION_COOKIE_NAME]);
-  }
-
-  private function getSessionUuidFromRequest(ServerRequestInterface $request): string
-  {
-    return $request->getCookieParams()[UserService::SESSION_COOKIE_NAME];
   }
 }

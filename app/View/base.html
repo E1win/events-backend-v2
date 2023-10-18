@@ -21,12 +21,6 @@
     
     {% if loggedIn == true %}
       <button onclick="event.preventDefault(); logout()">Logout</button>
-      <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        Logout
-      </a>
-      <form id="logout-form" method="post" action="/logout" style="display: none;">
-        {# <input type="submit" value="logout"> #}
-      </form>
     {% endif %}
     {% endblock %}
   </header>

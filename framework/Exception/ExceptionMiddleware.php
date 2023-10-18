@@ -39,19 +39,20 @@ class ExceptionMiddleware implements MiddlewareInterface
   {
     $statusCode =  $error->getCode() === 0 ? 500 : $error->getCode();
 
-    $response = $this->jsonResponseFactory->createJsonResponse($error->getMessage(), $statusCode);
+    $response = $this->jsonResponseFactory->createJsonResponse([
+      'error' => $error->getMessage()
+    ], $statusCode);
     
     $accept = $request->getHeaderLine('Accept');
 
     if (!array_key_exists($accept, self::CONTENT_TYPE_CONVERSION)) {
       return $response;
     } else {
-      echo 'valid type';
+      return $response->withAddedHeader(
+        'Content-Type',
+        self::CONTENT_TYPE_CONVERSION[$accept] . '; charset=' . $request->getHeaderLine('Accept-Charset')
+      );
     }
 
-    return $response->withAddedHeader(
-      'Content-Type',
-      self::CONTENT_TYPE_CONVERSION[$accept] . '; charset=' . $request->getHeaderLine('Accept-Charset')
-    );
   }
 }

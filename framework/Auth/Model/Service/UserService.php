@@ -13,6 +13,7 @@ namespace Framework\Auth\Model\Service;
 use Framework\Auth\Model\Entity\User;
 use Framework\Auth\Model\Mapper\User as UserMapper;
 use Framework\Auth\Exception\UserNotFoundException;
+use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 
 class UserService
@@ -49,11 +50,11 @@ class UserService
     return $user;
   }
 
-  public function getUserBySessionUuid(string $uuid): User
+  public function getUserByToken(string $token): User
   {
     $user = new User;
 
-    $user->setSessionUuid($uuid);
+    $user->setSessionUuid($token);
 
     $this->mapper->fetch($user);
 
@@ -92,6 +93,20 @@ class UserService
     $this->unsetSessionCookie();
 
     return $user;
+  }
+
+  public function sessionTokenInRequest(ServerRequestInterface $request): bool
+  {
+    return $request->hasHeader('Authorization') || isset($request->getCookieParams()[UserService::SESSION_COOKIE_NAME]);
+  }
+
+  public function getSessionTokenFromRequest(ServerRequestInterface $request): ?string
+  {
+    if ($request->hasHeader('Authorization')) {
+      return $request->getHeaderLine('Authorization');
+    }
+
+    return $request->getCookieParams()[UserService::SESSION_COOKIE_NAME];
   }
 
   private function setSessionCookie(User $user)

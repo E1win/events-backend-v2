@@ -19,32 +19,9 @@ class AuthController extends Controller
     private RedirectResponseFactoryInterface $redirectResponseFactory,
   ) {}
 
-  public function showLogin(ServerRequestInterface $request): ResponseInterface
-  {
-    return $this->view->load('login.html');
-  }
-
   public function login(ServerRequestInterface $request): ResponseInterface
   {
-    $body = $request->getParsedBody();
-
-    // var_dump($body);
-
-    $email = $body['email'];
-    $password = $body['password'];
-
-    $user = $this->authService->loginWithEmailAndPassword($email, $password);
-
-    return $this->redirectResponseFactory->createRedirectResponse("/auth");
-  }
-
-  public function logout(ServerRequestInterface $request): ResponseInterface
-  {
-    $user = $request->getAttribute('user');
-
-    $this->authService->logout($user);
-
-    return $this->redirectResponseFactory->createRedirectResponse("/login");
+    return $this->view->load('login.html');
   }
 
   public function authRoute(ServerRequestInterface $request): ResponseInterface

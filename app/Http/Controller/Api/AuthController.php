@@ -43,7 +43,7 @@ class AuthController extends Controller
 
     return $this->responseFactory->createJsonResponse(
       [
-        'user' => $user,
+        'token' => $user->getSessionUuid(),
         'status' => 'success'
       ]
     );
