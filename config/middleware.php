@@ -6,8 +6,9 @@
 
 use Framework\Auth\Middleware\UserInRequestMiddleware;
 use Framework\Exception\ExceptionMiddleware;
+use Framework\Middleware\CorsMiddleware;
 
 return [
   ExceptionMiddleware::class,
-  UserInRequestMiddleware::class,
+  CorsMiddleware::class
 ];
