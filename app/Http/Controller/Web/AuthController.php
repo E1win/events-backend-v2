@@ -23,17 +23,4 @@ class AuthController extends Controller
   {
     return $this->view->load('login.html');
   }
-
-  public function authRoute(ServerRequestInterface $request): ResponseInterface
-  {
-    /**
-     * TODO: Maybe just a getUser method on the request?
-     * returns null if no user is there
-     */
-    $user = $request->getAttribute('user');
-
-    return $this->view->load('auth.html', $request, [
-      'user' => $user,
-    ]);
-  }
 }

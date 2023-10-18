@@ -23,7 +23,6 @@ $router->get('/login', [AuthController::class, 'login']);
 
 $router->group('', function(Router $router) {
   $router->get('/', [ViewController::class, 'home']);
-  $router->get('/auth', [AuthController::class, 'authRoute']);
 })->addMiddlewares([
   UserInRequestMiddleware::class,
   AuthMiddleware::class
