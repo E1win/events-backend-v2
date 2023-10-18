@@ -13,7 +13,6 @@ $router->addMiddlewares([
   LoginRedirectMiddleware::class
 ]);
 
-$router->get('/', [ViewController::class, 'home']);
 
 $router->get('/events', [EventController::class, 'index']);
 $router->post('/events', [EventController::class, 'store']);
@@ -23,6 +22,7 @@ $router->get('/login', [AuthController::class, 'showLogin']);
 $router->post('/login', [AuthController::class, 'login']);
 
 $router->group('', function(Router $router) {
+  $router->get('/', [ViewController::class, 'home']);
   $router->get('/auth', [AuthController::class, 'authRoute']);
   $router->post('/logout', [AuthController::class, 'logout']);
 })->addMiddleware(AuthMiddleware::class);
