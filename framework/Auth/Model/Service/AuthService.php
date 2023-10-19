@@ -60,8 +60,13 @@ class AuthService
     string $firstName,
     ?string $prefix,
     string $lastName,
-  ) {
+  ): User {
+    // Check if user already exists
+    // $this->userService->userExists($email);
+
+
     $hash = password_hash($password, PASSWORD_DEFAULT);
+
 
     return $this->userService->createUser($email, $hash, $firstName, $prefix, $lastName);
   }

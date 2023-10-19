@@ -14,25 +14,43 @@
   {% endblock %}
 </head>
 <body>
-  <header>
-    {% block navigation %}
-    <p>The header</p>
+  {% if loggedIn == true %}
+    <div id="side-menu">
+      <!-- Side Menu -->
+      <h2>EventCMS</h2>
 
-    
-    {% if loggedIn == true %}
+      <nav>
+        <a href="/events"><span>Events</span></a>
+        <a href="/users"><span>Users</span></a>
+      </nav>
+
+      
       <button onclick="event.preventDefault(); logout()">Logout</button>
+    </div>
+  {% endif %}
+  <div id="content">
+    {% if loggedIn == true %}
+      <header>
+        {% block navigation %}
+        <p>The header</p>
+    
+        
+        {% endblock %}
+      </header>
     {% endif %}
-    {% endblock %}
-  </header>
-  <main>
-    {% block content %}{% endblock %}
-  </main>
-  <footer id="footer">
-    <span>&copy; Copyright 2023 by Elwin Jukema</span>
-  </footer>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    {% if loggedIn == true %}
+      <footer id="footer">
+        <span>&copy; Copyright 2023 by Elwin Jukema</span>
+      </footer>
+    {% endif %}
+  </div>
 
 
   <script src="./assets/js/script.js"></script>
+
   <!-- Bootstrap -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

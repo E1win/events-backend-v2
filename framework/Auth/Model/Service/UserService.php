@@ -71,11 +71,16 @@ class UserService
     string $firstName,
     ?string $prefix,
     string $lastName,
-  ) {
+  ): User {
     $user = new User;
     
     // fill user object
+
+    // Also create sessions, etc.
+
     // mapper->store;
+
+    return $user;
   }
 
   public function createSession(User $user): User

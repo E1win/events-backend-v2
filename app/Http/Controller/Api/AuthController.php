@@ -52,6 +52,34 @@ class AuthController extends Controller
         'status' => 'success'
       ]
     );
-    // )->withAddedHeader('Authorization', $user->getSessionUuid());
+  }
+
+  public function register(ServerRequestInterface $request): ResponseInterface
+  {
+    $body = $request->getParsedBody();
+
+    // Just check laravel and do what they do
+
+    // Verify that request has all necessary fields.
+    // verify($body['email'], blahblahblah);
+    // verify($body['password'], blahblahblah);
+
+    // verify([
+    //  $body['email'] => blahblah
+    //  $body['password'] => blahblah
+    // ])
+
+    $user = $this->authService->register();
+
+    return $this->responseFactory->createJsonResponse(
+      [
+        'token' => [
+          'name' => UserService::SESSION_TOKEN_NAME,
+          'value' => $user->getSessionUuid(),
+          'expires' => $user->getExpiresOn()
+        ],
+        'status' => 'success'
+      ]
+    );
   }
 }
