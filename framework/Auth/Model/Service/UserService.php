@@ -65,6 +65,19 @@ class UserService
     return $user;
   }
 
+  public function createUser(
+    string $email,
+    string $hash,
+    string $firstName,
+    ?string $prefix,
+    string $lastName,
+  ) {
+    $user = new User;
+    
+    // fill user object
+    // mapper->store;
+  }
+
   public function createSession(User $user): User
   {
     $user->setSessionUuid($this->generateUuid());

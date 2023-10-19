@@ -54,9 +54,16 @@ class AuthService
     $this->userService->removeSession($user);
   }
 
-  public function register()
-  {
-    // . . .
+  public function register(
+    string $email,
+    string $password,
+    string $firstName,
+    ?string $prefix,
+    string $lastName,
+  ) {
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    return $this->userService->createUser($email, $hash, $firstName, $prefix, $lastName);
   }
 
 }
