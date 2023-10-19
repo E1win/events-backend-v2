@@ -7,6 +7,7 @@ use Framework\Message\Contract\RedirectResponseFactoryInterface;
 use Framework\Message\Contract\JsonResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Framework\Auth\Model\Service\UserService;
 
 class AuthController extends Controller
 {
@@ -43,7 +44,11 @@ class AuthController extends Controller
 
     return $this->responseFactory->createJsonResponse(
       [
-        'token' => $user->getSessionUuid(),
+        'token' => [
+          'name' => UserService::SESSION_TOKEN_NAME,
+          'value' => $user->getSessionUuid(),
+          'expires' => $user->getExpiresOn()
+        ],
         'status' => 'success'
       ]
     );

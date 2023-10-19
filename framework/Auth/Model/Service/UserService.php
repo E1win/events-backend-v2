@@ -19,7 +19,7 @@ use Ramsey\Uuid\Uuid;
 class UserService
 {
   const SESSION_LIFESPAN = 14400; // seconds, 4 hours
-  const SESSION_COOKIE_NAME = 'EventsCMSSession';
+  const SESSION_TOKEN_NAME = 'EventsCMSSession';
 
 
   public function __construct(
@@ -78,7 +78,7 @@ class UserService
 
     $this->mapper->store($user);
 
-    $this->setSessionCookie($user);
+    // $this->setSessionCookie($user);
     
     return $user;
   }
@@ -90,14 +90,14 @@ class UserService
 
   public function removeSession(User $user): User
   {
-    $this->unsetSessionCookie();
+    // $this->unsetSessionCookie();
 
     return $user;
   }
 
   public function sessionTokenInRequest(ServerRequestInterface $request): bool
   {
-    return $request->hasHeader('Authorization') || isset($request->getCookieParams()[UserService::SESSION_COOKIE_NAME]);
+    return $request->hasHeader('Authorization') || isset($request->getCookieParams()[UserService::SESSION_TOKEN_NAME]);
   }
 
   public function getSessionTokenFromRequest(ServerRequestInterface $request): ?string
@@ -106,13 +106,13 @@ class UserService
       return $request->getHeaderLine('Authorization');
     }
 
-    return $request->getCookieParams()[UserService::SESSION_COOKIE_NAME];
+    return $request->getCookieParams()[UserService::SESSION_TOKEN_NAME];
   }
 
   private function setSessionCookie(User $user)
   {
     setcookie(
-      UserService::SESSION_COOKIE_NAME, 
+      UserService::SESSION_TOKEN_NAME, 
       $user->getSessionUuid(), 
       array(
         'expires' => $user->getExpiresOn(),
@@ -124,7 +124,7 @@ class UserService
   private function unsetSessionCookie()
   {
     setcookie(
-      UserService::SESSION_COOKIE_NAME,
+      UserService::SESSION_TOKEN_NAME,
       "",
       array(
         'expires' => time() - 4400,

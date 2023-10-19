@@ -9,33 +9,25 @@ const loginForm = document.getElementById('form-login');
 
 
 async function doRequest(url, method = "GET", body = {}, headers = {}) {
-  // Fetch not setting cookies for some reason.
-  // probably something with options here
-  // 
-
   const response = await fetch(API_URL + url, {
     credentials: "same-origin",
     method: method,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      ...addAuthHeaders(),
       ...headers
     },
-    // body: JSON.stringify(body)
     ...createBody(body, method)
   });
-
-  console.log(response);
 
   return response.json();
 }
 
 function addAuthHeaders() {
   let headers = {};
-  const token = localStorage.getItem(TOKEN_NAME);
+  const token = getCookie(TOKEN_NAME);
 
-  if (token !== null) {
+  if (token !== "") {
     headers['Authorization'] = token;
   }
 
@@ -61,9 +53,8 @@ async function logout() {
     if (response.hasOwnProperty("error")) {
       console.error(response['error']);
     } else {
-      localStorage.removeItem(TOKEN_NAME);
-      document.cookie = TOKEN_NAME + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      window.location = BASE_URL + "/login";
+      unsetCookie(TOKEN_NAME);
+      redirect("/login");
     }
   } catch (error) {
     console.error(error);
@@ -79,46 +70,48 @@ async function login() {
   try {
     const response = await doRequest('/login', "POST", Object.fromEntries(formData));
 
-    console.log(response);
-
     if (response.hasOwnProperty("error")) {
       console.error(response['error']);
     } else {
-      localStorage.setItem(TOKEN_NAME, response['token']);
-      document.cookie = TOKEN_NAME + '=' + response['token'];
+      const token = response['token'];
 
-      console.log('set token: ' + response['token']);
+      setCookie(token['name'], token['value'], token['expires']);
 
-      // Cookie is not set, even though it's a web route...
-      // can you set cookie from here?
-      // or set header
-
-      window.location = BASE_URL + "/";
+      redirect("/");
     }
   } catch (error) {
     console.error(error);
   }
 
-  // depending on response
-
-  // either redirect or show error message
-
-  // const response = await fetch(BASE_URL + "/login", {
-  //   method: "post",
-  //   headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({
-  //     email: myEmail,
-  //     password: myPassword
-  //   }),
-  // });
-
-  // return response.json();
 }
 
+function setCookie(name, value, expiresTimestamp) {
+  const date = new Date();
+  date.setTime(expiresTimestamp * 1000); // Convert seconds to milliseconds
+  let expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + "; " + expires + "; path=/;";
+}
 
-// loginForm.addEventListener("submit", function(e) {
-//   login(e);
-// })
+function unsetCookie(name) {
+  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function redirect(location) {
+  window.location = BASE_URL + location;
+}

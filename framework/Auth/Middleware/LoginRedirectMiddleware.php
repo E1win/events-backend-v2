@@ -26,7 +26,7 @@ class LoginRedirectMiddleware implements MiddlewareInterface
     } catch (\Throwable $th) {
       if ($th->getCode() === 401) {
         // redirect to /login.
-        // maybe add error or something so they can see it?
+        // TODO: maybe add error or something so they can see it?
         return $this->redirectResponseFactory->createRedirectResponse('/login');
       }
 
