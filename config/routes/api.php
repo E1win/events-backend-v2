@@ -9,13 +9,15 @@ use Framework\Auth\Middleware\UserInRequestMiddleware;
 $router = Router::create();
 $router->addPrefix('/api');
 
-$router->get('/events/{id:number}', [EventController::class, 'show']);
-$router->get('/events/{id:number}/participants', [EventController::class, 'participants']);
-$router->get('/events', [EventController::class, 'index']);
 
 $router->post('/login', [AuthController::class, 'login']);
 $router->group('', function(Router $router) {
   $router->post('/logout', [AuthController::class, 'logout']);
+  
+  $router->get('/events', [EventController::class, 'index']);
+  $router->get('/events/{id:number}', [EventController::class, 'show']);
+  $router->get('/events/{id:number}/participants', [EventController::class, 'participants']);
+
 })->addMiddlewares([
   UserInRequestMiddleware::class,
   AuthMiddleware::class

@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controller\Web\AuthController;
 use Framework\Routing\Router;
+
+use App\Http\Controller\Web\AuthController;
 use App\Http\Controller\Web\EventController;
 use App\Http\Controller\Web\ViewController;
+
 use Framework\Auth\Middleware\AuthMiddleware;
 use Framework\Auth\Middleware\LoginRedirectMiddleware;
 use Framework\Auth\Middleware\UserInRequestMiddleware;

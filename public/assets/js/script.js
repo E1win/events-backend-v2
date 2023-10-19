@@ -85,6 +85,21 @@ async function login() {
 
 }
 
+async function events()
+{
+  try {
+    return await doRequest('/events');
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+
+/**
+ * HELPER FUNCTIONS
+ */
+
 function setCookie(name, value, expiresTimestamp) {
   const date = new Date();
   date.setTime(expiresTimestamp * 1000); // Convert seconds to milliseconds
