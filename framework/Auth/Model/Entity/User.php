@@ -71,7 +71,7 @@ class User extends Entity
     return $this->firstName;
   }
 
-  public function setPrefix(string $prefix)
+  public function setPrefix(?string $prefix)
   {
     $this->prefix = $prefix;
   }
