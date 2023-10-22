@@ -58,7 +58,7 @@ class User extends Entity
 
   public function matchPassword(string $password): bool
   {
-    return true;
+    return password_verify($password, $this->password);
   }
   
   public function setFirstName(string $firstName)
