@@ -36,6 +36,9 @@ body {
 
   display: flex;
   flex-direction: column;
+  row-gap: 1.5rem;
+
+  padding: 1rem;
 }
 
 footer,
@@ -45,6 +48,12 @@ header {
 
 main {
   flex: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #footer {
@@ -99,7 +108,17 @@ button {
 }
 
 .btn-primary {
-  background-color: #222;
+  background-color: var(--primary-900);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-700);
+}
+
+/* TEXT */
+
+h1 {
+  font-weight: 600;
 }
 
 h2 {

@@ -1,13 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Events</title>
-</head>
-<body>
-  <h1>Create Event</h1>
-  <form method="post" enctype="multipart/form-data">  
+{% extends "base.html" %}
+
+{% block title %}Events{% endblock %}
+
+{% block headerTitle %}Events{% endblock %}
+{% block header %}
+  <button class="btn btn-primary">Create Event</button>
+{% endblock %}
+
+
+{% block content %}
+  <div>
+    <h2>List</h2>
+
+    {% for event in events %}
+    <div>
+        <h2>{{event.id}}: {{event.name}}</h2>
+        <p>{{event.createdOn.date}}</p>
+      </div>
+      <br><br>
+    {% endfor %}
+  </div>
+  <!-- <form method="post" enctype="multipart/form-data">  
     <label for="name">Name</label>
     <input type="text" id="name" name="name">
     <br>
@@ -16,16 +29,7 @@
     <input type="file" id="image" name="image">
     <br>
     <br>
-
+  
     <input type="submit" value="Create event">
-  </form>
-  <h1>Events</h1>
-  {% for event in events %}
-    <div>
-      <h2>{{event.id}}: {{event.name}}</h2>
-      <p>{{event.createdOn.date}}</p>
-    </div>
-    <br><br>
-  {% endfor %}
-</body>
-</html>
+  </form> -->
+{% endblock %}

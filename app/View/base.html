@@ -21,9 +21,10 @@
     <div id="side-menu">
       <!-- Side Menu -->
       <div id="side-menu-content">
-        <h2>EventCMS</h2>
+        <h2>EventsCMS</h2>
   
         <nav>
+          <a href="/"><span>Overview</span></a>
           <a href="/events"><span>Events</span></a>
           <a href="/users"><span>Users</span></a>
         </nav>
@@ -36,11 +37,9 @@
   <div id="content">
     {% if loggedIn == true %}
       <header>
-        {% block navigation %}
-        <p>The header</p>
-    
+        <h1>{% block headerTitle %}{% endblock %}</h1>
         
-        {% endblock %}
+        {% block header %}{% endblock %}
       </header>
     {% endif %}
     <main>
