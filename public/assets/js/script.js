@@ -6,6 +6,7 @@ const API_URL = BASE_URL + "/api";
 const TOKEN_NAME = 'EventsCMSSession';
 
 const loginForm = document.getElementById('form-login');
+const eventForm = document.getElementById('form-event');
 
 
 async function doRequest(url, method = "GET", body = {}, headers = {}) {
@@ -85,15 +86,17 @@ async function login() {
 
 }
 
-async function createEvent() {
-  // TODO: Implement
-  let formData = new FormData(loginForm);
+async function postEvent() {
+  let formData = new FormData(eventForm);
 
   console.log(Object.fromEntries(formData));
+  
 }
 
 async function events()
 {
+  console.log('testing what the fuck');
+
   try {
     return await doRequest('/events');
   } catch (error) {

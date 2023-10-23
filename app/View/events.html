@@ -46,7 +46,7 @@
     <div x-show="open" id="events-form" class="card">
       <h3 class="events-form-title">Create Event</h3>
 
-      <form id="form-event" class="form-event" method="post" onsubmit="event.preventDefault(); return createEvent();" accept-charset="UTF-8">
+      <form id="form-event" class="form-event" method="post" onsubmit="event.preventDefault(); return postEvent();" accept-charset="UTF-8">
         {{ form.input("name", "Name", "Name") }}
         {{ form.textarea("description", "Description", "Type your event description here...") }}
         {{ form.input("date", "Date", null, "date") }}
