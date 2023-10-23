@@ -1,8 +1,10 @@
 {% macro event(event, classes = "") %}
-  <div class="card-event">
-    <span class="card-event-date">{{event.date|date('Y-m-d')}} {{event.startTime}} - {{event.endTime}}</span>
+  <a href="/events/{{event.id}}" class="card card-event">
+    <span class="card-event-date">{{event.date|date('d/m/Y')}} {{event.startTime}}</span>
     <h3 class="card-event-title">{{event.name}}</h3>
     <p class="card-event-description">{{event.description}}</p>
-    <button class="btn btn-primary">More Info</button>
-  </div>
+    <div>
+      <button class="btn btn-primary">More Info</button>
+    </div>
+  </a>
 {% endmacro %}

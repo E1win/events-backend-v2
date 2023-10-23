@@ -12,15 +12,38 @@
 
 
 {% block content %}
-  <div>
-    <h2>List</h2>
+  <div id="events-page">
+    <!-- Content -->
+    <div>
+      <div>
+        <!-- Options -->
+      </div>
+      <div>
+        <h2>List</h2>
+    
+        <div class="list list-events">
+          {% for event in events %}
+            {{ card.event(event) }}
+          {% endfor %}
+          {% for event in events %}
+            {{ card.event(event) }}
+          {% endfor %}
+          {% for event in events %}
+            {{ card.event(event) }}
+          {% endfor %}
+          {% for event in events %}
+            {{ card.event(event) }}
+          {% endfor %}
+          {% for event in events %}
+            {{ card.event(event) }}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
 
-    <div class="list list-events">
-      {% for event in events %}
-        {{ card.event(event) }}
-        
-        <br><br>
-      {% endfor %}
+    <!-- Create Event Form -->
+    <div x-show="open" id="events-form">
+
     </div>
   </div>
   <!-- <form method="post" enctype="multipart/form-data">  
