@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% import "components/cards.html" as card %}
+
 {% block title %}Events{% endblock %}
 
 {% block headerTitle %}Events{% endblock %}
@@ -8,17 +10,18 @@
 {% endblock %}
 
 
+
 {% block content %}
   <div>
     <h2>List</h2>
 
-    {% for event in events %}
-    <div>
-        <h2>{{event.id}}: {{event.name}}</h2>
-        <p>{{event.createdOn.date}}</p>
-      </div>
-      <br><br>
-    {% endfor %}
+    <div class="list list-events">
+      {% for event in events %}
+        {{ card.event(event) }}
+        
+        <br><br>
+      {% endfor %}
+    </div>
   </div>
   <!-- <form method="post" enctype="multipart/form-data">  
     <label for="name">Name</label>
