@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 
 {% import "components/cards.html" as card %}
+{% import "components/forms.html" as form %}
 
 {% block title %}Events{% endblock %}
 
 {% block headerTitle %}Events{% endblock %}
 {% block header %}
-  <button class="btn btn-primary">Create Event</button>
+  <button class="btn btn-primary" @click="open = !open">Create Event</button>
 {% endblock %}
 
-
+{% block contentAttributes %}x-data="{ open: false }"{% endblock %}
 
 {% block content %}
   <div id="events-page">
     <!-- Content -->
-    <div>
+    <div id="events-content">
       <div>
         <!-- Options -->
       </div>
@@ -42,20 +43,21 @@
     </div>
 
     <!-- Create Event Form -->
-    <div x-show="open" id="events-form">
+    <div x-show="open" id="events-form" class="card">
+      <h3 class="events-form-title">Create Event</h3>
 
+      <form id="form-event" class="form-event" method="post" onsubmit="event.preventDefault(); return createEvent();" accept-charset="UTF-8">
+        {{ form.input("name", "Name", "Name") }}
+        {{ form.textarea("description", "Description", "Type your event description here...") }}
+        {{ form.input("date", "Date", null, "date") }}
+        <div class="form-cols-2">
+          {{ form.input("start-time", "Start time", "Start time") }}
+          {{ form.input("end-time", "End time", "End time") }}
+        </div>
+        {{ form.input("location", "Location", "Location") }}
+        {{ form.input("file", "File", null, "file") }}
+        {{ form.submit('Create') }}
+      </form>
     </div>
   </div>
-  <!-- <form method="post" enctype="multipart/form-data">  
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name">
-    <br>
-    <br>
-    <label for="name">Image</label>
-    <input type="file" id="image" name="image">
-    <br>
-    <br>
-  
-    <input type="submit" value="Create event">
-  </form> -->
 {% endblock %}

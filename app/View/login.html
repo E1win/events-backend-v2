@@ -3,7 +3,7 @@
 {% block title %}Login{% endblock %}
 
 {% import "components/buttons.html" as button %}
-{% import "components/forms.html" as forms %}
+{% import "components/forms.html" as form %}
 
 {% block content %}
   <div class="login">
@@ -16,9 +16,9 @@
       {% endif %} #}
       
       <div>
-        {{ forms.input("email", "", "Email", "email") }}
-        {{ forms.input("password", "", "Password", "password") }}
-        {{ forms.submit('Login') }}
+        {{ form.input("email", "", "Email", "email") }}
+        {{ form.input("password", "", "Password", "password") }}
+        {{ form.submit('Login') }}
       </div>
     </form>
   </div>

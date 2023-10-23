@@ -34,7 +34,7 @@
       <button onclick="event.preventDefault(); logout()">Logout</button>
     </div>
   {% endif %}
-  <div id="content">
+  <div {% block contentAttributes %}{% endblock %} id="content">
     {% if loggedIn == true %}
       <header>
         <h1>{% block headerTitle %}{% endblock %}</h1>

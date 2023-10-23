@@ -85,6 +85,13 @@ async function login() {
 
 }
 
+async function createEvent() {
+  // TODO: Implement
+  let formData = new FormData(loginForm);
+
+  console.log(Object.fromEntries(formData));
+}
+
 async function events()
 {
   try {
