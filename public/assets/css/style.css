@@ -1,3 +1,15 @@
+:root {
+  --primary-100: #DBE2FC;
+  --primary-200: #B8C6F8;
+  --primary-300: #94A9F5;
+  --primary-400: #708DF1;
+  --primary-500: #4C70EE;
+  --primary-600: #3D5ABE;
+  --primary-700: #2E438F;
+  --primary-800: #1F2D5F;
+  --primary-900: #0F1630;
+}
+
 *,
 *:before,
 *:after {
@@ -47,12 +59,40 @@ main {
 }
 
 #side-menu {
+  background-color: var(--primary-800);
+  color: #fff;
 
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#side-menu-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+
+#side-menu-content nav {
+  display: flex;
+  flex-direction: column;
+}
+
+#side-menu-content nav a {
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.5rem 0;
 }
 
 /************************************/
 /* REUSABLES */
 /************************************/
+
+button {
+  cursor: pointer;
+}
 
 .btn {
   border: none;
@@ -75,6 +115,7 @@ h2 {
 /************************************/
 
 .login {
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,7 +132,7 @@ h2 {
 
   border-radius: .5rem;
 
-  width: 24rem;
-  max-width: 100%;
+  max-width: 24rem;
+  width: 100%;
 
 }

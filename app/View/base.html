@@ -20,12 +20,14 @@
   {% if loggedIn == true %}
     <div id="side-menu">
       <!-- Side Menu -->
-      <h2>EventCMS</h2>
-
-      <nav>
-        <a href="/events"><span>Events</span></a>
-        <a href="/users"><span>Users</span></a>
-      </nav>
+      <div id="side-menu-content">
+        <h2>EventCMS</h2>
+  
+        <nav>
+          <a href="/events"><span>Events</span></a>
+          <a href="/users"><span>Users</span></a>
+        </nav>
+      </div>
 
       
       <button onclick="event.preventDefault(); logout()">Logout</button>
