@@ -86,7 +86,7 @@ async function login() {
 
 }
 
-async function postEvent() {
+async function createEvent() {
   let formData = new FormData(eventForm);
 
   console.log(Object.fromEntries(formData));

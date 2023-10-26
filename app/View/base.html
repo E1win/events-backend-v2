@@ -17,39 +17,41 @@
   {% endblock %}
 </head>
 <body>
-  {% if loggedIn == true %}
-    <div id="side-menu">
-      <!-- Side Menu -->
-      <div id="side-menu-content">
-        <h2>EventsCMS</h2>
+  <div id="wrapper">
+    {% if loggedIn == true %}
+      <div id="side-menu">
+        <!-- Side Menu -->
+        <div id="side-menu-content">
+          <h2>EventsCMS</h2>
+    
+          <nav>
+            <a href="/"><span>Overview</span></a>
+            <a href="/events"><span>Events</span></a>
+            <a href="/users"><span>Users</span></a>
+          </nav>
+        </div>
   
-        <nav>
-          <a href="/"><span>Overview</span></a>
-          <a href="/events"><span>Events</span></a>
-          <a href="/users"><span>Users</span></a>
-        </nav>
-      </div>
-
-      
-      <button onclick="event.preventDefault(); logout()">Logout</button>
-    </div>
-  {% endif %}
-  <div {% block contentAttributes %}{% endblock %} id="content">
-    {% if loggedIn == true %}
-      <header>
-        <h1>{% block headerTitle %}{% endblock %}</h1>
         
-        {% block header %}{% endblock %}
-      </header>
+        <button onclick="event.preventDefault(); logout()">Logout</button>
+      </div>
     {% endif %}
-    <main>
-      {% block content %}{% endblock %}
-    </main>
-    {% if loggedIn == true %}
-      <footer id="footer">
-        <span>&copy; Copyright 2023 by Elwin Jukema</span>
-      </footer>
-    {% endif %}
+    <div {% block contentAttributes %}{% endblock %} id="content">
+      {% if loggedIn == true %}
+        <header>
+          <h1>{% block headerTitle %}{% endblock %}</h1>
+          
+          {% block header %}{% endblock %}
+        </header>
+      {% endif %}
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+      {% if loggedIn == true %}
+        <footer id="footer">
+          <span>&copy; Copyright 2023 by Elwin Jukema</span>
+        </footer>
+      {% endif %}
+    </div>
   </div>
 
 
