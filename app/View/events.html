@@ -47,15 +47,15 @@
       <h3 class="events-form-title">Create Event</h3>
 
       <form id="form-event" class="form-event" method="post" @submit.prevent="createEvent" accept-charset="UTF-8">
-        {{ form.input("name", "Name", "Name") }}
-        {{ form.textarea("description", "Description", "Type your event description here...") }}
-        {{ form.input("date", "Date", null, "date") }}
+        {{ form.input("name", {label: "Name", placeholder:"Name", required: true}) }}
+        {{ form.textarea("description", {label: "Description", placeholder:"Type your event description here..."}) }}
+        {{ form.input("date", {label: "Date", type: "date"}) }}
         <div class="form-cols-2">
-          {{ form.input("start-time", "Start time", "Start time") }}
-          {{ form.input("end-time", "End time", "End time") }}
+          {{ form.input("start-time", {label: "Start time", placeholder:"Start time"}) }}
+          {{ form.input("end-time", {label: "End time", placeholder:"End time"}) }}
         </div>
-        {{ form.input("location", "Location", "Location") }}
-        {{ form.input("file", "File", null, "file") }}
+        {{ form.input("location", {label: "Location", placeholder:"Location"}) }}
+        {{ form.input("file", {label: "File", type: "file"}) }}
         {{ form.submit('Create') }}
       </form>
     </div>

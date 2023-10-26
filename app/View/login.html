@@ -16,8 +16,8 @@
       {% endif %} #}
       
       <div>
-        {{ form.input("email", "", "Email", "email") }}
-        {{ form.input("password", "", "Password", "password") }}
+        {{ form.input("email", {placeholder: 'Email', type: 'email'}) }}
+        {{ form.input("password", {placeholder: 'Password', type: 'password'}) }}
         {{ form.submit('Login') }}
       </div>
     </form>

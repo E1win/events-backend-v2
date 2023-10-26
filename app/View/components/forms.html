@@ -1,16 +1,16 @@
-{% macro input(name, label, placeholder = null, type = "text", classes = "") %}
-  <div class="form-group {{ classes }}">
-    {% if label != "" %}
-      <label for="{{ name }}"> {{ label }}</label>
+{% macro input(name, options=[]) %}
+  <div class="form-group {{ options.class }}">
+    {% if options.label != null %}
+      <label for="{{ name }}"> {{ options.label }}</label>
     {% endif %}
-    <input placeholder="{{ placeholder }}" type="{{ type }}" class="form-control" id="{{ name }}" name="{{ name }}">
+    <input {% if options.required == true %}required{% endif %} placeholder="{{ options.placeholder }}" type="{{ options.type }}" class="form-control" id="{{ name }}" name="{{ name }}">
   </div>
 {% endmacro %}
 
-{% macro textarea(name, label, placeholder = null, classes = "") %}
-  <div class="form-group {{ classes }}">
-    <label for="{{ name }}"> {{ label }}</label>
-    <textarea type="text" class="form-control" id="{{ name }}" name="{{ name }}" placeholder="{{placeholder}}"></textarea>
+{% macro textarea(name, options=[]) %}
+  <div class="form-group {{ options.classes }}">
+    <label for="{{ name }}"> {{ options.label }}</label>
+    <textarea type="text" class="form-control" id="{{ name }}" name="{{ name }}" placeholder="{{options.placeholder}}"></textarea>
   </div>
 {% endmacro %}
 
