@@ -32,6 +32,24 @@ class EventController extends Controller
     );
   }
 
+  public function store(ServerRequestInterface $request): ResponseInterface
+  {
+    $body = $request->getParsedBody();
+
+    $files = $request->getUploadedFiles();
+
+    $image = null;
+    if (count($files) !== 0) {
+      $image = $files[0];
+    }
+
+    $event = $this->eventService->createEvent($body, $image);
+
+    return $this->responseFactory->createJsonResponse(
+      $event,
+    );
+  }
+
   public function participants(ServerRequestInterface $request, int $id): ResponseInterface
   {
     $participants = $this->eventService->getParticipantsByEventId($id);

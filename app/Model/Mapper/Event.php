@@ -25,8 +25,8 @@ class Event extends DataMapper
   public function store(EntityEvent $entity)
   {
     $sql = "INSERT INTO {$this->table} 
-      (name, description, date, start_time, end_time, location, image_id, completed) VALUES 
-      (:name, :description, :date, :start_time, :end_time, :location, :image_id, :completed)";
+      (name, description, date, start_time, end_time, location, image_id) VALUES 
+      (:name, :description, :date, :start_time, :end_time, :location, :image_id)";
     
     $statement = $this->connection->prepare($sql);
 

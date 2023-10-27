@@ -20,11 +20,15 @@ class EventService
     private ImageService $imageService
   ) { }
 
-  public function createEvent(string $name, ?UploadedFileInterface $image = null): Event
+  public function createEvent(array $body, ?UploadedFileInterface $image = null): Event
   {
     $event = new Event();
+    $event->setName($body['name']);
+    $event->setDescription($body['description']);
     $event->setDate(new DateTimeImmutable);
-    $event->setName($name);
+    $event->setStartTime($body['startTime']);
+    $event->setEndTime($body['endTime']);
+    $event->setLocation($body['location']);
 
     if ($image !== null) {
       $image = $this->imageService->uploadImage($image);
