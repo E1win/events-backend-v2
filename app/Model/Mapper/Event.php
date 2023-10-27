@@ -37,7 +37,6 @@ class Event extends DataMapper
     $statement->bindValue(':end_time', $entity->getEndTime());
     $statement->bindValue(':location', $entity->getLocation());
     $statement->bindValue(':image_id', $entity->getImageId());
-    $statement->bindValue(':completed', $entity->getCompleted());
     $statement->execute();
 
     $entity->setId($this->connection->lastInsertId());

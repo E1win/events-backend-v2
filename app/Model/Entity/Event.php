@@ -6,17 +6,17 @@ use Framework\Model\Entity\Entity;
 
 class Event extends Entity
 {
-  protected ?int $id;
-  protected $name;
-  protected $description;
-  protected ?string $location;
+  protected ?int $id = null;
+  protected $name = null;
+  protected $description = null;
+  protected ?string $location = null;
 
-  protected ?DateTimeImmutable $date;
-  protected ?string $startTime;
-  protected ?string $endTime;
+  protected ?DateTimeImmutable $date = null;
+  protected ?string $startTime = null;
+  protected ?string $endTime = null;
 
-  protected ?int $imageId;
-  protected ?bool $completed;
+  protected ?int $imageId = null;
+  protected ?bool $completed = false;
 
   public function __construct(?int $id = null)
   {

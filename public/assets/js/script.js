@@ -91,6 +91,13 @@ async function createEvent() {
 
   console.log(Object.fromEntries(formData));
   
+  try {
+    const response = await doRequest('/events', 'POST', Object.fromEntries(formData));
+    
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function events()
