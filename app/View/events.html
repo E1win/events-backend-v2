@@ -13,7 +13,7 @@
 {% block contentAttributes %}x-data="{ open: false }"{% endblock %}
 
 {% block content %}
-  <div id="events-page">
+  <div x-data="{ events: []}" x-init="events = await (await fetch('api/events')).json()" id="events-page">
     <!-- Content -->
     <div id="events-content">
       <div>
@@ -23,21 +23,16 @@
         <h2>List</h2>
     
         <div class="list list-events">
-          {% for event in events %}
-            {{ card.event(event) }}
-          {% endfor %}
-          {% for event in events %}
-            {{ card.event(event) }}
-          {% endfor %}
-          {% for event in events %}
-            {{ card.event(event) }}
-          {% endfor %}
-          {% for event in events %}
-            {{ card.event(event) }}
-          {% endfor %}
-          {% for event in events %}
-            {{ card.event(event) }}
-          {% endfor %}
+          <template x-for="event in events">
+            <a :href="`/events/${event.id}`" class="card card-event">
+              <span class="card-event-date" x-text="`${event.date} ${event.startTime} - ${event.endTime}`"></span>
+              <h3 class="card-event-title" x-text="event.name"></h3>
+              <p class="card-event-description" x-text="event.description"></p>
+              <div>
+                <button class="btn btn-primary">More Info</button>
+              </div>
+            </a>
+          </template>
         </div>
       </div>
     </div>
