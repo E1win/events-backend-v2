@@ -7,6 +7,7 @@ use Framework\View\Contract\ViewRenderer as ContractViewRenderer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Twig\Environment;
+use Twig\TwigFilter;
 
 class ViewRenderer implements ContractViewRenderer
 {
@@ -18,6 +19,12 @@ class ViewRenderer implements ContractViewRenderer
 
   public function load(string $url, ?ServerRequestInterface $request = null, array $context = []): ResponseInterface
   {
+    $filter = new TwigFilter('asset', function($asset) {
+      return sprintf('../assets/%s', ltrim($asset, '/'));
+    });
+
+    $this->view->addFilter($filter);
+
     // Add things like user to context here.
     // and a view bools like loggedIn maybe.
     
