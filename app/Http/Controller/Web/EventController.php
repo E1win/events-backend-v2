@@ -29,6 +29,7 @@ class EventController extends Controller
   {
     $event = $this->eventService->getEventById($id);
 
+    $image = null;
     if ($event->getImageId() != null) {
       $image = $this->imageService->loadBase64EncodedImageById($event->getImageId());
     }

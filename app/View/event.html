@@ -1,10 +1,41 @@
 {% extends "base.html" %}
 
-{% block title %}Events{% endblock %}
+{% import "components/cards.html" as card %}
+{% import "components/forms.html" as form %}
+
+{% block title %}{{event.name}}{% endblock %}
+
+{% block headerTitle %}{{event.name}}{% endblock %}
+{% block header %}
+  <button class="btn btn-primary" @click="open = !open">Edit Event</button>
+{% endblock %}
+
+{% block contentAttributes %}x-data="{ open: false }"{% endblock %}
 
 {% block content %}
-  <h1>{{ event.name }}</h1>
-  <p>Event id: {{ event.id }}</p>
-  <p>Image Id: {{ event.imageId }}</p>
-  <img src="{{ image }}" />
+  <div id="events-page">
+    <!-- Content -->
+    <div id="events-content">
+      <span class="card-event-date">{{event.date|date('d/m/Y')}} {{event.startTime}}</span>
+      <p class="card-event-description">{{event.description}}</p>
+    </div>
+
+    <!-- Create Event Form -->
+    <div x-show="open" id="events-form" class="card">
+      <h3 class="events-form-title">Edit Event</h3>
+
+      <form id="form-event" class="form-event" method="post" @submit.prevent="createEvent" accept-charset="UTF-8">
+        {{ form.input("name", {label: "Name", placeholder:"Name", required: true}) }}
+        {{ form.textarea("description", {label: "Description", placeholder:"Type your event description here..."}) }}
+        {{ form.input("date", {label: "Date", type: "date", required: true}) }}
+        <div class="form-cols-2">
+          {{ form.input("startTime", {label: "Start time", placeholder:"Start time"}) }}
+          {{ form.input("endTime", {label: "End time", placeholder:"End time"}) }}
+        </div>
+        {{ form.input("location", {label: "Location", placeholder:"Location", required: true}) }}
+        {{ form.input("file", {label: "File", type: "file"}) }}
+        {{ form.submit('Create') }}
+      </form>
+    </div>
+  </div>
 {% endblock %}
