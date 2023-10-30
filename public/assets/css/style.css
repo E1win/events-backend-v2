@@ -180,6 +180,12 @@ h3 {
   column-gap: 0.25rem;
 }
 
+/* Togglable right-side menu */
+
+.togglable-menu {
+  width: 20rem;
+}
+
 /************************************/
 /* LOGIN */
 /************************************/
@@ -232,6 +238,10 @@ h3 {
 }
 
 .events-form-title {
+  padding: 0.5rem;
+}
+
+.card-event-detail {
   padding: 0.5rem;
 }
 

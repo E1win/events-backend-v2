@@ -16,8 +16,10 @@
   <div id="events-page">
     <!-- Content -->
     <div id="events-content">
-      <span class="card-event-date">{{event.date|date('d/m/Y')}} {{event.startTime}}</span>
-      <p class="card-event-description">{{event.description}}</p>
+      <div class="card card-event-detail">
+        <span class="card-event-date">{{event.date|date('d/m/Y')}} {{event.startTime}}</span>
+        <p class="card-event-description">{{event.description}}</p>
+      </div>
     </div>
 
     <!-- Create Event Form -->
