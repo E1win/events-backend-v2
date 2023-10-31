@@ -182,9 +182,20 @@ h3 {
 
 /* Togglable right-side menu */
 
-.togglable-menu {
-  width: 20rem;
+.toggleable-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 }
+
+.toggleable-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 /************************************/
 /* LOGIN */
@@ -233,7 +244,6 @@ h3 {
 }
 
 #events-form {
-  width: 20rem;
   padding: 0.5rem;
 }
 
@@ -250,11 +260,20 @@ h3 {
 /************************************/
 
 @media only screen and (min-width: 768px) {
+
+  .toggleable-menu {
+    position: unset;
+    width: 20rem;
+  }
+
+  .toggleable-menu-close {
+    display: none;
+  }
+
   .list-events {
     grid-template-columns: auto auto;
   }
 }
 
 @media only screen and (min-width: 1024px) {
-  
 }

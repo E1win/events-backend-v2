@@ -23,20 +23,23 @@
     </div>
 
     <!-- Create Event Form -->
-    <div x-show="open" id="events-form" class="card">
-      <h3 class="events-form-title">Edit Event</h3>
+    <div x-show="open" id="events-form" class="toggleable-menu card">
+      <div class="toggleable-menu-header">
+        <h3 class="events-form-title">Edit Event</h3>
+        <button class="toggleable-menu-close btn btn-primary" @click="open = !open">close</button>
+      </div>
 
       <form id="form-event" class="form-event" method="post" @submit.prevent="createEvent" accept-charset="UTF-8">
-        {{ form.input("name", {label: "Name", placeholder:"Name", required: true}) }}
-        {{ form.textarea("description", {label: "Description", placeholder:"Type your event description here..."}) }}
-        {{ form.input("date", {label: "Date", type: "date", required: true}) }}
+        {{ form.input("name", {label: "Name", placeholder:"Name", required: true, value:event.name}) }}
+        {{ form.textarea("description", {label: "Description", placeholder:"Type your event description here...", value:event.description}) }}
+        {{ form.input("date", {label: "Date", type: "date", required: true, value:event.date|date('Y-m-d')}) }}
         <div class="form-cols-2">
-          {{ form.input("startTime", {label: "Start time", placeholder:"Start time"}) }}
-          {{ form.input("endTime", {label: "End time", placeholder:"End time"}) }}
+          {{ form.input("startTime", {label: "Start time", placeholder:"Start time", value:event.startTime}) }}
+          {{ form.input("endTime", {label: "End time", placeholder:"End time", value:event.endTime}) }}
         </div>
-        {{ form.input("location", {label: "Location", placeholder:"Location", required: true}) }}
+        {{ form.input("location", {label: "Location", placeholder:"Location", required: true, value:event.location}) }}
         {{ form.input("file", {label: "File", type: "file"}) }}
-        {{ form.submit('Create') }}
+        {{ form.submit('Update') }}
       </form>
     </div>
   </div>

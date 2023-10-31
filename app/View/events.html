@@ -38,8 +38,11 @@
     </div>
 
     <!-- Create Event Form -->
-    <div x-show="open" id="events-form" class="card">
-      <h3 class="events-form-title">Create Event</h3>
+    <div x-show="open" id="events-form" class="toggleable-menu card">
+      <div class="toggleable-menu-header">
+        <h3 class="events-form-title">Create Event</h3>
+        <button class="toggleable-menu-close btn btn-primary" @click="open = !open">close</button>
+      </div>
 
       <form id="form-event" class="form-event" method="post" @submit.prevent="createEvent" accept-charset="UTF-8">
         {{ form.input("name", {label: "Name", placeholder:"Name", required: true}) }}
