@@ -111,10 +111,16 @@ async function events()
   }
 }
 
+/**
+ * PUBLIC HELPER FUNCTIONS
+ */
 
+function formatDate(date) {
+  return date.split(' ')[0].split('-').reverse().join('/');
+}
 
 /**
- * HELPER FUNCTIONS
+ * PRIVATE HELPER FUNCTIONS
  */
 
 function setCookie(name, value, expiresTimestamp) {

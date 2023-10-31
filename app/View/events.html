@@ -25,7 +25,7 @@
         <div class="list list-events">
           <template x-for="event in events">
             <a :href="`/events/${event.id}`" class="card card-event">
-              <span class="card-event-date" x-text="`${event.date} ${event.startTime} - ${event.endTime}`"></span>
+              <span class="card-event-date" x-text="`${formatDate(event.date.date)} ${event.startTime} - ${event.endTime}`"></span>
               <h3 class="card-event-title" x-text="event.name"></h3>
               <p class="card-event-description" x-text="event.description"></p>
               <div>
