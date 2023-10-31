@@ -22,7 +22,35 @@ class Event extends DataMapper
     return empty($data) === false;
   }
 
+  public function fetch(EntityEvent $entity)
+  {
+    $sql = "SELECT * FROM {$this->table} WHERE id = :id";
+
+    $statement = $this->connection->prepare($sql);
+
+    $statement->bindValue(":id", $entity->getId());
+    $statement->execute();
+
+    $data = $statement->fetch();
+
+    $data['date'] = new DateTimeImmutable($data['date']);
+
+    if ($data) {
+      $this->applyValues($entity, $data);
+    }
+  }
+
   public function store(EntityEvent $entity)
+  {
+    if ($entity->getId() === null) {
+      $this->createEvent($entity);
+      return;
+    }
+
+    $this->updateEvent($entity);
+  }
+
+  private function createEvent(EntityEvent $entity) 
   {
     $sql = "INSERT INTO {$this->table} 
       (name, description, date, start_time, end_time, location, image_id) VALUES 
@@ -42,21 +70,30 @@ class Event extends DataMapper
     $entity->setId($this->connection->lastInsertId());
   }
 
-  public function fetch(EntityEvent $entity)
+  private function updateEvent(EntityEvent $entity) 
   {
-    $sql = "SELECT * FROM {$this->table} WHERE id = :id";
-
+    $sql = "UPDATE {$this->table}
+            SET name = :name,
+                description = :description,
+                date = :date, 
+                start_time = :start_time, 
+                end_time = :end_time, 
+                location = :location, 
+                image_id = :image_id
+            WHERE id = :id";
+    
     $statement = $this->connection->prepare($sql);
 
     $statement->bindValue(":id", $entity->getId());
+    $statement->bindValue(':name', $entity->getName());
+    $statement->bindValue(':description', $entity->getDescription());
+    $statement->bindValue(':date', $entity->getDate()->format('Y-m-d'));
+    $statement->bindValue(':start_time', $entity->getStartTime());
+    $statement->bindValue(':end_time', $entity->getEndTime());
+    $statement->bindValue(':location', $entity->getLocation());
+    $statement->bindValue(':image_id', $entity->getImageId());
     $statement->execute();
 
-    $data = $statement->fetch();
-
-    $data['date'] = new DateTimeImmutable($data['date']);
-
-    if ($data) {
-      $this->applyValues($entity, $data);
-    }
+    $entity->setId($this->connection->lastInsertId());
   }
 }
