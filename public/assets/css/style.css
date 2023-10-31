@@ -196,6 +196,15 @@ h3 {
   align-items: center;
 }
 
+/* Other */
+
+.key-value span {
+  color: var(--gray-500);
+}
+
+.key-value p {
+  color: var(--primary-700);
+}
 
 /************************************/
 /* LOGIN */
