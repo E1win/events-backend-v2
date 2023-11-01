@@ -25,7 +25,7 @@ class EventService
     $event = new Event();
     $event->setName($body['name']);
     $event->setDescription($body['description']);
-    $event->setDate(new DateTimeImmutable);
+    $event->setDate(new DateTimeImmutable($body['date']));
     $event->setStartTime($body['startTime']);
     $event->setEndTime($body['endTime']);
     $event->setLocation($body['location']);
