@@ -39,6 +39,8 @@ class EventController extends Controller
       $events = $this->eventService->getAllUpcomingEvents();
     } else {
       // Get a number of upcoming events
+      $events = $this->eventService->getUpcomingEventsByAmount($amount);
+
     }
 
     return $this->responseFactory->createJsonResponse(

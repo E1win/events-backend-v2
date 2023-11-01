@@ -8,6 +8,7 @@ class EventCollection extends Collection
 {
   protected ?bool $completed = null;
   protected ?bool $upcoming = null;
+  protected ?int $amount = null;
 
   protected function buildEntity(): HasId
   {
@@ -32,5 +33,15 @@ class EventCollection extends Collection
   public function getUpcoming(): ?bool
   {
     return $this->upcoming;
+  }
+
+  public function forAmount(int $amount)
+  {
+    $this->amount = $amount;
+  }
+
+  public function getAmount(): ?int
+  {
+    return $this->amount;
   }
 }

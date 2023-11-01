@@ -29,7 +29,8 @@ class EventCollection extends DataMapper
 
   private function fetchUpcoming(EntityEventCollection $collection)
   {
-    $sql = "SELECT * FROM {$this->table} WHERE `date` >= DATE(NOW())";
+    $limit = $this->formatLimit($collection);
+    $sql = "SELECT * FROM {$this->table} WHERE `date` >= DATE(NOW()) {$limit}";
 
     $statement = $this->connection->prepare($sql);
 
@@ -43,6 +44,15 @@ class EventCollection extends DataMapper
     $statement = $this->connection->prepare($sql);
 
     $this->populateCollection($collection, $statement);   
+  }
+
+  private function formatLimit(EntityEventCollection $collection): string
+  {
+    if ($collection->getAmount() === null) {
+      return '';
+    } else {
+      return 'LIMIT ' . $collection->getAmount();
+    }
   }
 
   private function populateCollection(EntityEventCollection $collection, PDOStatement $statement)
