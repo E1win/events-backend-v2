@@ -1,10 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard{% endblock %}
+{% import "components/cards.html" as card %}
+{% import "components/forms.html" as form %}
 
-{% block headerTitle %}Dashboard{% endblock %}
+{% block title %}Events{% endblock %}
+
+{% block headerTitle %}Events{% endblock %}
+{% block header %}
+  <button class="btn btn-primary" @click="open = !open">Create Event</button>
+{% endblock %}
+
+{% block contentAttributes %}x-data="{ open: false }"{% endblock %}
 
 {% block content %}
-  <p>content</p>
-  
+  <div x-data="{ events: []}" x-init="events = await (await fetch('api/events/upcoming/2')).json()" class="home-next-events">
+    <h2>Next Event(s)</h2>
+    <div class="list list-events">
+      <template x-for="event in events">
+        <a :href="`/events/${event.id}`" class="card card-event">
+          <span class="card-event-date" x-text="`${formatDate(event.date.date)} ${event.startTime} - ${event.endTime}`"></span>
+          <h3 class="card-event-title" x-text="event.name"></h3>
+          <p class="card-event-description" x-text="event.description"></p>
+        </a>
+      </template>
+    </div>
+  </div>
 {% endblock %}
