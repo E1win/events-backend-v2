@@ -1,16 +1,10 @@
 {% extends "base.html" %}
 
 {% import "components/cards.html" as card %}
-{% import "components/forms.html" as form %}
 
-{% block title %}Events{% endblock %}
+{% block title %}Dashboard Overview{% endblock %}
 
-{% block headerTitle %}Events{% endblock %}
-{% block header %}
-  <button class="btn btn-primary" @click="open = !open">Create Event</button>
-{% endblock %}
-
-{% block contentAttributes %}x-data="{ open: false }"{% endblock %}
+{% block headerTitle %}Dashboard{% endblock %}
 
 {% block content %}
   <div x-data="{ events: []}" x-init="events = await (await fetch('api/events/upcoming/2')).json()" class="home-next-events">
