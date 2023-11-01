@@ -32,6 +32,20 @@ class EventController extends Controller
     );
   }
 
+  public function upcoming(ServerRequestInterface $request, ?int $amount = null): ResponseInterface
+  {
+    if ($amount == null) {
+      // Get all upcoming events
+      $events = $this->eventService->getAllUpcomingEvents();
+    } else {
+      // Get a number of upcoming events
+    }
+
+    return $this->responseFactory->createJsonResponse(
+      $events
+    );
+  }
+
   public function store(ServerRequestInterface $request): ResponseInterface
   {
     $body = $request->getParsedBody();

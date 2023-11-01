@@ -7,6 +7,7 @@ use Framework\Model\Entity\Contract\HasId;
 class EventCollection extends Collection
 {
   protected ?bool $completed = null;
+  protected ?bool $upcoming = null;
 
   protected function buildEntity(): HasId
   {
@@ -21,5 +22,15 @@ class EventCollection extends Collection
   public function getCompleted(): ?bool
   {
     return $this->completed;
+  }
+
+  public function forUpcoming(bool $upcoming)
+  {
+    $this->upcoming = $upcoming;
+  }
+
+  public function getUpcoming(): ?bool
+  {
+    return $this->upcoming;
   }
 }

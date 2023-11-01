@@ -57,6 +57,15 @@ class EventService
     return $collection;
   }
 
+  public function getAllUpcomingEvents(): EventCollection
+  {
+    $collection = new EventCollection();
+    $collection->forUpcoming(true);
+    $this->collectionMapper->fetch($collection);
+
+    return $collection;
+  }
+
   public function getParticipantsByEventId(int $id): UserCollection
   {
     $participants = $this->participantService->getParticipantsByEventId($id);

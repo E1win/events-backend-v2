@@ -10,7 +10,35 @@ class EventCollection extends DataMapper
 {
   public function fetch(EntityEventCollection $collection)
   {
-    $sql = "SELECT * FROM {$this->table}";
+    if ($collection->getUpcoming() !== null) {
+      $this->fetchUpcoming($collection);
+      return;
+    }
+    
+    $this->fetchUncompleted($collection);
+  }
+
+  private function fetchUncompleted(EntityEventCollection $collection)
+  {
+    $sql = "SELECT * FROM {$this->table} WHERE NOT completed ORDER BY date ASC";
+
+    $statement = $this->connection->prepare($sql);
+
+    $this->populateCollection($collection, $statement);   
+  }
+
+  private function fetchUpcoming(EntityEventCollection $collection)
+  {
+    $sql = "SELECT * FROM {$this->table} WHERE `date` >= DATE(NOW())";
+
+    $statement = $this->connection->prepare($sql);
+
+    $this->populateCollection($collection, $statement);   
+  }
+
+  private function fetchAll(EntityEventCollection $collection)
+  {
+    $sql = "SELECT * FROM {$this->table} ORDER BY date ASC";
 
     $statement = $this->connection->prepare($sql);
 
