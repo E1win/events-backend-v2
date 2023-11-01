@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% import "components/misc.html" as misc %}
+
+{% block title %}Users{% endblock %}
+
+{% block headerTitle %}Users{% endblock %}
+{% block header %}
+  <button class="btn btn-primary" @click="open = !open">Create Event</button>
+{% endblock %}
+
+{% block contentAttributes %}x-data="{ open: false }"{% endblock %}
+
+{% block content %}
+  <div x-data="{ users: []}" x-init="users = await (await fetch('api/users')).json()" id="users-page">
+    <!-- Content -->
+    <div id="events-content">
+      <div>
+        <!-- Options -->
+      </div>
+      <div>
+        <h2>List</h2>
+    
+        <div class="list list-users">
+          <template x-for="user in users">
+            <div class="card card-user">
+              <div class="key-value">
+                <span>Name</span>
+                <p x-text="user.name"></p>
+              </div>
+
+              <span class="card-user-date" x-text="`${formatDate(user.date.date)} ${user.startTime} - ${user.endTime}`"></span>
+              <h3 class="card-user-title" x-text="user.name"></h3>
+              <p class="card-user-description" x-text="user.description"></p>
+              <div>
+                <button class="btn btn-primary">More Info</button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
