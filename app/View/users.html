@@ -5,16 +5,11 @@
 {% block title %}Users{% endblock %}
 
 {% block headerTitle %}Users{% endblock %}
-{% block header %}
-  <button class="btn btn-primary" @click="open = !open">Create Event</button>
-{% endblock %}
-
-{% block contentAttributes %}x-data="{ open: false }"{% endblock %}
 
 {% block content %}
   <div x-data="{ users: []}" x-init="users = await (await fetch('api/users')).json()" id="users-page">
     <!-- Content -->
-    <div id="events-content">
+    <div id="users-content">
       <div>
         <!-- Options -->
       </div>
@@ -25,8 +20,16 @@
           <template x-for="user in users">
             <div class="card card-user">
               <div class="key-value">
+                <span>Email</span>
+                <p x-text="user.email"></p>
+              </div>
+              <div class="key-value">
                 <span>Name</span>
-                <p x-text="user.name"></p>
+                <p x-text="user.firstName"></p>
+              </div>
+              <div class="key-value">
+                <span>Last online</span>
+                <p x-text="formatLastOnline(user.expiresOn)"></p>
               </div>
             </div>
           </template>
