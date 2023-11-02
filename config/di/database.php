@@ -9,6 +9,7 @@ use App\Model\Mapper\Image;
 use App\Model\Mapper\ParticipantCollection;
 
 use Framework\Auth\Model\Mapper\User;
+use Framework\Auth\Model\Mapper\UserCollection;
 
 /**
  * TODO: Some mappers can also just find out their default
@@ -43,6 +44,10 @@ return [
     'participants'
   ],
   User::class => [
+    PDO::class,
+    'users'
+  ],
+  UserCollection::class => [
     PDO::class,
     'users'
   ],

@@ -13,6 +13,8 @@ namespace Framework\Auth\Model\Service;
 use Framework\Auth\Model\Entity\User;
 use Framework\Auth\Model\Mapper\User as UserMapper;
 use Framework\Auth\Exception\UserNotFoundException;
+use Framework\Auth\Model\Entity\UserCollection;
+use Framework\Auth\Model\Mapper\UserCollection as UserCollectionMapper;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -23,8 +25,17 @@ class UserService
 
 
   public function __construct(
-    private UserMapper $mapper
+    private UserMapper $mapper,
+    private UserCollectionMapper $collectionMapper,
   ) { }
+
+  public function getAllUsers(): UserCollection
+  {
+    $collection = new UserCollection();
+    $this->collectionMapper->fetch($collection);
+
+    return $collection;
+  }
 
   public function getUserById(int $id): User
   {
