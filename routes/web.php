@@ -4,6 +4,7 @@ use Framework\Routing\Router;
 
 use App\Http\Controller\Web\AuthController;
 use App\Http\Controller\Web\EventController;
+use App\Http\Controller\Web\UserController;
 use App\Http\Controller\Web\ViewController;
 use Framework\Auth\Middleware\AdminAuthMiddleware;
 use Framework\Auth\Middleware\AuthMiddleware;
@@ -26,6 +27,8 @@ $router->group('', function(Router $router) {
   $router->get('/events', [EventController::class, 'index']);
   $router->post('/events', [EventController::class, 'store']);
   $router->get('/events/{id:number}', [EventController::class, 'show']);
+
+  $router->get('/users', [UserController::class, 'index']);
 })->addMiddlewares([
   UserInRequestMiddleware::class,
   AuthMiddleware::class,

@@ -21,8 +21,6 @@ class UserController extends Controller
   {
     $users = $this->userService->getAllUsers();
 
-    // filter certain info out of user info (like passwords)
-
     return $this->responseFactory->createJsonResponse(
       $users
     );
