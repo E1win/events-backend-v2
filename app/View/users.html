@@ -31,6 +31,18 @@
                 <span>Last online</span>
                 <p x-text="formatLastOnline(user.expiresOn)"></p>
               </div>
+              <div class="key-value">
+                <span>Role</span>
+                <template x-if="user.roleId == 3">
+                  <div>
+                    <p>Role dropdown</p>
+                  </div>
+                </template>
+
+                <template x-if="user.roleId != 3">
+                  <p x-text="formatRole(user.roleId)"></p>
+                </template>
+              </div>
             </div>
           </template>
         </div>

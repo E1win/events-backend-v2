@@ -8,6 +8,7 @@ const TOKEN_NAME = 'EventsCMSSession';
 const loginForm = document.getElementById('form-login');
 const eventForm = document.getElementById('form-event');
 
+let roles = ['User', 'Admin', 'Owner'];
 
 async function doRequest(url, method = "GET", body = {}, headers = {}) {
   const response = await fetch(API_URL + url, {
@@ -129,6 +130,10 @@ function formatLastOnline(timestamp) {
   }
 
   return timeSince(timestamp);
+}
+
+function formatRole(roleId) {
+  return roles[roleId - 1];
 }
 
 
