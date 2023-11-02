@@ -19,6 +19,15 @@
 <body>
   <div id="wrapper">
     {% if loggedIn == true %}
+      <div x-data="{open: false}" id="navigation">
+        <div id="top-bar">
+          <h2>EventsCMS</h2>
+
+          <button class="btn btn-primary" @click="open = !open">
+            Menu
+          </button>
+        </div>
+      </div>
       <div id="side-menu">
         <!-- Side Menu -->
         <div id="side-menu-content">
