@@ -42,15 +42,27 @@ class FileSystemManager implements ContractFileSystemManager
     return $this->streamFactory->createStreamFromFile($path);
   }
 
+  public function getFilePath(string $fileName, string $fileMediaType, string $directory = ""): string
+  {
+    $fileExtension = $this->formatFileExtension($fileMediaType);
+
+    return $directory . $fileName . ".". $fileExtension;
+  }
+
   private function formatPath(string $fileName, string $fileMediaType, string $directory = ""): string
+  {
+    $fileExtension = $this->formatFileExtension($fileMediaType);
+    $path = $this->storageDir . $directory . $fileName . ".". $fileExtension;
+
+    return $path;
+  }
+
+  private function formatFileExtension(string $fileMediaType): string
   {
     if (!key_exists($fileMediaType, $this->allowedFileExtensions)) {
       throw new Exception("File extension '{$fileMediaType}' not allowed");
     }
 
-    $fileExtension = $this->allowedFileExtensions[$fileMediaType];
-    $path = $this->storageDir . $directory . $fileName . ".". $fileExtension;
-
-    return $path;
+    return $this->allowedFileExtensions[$fileMediaType];
   }
 }

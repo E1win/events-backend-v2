@@ -2,6 +2,7 @@
 namespace App\Http\Controller\Api;
 
 use App\Model\Service\EventService;
+use App\Model\Service\ImageService;
 use Framework\Controller\Controller;
 use Framework\Message\Contract\JsonResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -10,8 +11,9 @@ use Psr\Http\Message\ServerRequestInterface;
 class EventController extends Controller
 {
   public function __construct(
-    private JsonResponseFactoryInterface $responseFactory,
-    private EventService $eventService
+    private JsonResponseFactoryInterface $responseFactory,    
+    private EventService $eventService,
+    private ImageService $imageService
   ) {}
 
   public function index(ServerRequestInterface $request): ResponseInterface
@@ -27,8 +29,14 @@ class EventController extends Controller
   {
     $event = $this->eventService->getEventById($id);
 
+    $imageUrl = $event->getImageId() != null ? $this->imageService->loadImageUrlById($event->getImageId()) : null;
+
+    $eventArray = $event->toArray();
+
+    $eventArray['image_url'] = $imageUrl;
+
     return $this->responseFactory->createJsonResponse(
-      $event
+      $eventArray
     );
   }
 

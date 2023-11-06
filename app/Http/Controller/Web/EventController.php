@@ -29,14 +29,11 @@ class EventController extends Controller
   {
     $event = $this->eventService->getEventById($id);
 
-    $image = null;
-    if ($event->getImageId() != null) {
-      $image = $this->imageService->loadBase64EncodedImageById($event->getImageId());
-    }
+    $imageUrl = $event->getImageId() != null ? $this->imageService->loadImageUrlById($event->getImageId()) : null;
 
     $eventArray = $event->toArray();
 
-    $eventArray['image_url'] = $image;
+    $eventArray['image_url'] = $imageUrl;
 
     return $this->view->load('event.html', $request, [
       'event' => $eventArray,

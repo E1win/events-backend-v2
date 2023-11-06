@@ -15,6 +15,15 @@ class ImageService
     private FileSystemManager $fileSystemManager
   ) { }
 
+  public function loadImageUrlById(int $id): string
+  {
+    $image = new Image($id);
+
+    $this->mapper->fetch($image);
+
+    return $this->fileSystemManager->getFilePath($image->getId(), $image->getContentType(), $this->imagesDir);
+  }
+
   public function loadBase64EncodedImageById(int $id): string
   {
     $image = new Image($id);

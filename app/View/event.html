@@ -29,7 +29,7 @@
         {{ misc.keyValue("Completed", event.completed ? 'Yes' : 'No')}}
         <div class="key-value">
           <span>Image</span>
-          <img class="card-event-image" src="{{event.image_url}}">
+          <img class="card-event-image" src="{{ event.image_url|asset }}">
         </div>
         
         <div class="button-group">

@@ -9,4 +9,6 @@ interface FileSystemManager
   public function upload(UploadedFileInterface $file, string $fileName, string $directory = "");
 
   public function load(string $fileName, string $fileMediaType, string $directory = ""): StreamInterface;
+
+  public function getFilePath(string $fileName, string $fileMediaType, string $directory = ""): string;
 }
