@@ -299,7 +299,12 @@ h3 {
 }
 
 .card-event-image {
-  max-width: 30rem;
+  width: 30rem;
+  max-width: 100%;
+}
+
+.event-edit-btn-header {
+  display: none;
 }
 
 /************************************/
@@ -356,6 +361,10 @@ h3 {
 
   .list-events {
     grid-template-columns: auto auto;
+  }
+
+  .event-edit-btn-header {
+    display: block;
   }
 }
 

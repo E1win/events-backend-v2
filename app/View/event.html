@@ -6,9 +6,9 @@
 
 {% block title %}Event - {{event.name}}{% endblock %}
 
-{% block headerTitle %}Event detailpage{% endblock %}
+{% block headerTitle %}Event - {{event.name}}{% endblock %}
 {% block header %}
-  <button class="btn btn-primary" @click="open = !open">Edit Event</button>
+  <button class="btn btn-primary event-edit-btn-header" @click="open = !open">Edit Event</button>
 {% endblock %}
 
 {% block contentAttributes %}x-data="{ open: false }"{% endblock %}
@@ -33,6 +33,7 @@
         </div>
         
         <div class="button-group">
+          <button class="btn btn-primary" @click="open = !open">Edit event</button>
           <button class="btn btn-primary">Mark completed</button>
           <button class="btn btn-danger">Delete</button>
         </div>
