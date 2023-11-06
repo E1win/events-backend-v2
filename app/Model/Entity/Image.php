@@ -6,8 +6,8 @@ use Framework\Model\Entity\Entity;
 class Image extends Entity
 {
   protected ?int $id;
-  public string $name;
-  public string $fileExtension;
+  public ?string $name = null;
+  public ?string $contentType = null;
 
   public function __construct(?int $id = null)
   {
@@ -29,18 +29,18 @@ class Image extends Entity
     $this->name = $name;
   }
 
-  public function getName(): string
+  public function getName(): ?string
   {
     return $this->name;
   }
 
-  public function setFileExtension(string $fileExtension)
+  public function setContentType(string $contentType)
   {
-    $this->fileExtension = $fileExtension;
+    $this->contentType = $contentType;
   }
 
-  public function getFileExtension(): string
+  public function getContentType(): ?string
   {
-    return $this->fileExtension;
+    return $this->contentType;
   }
 }

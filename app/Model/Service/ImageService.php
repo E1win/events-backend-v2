@@ -21,13 +21,13 @@ class ImageService
 
     $this->mapper->fetch($image);
 
-    $fileStream = $this->fileSystemManager->load($image->getId(), $image->getFileExtension(), $this->imagesDir);
+    $fileStream = $this->fileSystemManager->load($image->getId(), $image->getContentType(), $this->imagesDir);
 
     $imageData = $fileStream->getContents();
 
     $base64Data = base64_encode($imageData);
 
-    $imageSource = "data:{$image->getFileExtension()};base64,{$base64Data}";
+    $imageSource = "data:{$image->getContentType()};base64,{$base64Data}";
 
     return $imageSource;
   }
@@ -37,7 +37,7 @@ class ImageService
     $image = new Image();
 
     $image->setName($file->getClientFilename());
-    $image->setFileExtension($file->getClientMediaType());
+    $image->setContentType($file->getClientMediaType());
 
     $this->mapper->store($image);
 

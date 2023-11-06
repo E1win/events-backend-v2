@@ -15,9 +15,9 @@ async function doRequest(url, method = "GET", body = {}, headers = {}) {
     credentials: "same-origin",
     method: method,
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      ...headers
+      // 'Accept': 'application/json',
+      // 'Content-Type': 'application/json',
+      // ...headers
     },
     ...createBody(body, method)
   });
@@ -93,7 +93,20 @@ async function createEvent() {
   console.log(Object.fromEntries(formData));
   
   try {
-    const response = await doRequest('/events', 'POST', Object.fromEntries(formData));
+    // const response = await doRequest('/events', 'POST', formData);
+
+    let response = await fetch(API_URL + '/events', {
+      credentials: "same-origin",
+      method: "POST",
+      headers: {
+        // 'Accept': 'application/json',
+        // 'Content-Type': 'application/json',
+        // ...headers
+      },
+      body: formData
+    });
+  
+    response = response.json();
     
     console.log(response);
   } catch (error) {

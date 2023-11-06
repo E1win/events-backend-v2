@@ -9,12 +9,12 @@ class Image extends DataMapper
 {
   public function store(ImageEntity $image)
   {
-    $sql = "INSERT INTO {$this->table} (name, file_extension) VALUES (:name, :file_extension)";
+    $sql = "INSERT INTO {$this->table} (name, content_type) VALUES (:name, :content_type)";
     
     $statement = $this->connection->prepare($sql);
 
     $statement->bindValue(':name', $image->getName(), PDO::PARAM_STR);
-    $statement->bindValue(':file_extension', $image->getFileExtension(), PDO::PARAM_STR);
+    $statement->bindValue(':content_type', $image->getContentType(), PDO::PARAM_STR);
     $statement->execute();
 
     $image->setId($this->connection->lastInsertId());
