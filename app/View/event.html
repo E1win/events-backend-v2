@@ -18,8 +18,6 @@
     <!-- Content -->
     <div id="events-content">
       <div class="card card-event-detail">
-        <img src="{{image}}">
-        <!-- <span class="card-event-date">{{event.date|date('d/m/Y')}} {{event.startTime}}</span> -->
         {{ misc.keyValue("Name", event.name)}}
         {{ misc.keyValue("Description", event.description)}}
         {{ misc.keyValue("Date", event.date|date('d/m/Y'))}}
@@ -29,10 +27,14 @@
         </div>
         {{ misc.keyValue("Location", event.location)}}
         {{ misc.keyValue("Completed", event.completed ? 'Yes' : 'No')}}
+        <div class="key-value">
+          <span>Image</span>
+          <img class="card-event-image" src="{{event.image_url}}">
+        </div>
         
         <div class="button-group">
           <button class="btn btn-primary">Mark completed</button>
-          <button class="btn btn-primary">Mark completed</button>
+          <button class="btn btn-danger">Delete</button>
         </div>
       </div>
 

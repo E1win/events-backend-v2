@@ -216,6 +216,11 @@ h3 {
 
 /* Other */
 
+.key-value {
+  display: flex;
+  flex-direction: column;
+}
+
 .key-value span {
   color: var(--gray-500);
 }
@@ -291,6 +296,10 @@ h3 {
 
 .card-event-detail .key-value p {
   font-weight: 600;
+}
+
+.card-event-image {
+  max-width: 30rem;
 }
 
 /************************************/
