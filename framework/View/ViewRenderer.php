@@ -20,6 +20,10 @@ class ViewRenderer implements ContractViewRenderer
   public function load(string $url, ?ServerRequestInterface $request = null, array $context = []): ResponseInterface
   {
     $filter = new TwigFilter('asset', function($asset) {
+      if ($asset == null) {
+        return null;
+      }
+
       return sprintf('../assets/%s', ltrim($asset, '/'));
     });
 
