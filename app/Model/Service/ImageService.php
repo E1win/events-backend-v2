@@ -21,7 +21,9 @@ class ImageService
 
     $this->mapper->fetch($image);
 
-    return $this->fileSystemManager->getFilePath($image->getId(), $image->getContentType(), $this->imagesDir);
+    $fileName = $this->formatImageFileName($image->getId(), $image->getName());
+
+    return $this->fileSystemManager->getFilePath($fileName, $image->getContentType(), $this->imagesDir);
   }
 
   public function loadBase64EncodedImageById(int $id): string
@@ -45,13 +47,21 @@ class ImageService
   {
     $image = new Image();
 
-    $image->setName($file->getClientFilename());
+    $name = explode('.', $file->getClientFilename())[0];
+
+    $image->setName($name);
     $image->setContentType($file->getClientMediaType());
 
     $this->mapper->store($image);
 
-    $this->fileSystemManager->upload($file, $image->getId(), $this->imagesDir);
+    $fileName = $this->formatImageFileName($image->getId(), $image->getName());
+
+    $this->fileSystemManager->upload($file, $fileName, $this->imagesDir);
 
     return $image;
+  }
+
+  private function formatImageFileName(int $id, string $name): string {
+    return "{$id}-{$name}";
   }
 }
