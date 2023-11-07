@@ -303,8 +303,19 @@ h3 {
   max-width: 100%;
 }
 
-.event-edit-btn-header {
+.mobile-only {
+  display: block;
+}
+
+.desktop-only {
   display: none;
+}
+
+.desktop-event-edit-btn {
+  display: none;
+}
+
+.mobile-event-edit-btn {
 }
 
 /************************************/
@@ -363,8 +374,12 @@ h3 {
     grid-template-columns: auto auto;
   }
 
-  .event-edit-btn-header {
+  .desktop-only {
     display: block;
+  }
+
+  .mobile-only {
+    display: none;
   }
 }
 
