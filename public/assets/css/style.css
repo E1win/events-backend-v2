@@ -87,6 +87,32 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-800);
+  color: #fff;
+}
+
+#mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: var(--primary-800);
+  color: #fff;
+  padding: 1rem;
+}
+
+.mobile-menu-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
 }
 
 #side-menu {
@@ -108,12 +134,12 @@ header {
   row-gap: 2rem;
 }
 
-#side-menu-content nav {
+.navigation {
   display: flex;
   flex-direction: column;
 }
 
-#side-menu-content nav a {
+.navigation a {
   color: #fff;
   font-size: 1.2rem;
   padding: 0.5rem 0;
@@ -135,6 +161,14 @@ button {
 
 .btn {
   border: none;
+}
+
+.btn-reset {
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-primary {
@@ -364,6 +398,7 @@ h3 {
   .toggleable-menu {
     position: unset;
     width: 20rem;
+    height: auto;
   }
 
   .toggleable-menu-close {

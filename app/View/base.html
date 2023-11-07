@@ -23,9 +23,33 @@
         <div id="top-bar">
           <h2>EventsCMS</h2>
 
-          <button class="btn btn-primary" @click="open = !open">
-            Menu
+          <button class="btn-reset" @click="open = !open">
+            <svg width="32" height="32" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.5 14H24.5" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M3.5 7H24.5" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M3.5 21H24.5" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+            </svg>            
           </button>
+        </div>
+        <div x-show="open" id="mobile-menu">
+          <div class="mobile-menu-top">
+            <button class="btn-reset" @click="open = !open">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.63574 18.364L18.3637 5.63604" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M5.63574 5.63609L18.3637 18.364" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="mobile-menu-center">
+            <nav class="navigation">
+              <a href="/"><span>Overview</span></a>
+              <a href="/events"><span>Events</span></a>
+              <a href="/users"><span>Users</span></a>
+            </nav>
+          </div>
+          <div class="mobile-menu-bottom">
+            <button onclick="event.preventDefault(); logout()">Logout</button>
+          </div>
         </div>
       </div>
       <div id="side-menu">
@@ -33,7 +57,7 @@
         <div id="side-menu-content">
           <h2>EventsCMS</h2>
     
-          <nav>
+          <nav class="navigation">
             <a href="/"><span>Overview</span></a>
             <a href="/events"><span>Events</span></a>
             <a href="/users"><span>Users</span></a>

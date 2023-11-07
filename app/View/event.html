@@ -36,7 +36,6 @@
         
         <div class="button-group">
           <button class="btn btn-primary mobile-only" @click="open = !open">Edit event</button>
-          <button class="btn btn-primary">Mark completed</button>
           <button class="btn btn-danger">Delete</button>
         </div>
       </div>
@@ -66,6 +65,7 @@
         {{ form.input("location", {label: "Location", placeholder:"Location", required: true, value:event.location}) }}
         {{ form.input("file", {label: "File", type: "file"}) }}
         {{ form.submit('Update') }}
+        <button class="btn btn-primary">Mark completed</button>
       </form>
     </div>
   </div>
