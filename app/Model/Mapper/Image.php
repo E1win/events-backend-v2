@@ -35,4 +35,9 @@ class Image extends DataMapper
       $this->applyValues($image, $data);
     }
   }
+
+  public function remove(ImageEntity $image)
+  {
+    // blahblahblahblahbalhbalbhah
+  }
 }

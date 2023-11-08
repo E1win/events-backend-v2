@@ -93,16 +93,32 @@ async function createEvent() {
   console.log(Object.fromEntries(formData));
   
   try {
-    // const response = await doRequest('/events', 'POST', formData);
 
     let response = await fetch(API_URL + '/events', {
       credentials: "same-origin",
       method: "POST",
-      headers: {
-        // 'Accept': 'application/json',
-        // 'Content-Type': 'application/json',
-        // ...headers
-      },
+      body: formData
+    });
+  
+    response = response.json();
+    
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function updateEvent(eventId) {
+  let formData = new FormData(eventForm);
+
+  console.log(Object.fromEntries(formData));
+  console.log(eventId);
+
+  
+  try {
+    let response = await fetch(API_URL + `/events/${eventId}`, {
+      credentials: "same-origin",
+      method: "PUT",
       body: formData
     });
   

@@ -6,6 +6,7 @@ use App\Model\Entity\EventCollection;
 use App\Model\Mapper\Event as EventMapper;
 use App\Model\Mapper\EventCollection as EventCollectionMapper;
 use DateTimeImmutable;
+use Exception;
 use Framework\Auth\Model\Entity\UserCollection;
 use Framework\Auth\Model\Service\UserService;
 use Psr\Http\Message\UploadedFileInterface;
@@ -20,6 +21,14 @@ class EventService
     private ImageService $imageService
   ) { }
 
+  public function eventExists(int $id): bool
+  {
+    $event = new Event();
+    $event->setId($id);
+
+    return $this->mapper->exists($event);
+  }
+
   public function createEvent(array $body, ?UploadedFileInterface $image = null): Event
   {
     $event = new Event();
@@ -33,6 +42,33 @@ class EventService
     if ($image !== null) {
       $image = $this->imageService->uploadImage($image);
       $event->setImageId($image->getId());
+    }
+
+    $this->mapper->store($event);
+
+    return $event;
+  }
+
+  public function updateEvent(int $id, array $body, ?UploadedFileInterface $image = null): Event
+  {
+    $event = $this->getEventById($id);
+
+    $event->setName($body['name']);
+    $event->setDescription($body['description']);
+    $event->setDate(new DateTimeImmutable($body['date']));
+    $event->setStartTime($body['startTime']);
+    $event->setEndTime($body['endTime']);
+    $event->setLocation($body['location']);
+
+    if ($image != null) {
+      $prevImageId = $event->getImageId();
+
+      $image = $this->imageService->uploadImage($image);
+      $event->setImageId($image->getId());
+      
+      if ($prevImageId != null) {
+        // TODO: Delete event from file storage and database
+      }
     }
 
     $this->mapper->store($event);

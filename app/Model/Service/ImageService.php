@@ -61,6 +61,13 @@ class ImageService
     return $image;
   }
 
+  public function deleteImageById(int $id)
+  {
+    $image = new Image();
+
+    $image->setId($id);
+  }
+
   private function formatImageFileName(int $id, string $name): string {
     return "{$id}-{$name}";
   }

@@ -93,7 +93,5 @@ class Event extends DataMapper
     $statement->bindValue(':location', $entity->getLocation());
     $statement->bindValue(':image_id', $entity->getImageId());
     $statement->execute();
-
-    $entity->setId($this->connection->lastInsertId());
   }
 }

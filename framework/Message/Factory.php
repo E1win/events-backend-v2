@@ -80,11 +80,14 @@ class Factory implements RedirectResponseFactoryInterface, HtmlResponseFactoryIn
 
     $body = new InputStream();
 
+
     if (!empty($_POST)) {
       $parsedBody = $_POST;
     } else {
       $parsedBody = json_decode($body->getContents(), true);
     }
+
+    var_dump($serverParams['REQUEST_METHOD']);
 
 
     // Create functions for stuff like protocol version later.

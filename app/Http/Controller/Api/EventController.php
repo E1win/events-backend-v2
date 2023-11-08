@@ -3,6 +3,7 @@ namespace App\Http\Controller\Api;
 
 use App\Model\Service\EventService;
 use App\Model\Service\ImageService;
+use Exception;
 use Framework\Controller\Controller;
 use Framework\Message\Contract\JsonResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -69,6 +70,28 @@ class EventController extends Controller
 
     $event = $this->eventService->createEvent($body, $image);
     
+    return $this->responseFactory->createJsonResponse(
+      $event,
+    );
+  }
+
+  public function update(ServerRequestInterface $request, int $id): ResponseInterface
+  {
+    $body = $request->getParsedBody();
+
+    $files = $request->getUploadedFiles();
+
+    $image = null;
+    if (count($files) !== 0) {
+      $image = $files[0];
+    }
+
+    echo '<pre>';
+    var_dump($request);
+    echo '</pre>';
+
+    $event = $this->eventService->updateEvent($id, $body, $image);
+
     return $this->responseFactory->createJsonResponse(
       $event,
     );

@@ -54,7 +54,7 @@
         <button class="toggleable-menu-close btn btn-primary" @click="open = !open">close</button>
       </div>
 
-      <form id="form-event" class="form-event" method="post" @submit.prevent="createEvent" accept-charset="UTF-8">
+      <form id="form-event" class="form-event" method="post" @submit.prevent="updateEvent({{event.id}})" accept-charset="UTF-8">
         {{ form.input("name", {label: "Name", placeholder:"Name", required: true, value:event.name}) }}
         {{ form.textarea("description", {label: "Description", placeholder:"Type your event description here...", value:event.description}) }}
         {{ form.input("date", {label: "Date", type: "date", required: true, value:event.date|date('Y-m-d')}) }}
@@ -63,7 +63,7 @@
           {{ form.input("endTime", {label: "End time", placeholder:"End time", value:event.endTime}) }}
         </div>
         {{ form.input("location", {label: "Location", placeholder:"Location", required: true, value:event.location}) }}
-        {{ form.input("file", {label: "File", type: "file"}) }}
+        {{ form.input("image", {label: "Image", type: "file"}) }}
         {{ form.submit('Update') }}
         <button class="btn btn-primary">Mark completed</button>
       </form>
