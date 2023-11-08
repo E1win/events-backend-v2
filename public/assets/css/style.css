@@ -383,6 +383,10 @@ h3 {
     flex-direction: row;
   }
 
+  #mobile-menu {
+    display: none;
+  }
+
   #top-bar {
     display: none;
   }
