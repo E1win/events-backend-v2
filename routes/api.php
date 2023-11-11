@@ -26,7 +26,7 @@ $router->group('', function(Router $router) {
   $router->group('', function(Router $router) {
     $router->post('/events', [EventController::class, 'store']);
     $router->get('/users', [UserController::class, 'index']);
-    $router->put('/events/{id:number}', [EventController::class, 'update']);
+    $router->post('/events/{id:number}', [EventController::class, 'update']);
   })->addMiddleware(AdminAuthMiddleware::class);
 
 })->addMiddlewares([

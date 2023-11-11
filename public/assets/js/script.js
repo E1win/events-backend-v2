@@ -118,7 +118,7 @@ async function updateEvent(eventId) {
   try {
     let response = await fetch(API_URL + `/events/${eventId}`, {
       credentials: "same-origin",
-      method: "PUT",
+      method: "POST",
       body: formData
     });
   

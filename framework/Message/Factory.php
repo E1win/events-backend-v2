@@ -87,8 +87,6 @@ class Factory implements RedirectResponseFactoryInterface, HtmlResponseFactoryIn
       $parsedBody = json_decode($body->getContents(), true);
     }
 
-    var_dump($serverParams['REQUEST_METHOD']);
-
 
     // Create functions for stuff like protocol version later.
 

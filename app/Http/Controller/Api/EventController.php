@@ -86,10 +86,6 @@ class EventController extends Controller
       $image = $files[0];
     }
 
-    echo '<pre>';
-    var_dump($request);
-    echo '</pre>';
-
     $event = $this->eventService->updateEvent($id, $body, $image);
 
     return $this->responseFactory->createJsonResponse(
