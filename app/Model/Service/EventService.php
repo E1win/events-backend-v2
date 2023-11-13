@@ -59,7 +59,10 @@ class EventService
     $event->setStartTime($body['startTime']);
     $event->setEndTime($body['endTime']);
     $event->setLocation($body['location']);
-    $event->setCompleted($body['completed']);
+
+    if (isset($body['completed'])) {
+      $event->setCompleted($body['completed']);
+    }
 
     if ($image != null) {
       $prevImageId = $event->getImageId();
