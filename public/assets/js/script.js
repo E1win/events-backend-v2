@@ -154,9 +154,7 @@ async function deleteEvent(eventId) {
       method: "DELETE",
     });
 
-    console.log(response);
-
-
+    redirect("/events");
   } catch (error) {
     console.error(error);
     return 'Failed to delete event...';
