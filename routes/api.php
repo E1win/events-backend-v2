@@ -26,6 +26,7 @@ $router->group('', function(Router $router) {
   $router->group('', function(Router $router) {
     $router->post('/events', [EventController::class, 'store']);
     $router->post('/events/{id:number}', [EventController::class, 'update']);
+    $router->post('/events/{id:number}/completed', [EventController::class, 'markEventCompleted']);
     $router->delete('/events/{id:number}', [EventController::class, 'delete']);
 
     $router->get('/users', [UserController::class, 'index']);

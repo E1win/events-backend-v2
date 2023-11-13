@@ -88,6 +88,19 @@ class EventController extends Controller
     );
   }
 
+  public function markEventCompleted(ServerRequestInterface $request, int $id): ResponseInterface
+  {
+    $body = $request->getParsedBody();
+
+    $completed = $body['completed'];
+
+    $event = $this->eventService->markEventCompletedById($id, $completed);
+
+    return $this->responseFactory->createJsonResponse(
+      $this->formatEventArrayWithImageUrl($event),
+    );
+  }
+
   public function delete(ServerRequestInterface $request, int $id): ResponseInterface
   {
     $event = $this->eventService->deleteEventById($id);

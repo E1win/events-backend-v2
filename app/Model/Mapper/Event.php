@@ -89,7 +89,8 @@ class Event extends DataMapper
                 start_time = :start_time, 
                 end_time = :end_time, 
                 location = :location, 
-                image_id = :image_id
+                image_id = :image_id,
+                completed = :completed
             WHERE id = :id";
     
     $statement = $this->connection->prepare($sql);
@@ -102,6 +103,7 @@ class Event extends DataMapper
     $statement->bindValue(':end_time', $entity->getEndTime());
     $statement->bindValue(':location', $entity->getLocation());
     $statement->bindValue(':image_id', $entity->getImageId());
+    $statement->bindValue(':completed', $entity->getCompleted(), PDO::PARAM_BOOL);
     $statement->execute();
   }
 }

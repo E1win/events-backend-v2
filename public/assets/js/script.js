@@ -128,6 +128,25 @@ async function updateEvent(eventId) {
   }
 }
 
+async function setEventCompleted(eventId, completed) {
+
+  let body = JSON.stringify({
+    'completed': completed
+  });
+  
+  try {
+    let response = await fetch(API_URL + `/events/${eventId}/completed`, {
+      credentials: "same-origin",
+      method: "POST",
+      body: body
+    });
+  
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function deleteEvent(eventId) {
   try {
     let response = await fetch(API_URL + `/events/${eventId}`, {
@@ -137,7 +156,7 @@ async function deleteEvent(eventId) {
 
     console.log(response);
 
-    
+
   } catch (error) {
     console.error(error);
     return 'Failed to delete event...';

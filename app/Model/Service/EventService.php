@@ -59,6 +59,7 @@ class EventService
     $event->setStartTime($body['startTime']);
     $event->setEndTime($body['endTime']);
     $event->setLocation($body['location']);
+    $event->setCompleted($body['completed']);
 
     if ($image != null) {
       $prevImageId = $event->getImageId();
@@ -70,6 +71,17 @@ class EventService
         // TODO: Delete event from file storage and database
       }
     }
+
+    $this->mapper->store($event);
+
+    return $event;
+  }
+
+  public function markEventCompletedById(int $id, bool $completed): Event
+  {
+    $event = $this->getEventById($id);
+
+    $event->setCompleted($completed);
 
     $this->mapper->store($event);
 
