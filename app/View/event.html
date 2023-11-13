@@ -14,25 +14,51 @@
 {% block contentAttributes %}x-data="{ open: false }"{% endblock %}
 
 {% block content %}
-  <div id="events-page">
+  <div x-data="{event: {{event|json_encode()}}}" id="events-page">
     <!-- Content -->
     <div id="events-content">
       <div class="card card-event-detail">
-        {{ misc.keyValue("Name", event.name)}}
-        {{ misc.keyValue("Description", event.description)}}
-        {{ misc.keyValue("Date", event.date|date('d/m/Y'))}}
-        <div class="form-cols-2">
-          {{ misc.keyValue("Start time", event.startTime)}}
-          {{ misc.keyValue("End time", event.endTime)}}
-        </div>
-        {{ misc.keyValue("Location", event.location)}}
-        {{ misc.keyValue("Completed", event.completed ? 'Yes' : 'No')}}
-        {% if event.image_url != null %}
         <div class="key-value">
-          <span>Image</span>
-          <img class="card-event-image" src="{{ event.image_url|asset }}">
+          <span>Name</span>
+          <p x-text="event.name"></p>
         </div>
-        {% endif %}
+        <div class="key-value">
+          <span>Description</span>
+          <p x-text="event.description"></p>
+        </div>
+        <div class="key-value">
+          <span>Date</span>
+          <p x-text="`${formatDate(event.date.date)}`"></p>
+        </div>
+        <div class="form-cols-2">
+          <div class="key-value">
+            <span>Start time</span>
+            <p x-text="event.startTime"></p>
+          </div>
+          <div class="key-value">
+            <span>End time</span>
+            <p x-text="event.endTime"></p>
+          </div>
+        </div>
+        <div class="key-value">
+          <span>Location</span>
+          <p x-text="event.location"></p>
+        </div>
+        <div class="key-value">
+          <span>Completed</span>
+          <template x-if="event.completed">
+            <p>Yes</p>
+          </template>
+          <template x-if="!event.completed">
+            <p>No</p>
+          </template>
+        </div>
+        <template x-if="event.image_url">
+          <div class="key-value">
+            <span>Image</span>
+            <img class="card-event-image" src="{{ event.image_url|asset }}">
+          </div>
+        </template>
         
         <div class="button-group">
           <button class="btn btn-primary mobile-only" @click="open = !open">Edit event</button>
