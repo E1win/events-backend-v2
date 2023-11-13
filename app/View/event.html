@@ -14,7 +14,7 @@
 {% block contentAttributes %}x-data="{ open: false }"{% endblock %}
 
 {% block content %}
-  <div x-data="{event: {{event|json_encode()}}}" id="events-page">
+  <div x-data="{event: {{event|json_encode()}}, showModal: false}" id="events-page">
     <!-- Content -->
     <div id="events-content">
       <div class="card card-event-detail">
@@ -62,7 +62,7 @@
         
         <div class="button-group">
           <button class="btn btn-primary mobile-only" @click="open = !open">Edit event</button>
-          <button class="btn btn-danger" @click="deleteEvent(event.id)">Delete</button>
+          <button class="btn btn-danger" @click="showModal = true">Delete</button>
         </div>
       </div>
 
@@ -93,6 +93,18 @@
         {{ form.submit('Update') }}
         <button class="btn btn-primary">Mark completed</button>
       </form>
+    </div>
+
+    <div x-show="showModal" class="overlay">
+      <div x-show="showModal" class="cms-modal modal-delete">
+        <h3>Are you sure?</h3>
+        <p>Are you sure you want to delete this event?</p>
+        
+        <div>
+          <button class="btn btn-danger" @click="deleteEvent(event.id)">Delete</button>
+          <button class="btn btn-primary" @click="showModal = false">Cancel</button>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}
