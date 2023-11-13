@@ -50,6 +50,16 @@ class Event extends DataMapper
     $this->updateEvent($entity);
   }
 
+  public function delete(EntityEvent $entity)
+  {
+    $sql = "DELETE FROM {$this->table} WHERE id = :id";
+
+    $statement = $this->connection->prepare($sql);
+    $statement->bindValue(':id', $entity->getId());
+
+    $statement->execute();
+  }
+
   private function createEvent(EntityEvent $entity) 
   {
     $sql = "INSERT INTO {$this->table} 

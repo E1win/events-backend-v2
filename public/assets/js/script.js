@@ -128,6 +128,22 @@ async function updateEvent(eventId) {
   }
 }
 
+async function deleteEvent(eventId) {
+  try {
+    let response = await fetch(API_URL + `/events/${eventId}`, {
+      credentials: "same-origin",
+      method: "DELETE",
+    });
+
+    console.log(response);
+
+    
+  } catch (error) {
+    console.error(error);
+    return 'Failed to delete event...';
+  }
+}
+
 async function events()
 {
   console.log('testing what the fuck');

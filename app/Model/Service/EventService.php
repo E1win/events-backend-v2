@@ -76,6 +76,15 @@ class EventService
     return $event;
   }
 
+  public function deleteEventById(int $id): Event
+  {
+    $event = $this->getEventById($id);
+
+    $this->mapper->delete($event);
+
+    return $event;
+  }
+
   public function getEventById(int $id): Event
   {
     $event = new Event($id);

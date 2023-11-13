@@ -88,6 +88,15 @@ class EventController extends Controller
     );
   }
 
+  public function delete(ServerRequestInterface $request, int $id): ResponseInterface
+  {
+    $event = $this->eventService->deleteEventById($id);
+
+    return $this->responseFactory->createJsonResponse(
+      ['success' => "Event with id '{$id}' succesfully deleted."],
+    );
+  }
+
   public function participants(ServerRequestInterface $request, int $id): ResponseInterface
   {
     $participants = $this->eventService->getParticipantsByEventId($id);
