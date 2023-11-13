@@ -122,7 +122,7 @@ async function updateEvent(eventId) {
       body: formData
     });
   
-    response = response.json();
+    return response.json();
     
     console.log(response);
   } catch (error) {

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controller\Api;
 
+use App\Model\Entity\Event;
 use App\Model\Service\EventService;
 use App\Model\Service\ImageService;
 use Exception;
@@ -30,14 +31,8 @@ class EventController extends Controller
   {
     $event = $this->eventService->getEventById($id);
 
-    $imageUrl = $event->getImageId() != null ? $this->imageService->loadImageUrlById($event->getImageId()) : null;
-
-    $eventArray = $event->toArray();
-
-    $eventArray['image_url'] = $imageUrl;
-
     return $this->responseFactory->createJsonResponse(
-      $eventArray
+      $this->formatEventArrayWithImageUrl($event),
     );
   }
 
@@ -89,7 +84,7 @@ class EventController extends Controller
     $event = $this->eventService->updateEvent($id, $body, $image);
 
     return $this->responseFactory->createJsonResponse(
-      $event,
+      $this->formatEventArrayWithImageUrl($event),
     );
   }
 
@@ -100,5 +95,16 @@ class EventController extends Controller
     return $this->responseFactory->createJsonResponse(
       $participants
     );
+  }
+
+  private function formatEventArrayWithImageUrl(Event $event): array
+  {
+    $imageUrl = $event->getImageId() != null ? $this->imageService->loadImageUrlById($event->getImageId()) : null;
+
+    $eventArray = $event->toArray();
+
+    $eventArray['image_url'] = $imageUrl;
+
+    return $eventArray;
   }
 }
