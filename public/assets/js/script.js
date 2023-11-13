@@ -123,8 +123,6 @@ async function updateEvent(eventId) {
     });
   
     return response.json();
-    
-    console.log(response);
   } catch (error) {
     console.error(error);
   }
