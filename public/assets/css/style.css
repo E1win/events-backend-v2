@@ -334,6 +334,12 @@ h3 {
   row-gap: 1rem;
 }
 
+.events-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 0.5rem;
+}
+
 .list-events {
   display: grid;
   grid-template-columns: auto;
@@ -430,7 +436,7 @@ h3 {
   .toggleable-menu {
     position: unset;
     width: 20rem;
-    height: auto;
+    height: fit-content;
   }
 
   .toggleable-menu-close {
