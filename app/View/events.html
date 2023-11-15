@@ -13,7 +13,7 @@
 {% block contentAttributes %}x-data="{ open: false }"{% endblock %}
 
 {% block content %}
-  <div x-data="{ events: []}" x-init="events = await (await fetch('api/events')).json()" id="events-page">
+  <div x-data="eventsData()" x-init="getEvents()" id="events-page">
     <!-- Content -->
     <div id="events-content">
       <div>
@@ -41,7 +41,7 @@
         <button class="toggleable-menu-close btn btn-primary" @click="open = !open">close</button>
       </div>
 
-      <form id="form-event" class="form-event" method="post" @submit.prevent="createEvent" accept-charset="UTF-8">
+      <form id="form-event-create" class="form-event" method="post" @submit.prevent="addEvent" accept-charset="UTF-8">
         {{ form.input("name", {label: "Name", placeholder:"Name", required: true}) }}
         {{ form.textarea("description", {label: "Description", placeholder:"Type your event description here..."}) }}
         {{ form.input("date", {label: "Date", type: "date", required: true}) }}
@@ -55,4 +55,8 @@
       </form>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ 'js/events.js'|asset }}"></script>
 {% endblock %}

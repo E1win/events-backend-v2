@@ -6,7 +6,6 @@ const API_URL = BASE_URL + "/api";
 const TOKEN_NAME = 'EventsCMSSession';
 
 const loginForm = document.getElementById('form-login');
-const eventForm = document.getElementById('form-event');
 
 let roles = ['User', 'Admin', 'Owner'];
 
@@ -86,92 +85,6 @@ async function login() {
   }
 
 }
-
-async function createEvent() {
-  let formData = new FormData(eventForm);
-
-  console.log(Object.fromEntries(formData));
-  
-  try {
-
-    let response = await fetch(API_URL + '/events', {
-      credentials: "same-origin",
-      method: "POST",
-      body: formData
-    });
-  
-    response = response.json();
-    
-    console.log(response);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function updateEvent(eventId) {
-  let formData = new FormData(eventForm);
-
-  console.log(Object.fromEntries(formData));
-  console.log(eventId);
-
-  
-  try {
-    let response = await fetch(API_URL + `/events/${eventId}`, {
-      credentials: "same-origin",
-      method: "POST",
-      body: formData
-    });
-  
-    return response.json();
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function setEventCompleted(eventId, completed) {
-
-  let body = JSON.stringify({
-    'completed': completed
-  });
-  
-  try {
-    let response = await fetch(API_URL + `/events/${eventId}/completed`, {
-      credentials: "same-origin",
-      method: "POST",
-      body: body
-    });
-  
-    return response.json();
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function deleteEvent(eventId) {
-  try {
-    let response = await fetch(API_URL + `/events/${eventId}`, {
-      credentials: "same-origin",
-      method: "DELETE",
-    });
-
-    redirect("/events");
-  } catch (error) {
-    console.error(error);
-    return 'Failed to delete event...';
-  }
-}
-
-async function events()
-{
-  console.log('testing what the fuck');
-
-  try {
-    return await doRequest('/events');
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 /**
  * PUBLIC HELPER FUNCTIONS
  */

@@ -14,7 +14,7 @@
 {% block contentAttributes %}x-data="{ open: false }"{% endblock %}
 
 {% block content %}
-  <div x-data="{event: {{event|json_encode()}}, showModal: false}" id="events-page">
+  <div x-data="eventData()" x-init="setEvent( {{event|json_encode()}} )" id="events-page">
     <!-- Content -->
     <div id="events-content">
       <div class="card card-event-detail">
@@ -62,7 +62,7 @@
         
         <div class="button-group">
           <button class="btn btn-primary mobile-only" @click="open = !open">Edit event</button>
-          <button class="btn btn-danger" @click="showModal = true">Delete</button>
+          <button class="btn btn-danger" @click="showModal">Delete</button>
         </div>
       </div>
 
@@ -80,7 +80,7 @@
         <button class="toggleable-menu-close btn btn-primary" @click="open = !open">close</button>
       </div>
 
-      <form id="form-event" class="form-event" method="post" @submit.prevent="event = await updateEvent({{event.id}})" accept-charset="UTF-8">
+      <form id="form-event-update" class="form-event" method="post" @submit.prevent="updateEvent({{event.id}})" accept-charset="UTF-8">
         {{ form.input("name", {label: "Name", placeholder:"Name", required: true, value:event.name}) }}
         {{ form.textarea("description", {label: "Description", placeholder:"Type your event description here...", value:event.description}) }}
         {{ form.input("date", {label: "Date", type: "date", required: true, value:event.date|date('Y-m-d')}) }}
@@ -91,20 +91,24 @@
         {{ form.input("location", {label: "Location", placeholder:"Location", required: true, value:event.location}) }}
         {{ form.input("image", {label: "Image", type: "file"}) }}
         {{ form.submit('Update') }}
-        <button class="btn btn-primary" @click.prevent="event = await setEventCompleted(event.id, !event.completed)">Toggle completed</button>
+        <button class="btn btn-primary" @click.prevent="setEventCompleted(event.id, !event.completed)">Toggle completed</button>
       </form>
     </div>
 
-    <div x-show="showModal" class="overlay">
+    <div x-show="isModalOpen" class="overlay">
       <div class="cms-modal modal-delete">
         <h3>Are you sure?</h3>
         <p>Are you sure you want to delete this event?</p>
         
         <div>
           <button class="btn btn-danger" @click="deleteEvent(event.id)">Delete</button>
-          <button class="btn btn-primary" @click="showModal = false">Cancel</button>
+          <button class="btn btn-primary" @click="hideModal">Cancel</button>
         </div>
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ 'js/event.js'|asset }}"></script>
 {% endblock %}
