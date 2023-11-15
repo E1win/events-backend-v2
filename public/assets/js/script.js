@@ -46,8 +46,6 @@ function createBody(body, method) {
 }
 
 async function logout() {
-  console.log('logout function called');
-
   try {
     const response = await doRequest('/logout', "POST");
     
@@ -65,8 +63,6 @@ async function logout() {
 
 async function login() {
   let formData = new FormData(loginForm);
-
-  console.log(Object.fromEntries(formData));
 
   try {
     const response = await doRequest('/login', "POST", Object.fromEntries(formData));
