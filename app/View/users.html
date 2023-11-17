@@ -7,7 +7,8 @@
 {% block headerTitle %}Users{% endblock %}
 
 {% block content %}
-  <div x-data="{ users: [], currentUserId: {{ user.id }}, currentUserRoleId: {{ user.roleId }}}" x-init="users = await (await fetch('api/users')).json()" id="users-page">
+  <!-- <div x-data="{ users: [], currentUserId: {{ user.id }}, currentUserRoleId: {{ user.roleId }}}" x-init="users = await (await fetch('api/users')).json()" id="users-page"> -->
+  <div x-data="usersData()" x-init="getUsers(); setCurrentUser({{user|json_encode()}})" id="users-page">
     <!-- Content -->
     <div id="users-content">
       <div>
@@ -33,20 +34,19 @@
               </div>
               <div class="key-value">
                 <span>Role</span>
-                <template x-if="currentUserRoleId == 3 && user.id != currentUserId">
+                <template x-if="currentUser.roleId == 3 && user.roleId != 3">
                   <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <span x-text="formatRole(user.roleId)"></span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">User</a>
-                      <a class="dropdown-item" href="#">Admin</a>
-                      <a class="dropdown-item" href="#">Owner</a>
+                      <a class="dropdown-item" href="#" @click="changeUserRole(user.id, 1); user.roleId = 1">User</a>
+                      <a class="dropdown-item" href="#" @click="changeUserRole(user.id, 2); user.roleId = 2">Admin</a>
                     </div>
                   </div>
                 </template>
 
-                <template x-if="currentUserRoleId != 3 || user.id == currentUserId">
+                <template x-if="currentUser.roleId != 3 || user.roleId == 3">
                   <p x-text="formatRole(user.roleId)"></p>
                 </template>
               </div>
@@ -56,4 +56,8 @@
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ 'js/users.js'|asset }}"></script>
 {% endblock %}
