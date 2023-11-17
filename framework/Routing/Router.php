@@ -53,8 +53,6 @@ class Router implements RouterInterface
 
   protected $tokenPattern = '/\{([^:]+):[^}]+\}/';
 
-  // TODO: loadRoutes function.
-
   public static function create()
   {
     return new Router((new MiddlewareStack()));
@@ -82,7 +80,9 @@ class Router implements RouterInterface
   {
     $path = $request->getUri()->getPath();
 
-    foreach ($this->groups as $prefix => $router) {
+    foreach ($this->groups as $router) {
+      $prefix = $router->getPrefix();
+
       // Check if request target string starts with prefix
       if (substr($path, 0, strlen($prefix)) === $prefix) {
         $route = $router->match($request);
@@ -142,14 +142,14 @@ class Router implements RouterInterface
 
     call_user_func($callback, $subRouter);
 
-    $this->groups[$prefix] = $subRouter;
+    array_push($this->groups, $subRouter);
 
     return $subRouter;
   }
 
   public function groupRouter(string $prefix, RouterInterface $router): RouterInterface
   {
-    $this->groups[$prefix] = $router;
+    array_push($this->groups, $router);
     
     return $router;
   }
