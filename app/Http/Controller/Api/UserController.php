@@ -25,4 +25,17 @@ class UserController extends Controller
       $users
     );
   }
+
+  public function changeUserRole(ServerRequestInterface $request, int $id): ResponseInterface
+  {
+    $body = $request->getParsedBody();
+
+    $roleId = $body['roleId'];
+
+    $user = $this->userService->changeUserRoleById($id, $roleId);
+
+    return $this->responseFactory->createJsonResponse(
+      $user
+    );
+  }
 }

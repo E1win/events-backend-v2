@@ -6,6 +6,7 @@ use Framework\Auth\Middleware\AuthMiddleware;
 use App\Http\Controller\Api\AuthController;
 use App\Http\Controller\Api\UserController;
 use Framework\Auth\Middleware\AdminAuthMiddleware;
+use Framework\Auth\Middleware\OwnerAuthMiddleware;
 use Framework\Auth\Middleware\UserInRequestMiddleware;
 
 $router = Router::create();
@@ -31,6 +32,10 @@ $router->group('', function(Router $router) {
 
     $router->get('/users', [UserController::class, 'index']);
   })->addMiddleware(AdminAuthMiddleware::class);
+
+  $router->group('', function(Router $router) {
+    $router->post('/users/{id:number}/role', [UserController::class, 'changeUserRole']);
+  })->addMiddleware(OwnerAuthMiddleware::class);
 
 })->addMiddlewares([
   UserInRequestMiddleware::class,

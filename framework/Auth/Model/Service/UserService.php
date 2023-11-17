@@ -76,6 +76,17 @@ class UserService
     return $user;
   }
 
+  public function changeUserRoleById(int $id, int $roleId): User
+  {
+    $user = $this->getUserById($id);
+
+    $user->setRoleId($roleId);
+
+    $this->mapper->updateRoleId($user);
+
+    return $user;
+  }
+
   public function createUser(
     string $email,
     string $hash,
