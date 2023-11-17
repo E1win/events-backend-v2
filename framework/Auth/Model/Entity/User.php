@@ -20,7 +20,6 @@ class User extends Entity
   protected ?bool $activeAccount = null;
   protected ?int $roleId = null;
 
-
   public function __construct(?int $id = null)
   {
     $this->id = $id;
@@ -149,4 +148,12 @@ class User extends Entity
     return $this->roleId;
   }
 
+  /**
+   * Unsets all sensitive data. (ex: passwords)
+   */
+  public function unsetSensitiveData()
+  {
+    $this->password = null;
+    $this->sessionUuid = null;
+  }
 }

@@ -43,6 +43,8 @@ class UserService
 
     $this->mapper->fetch($user);
 
+    $user->unsetSensitiveData();
+
     return $user;
   }
 
