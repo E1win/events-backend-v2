@@ -4,6 +4,7 @@ namespace Framework\Routing;
 use Framework\Message\Response;
 use Framework\Middleware\Contract\MiddlewareStackInterface;
 use Framework\Middleware\MiddlewareStack;
+use Framework\Middleware\RouteNotFoundMiddleware;
 use Framework\Routing\Contract\DispatcherInterface;
 use Framework\Routing\Contract\RouteInterface;
 use Framework\Routing\Contract\RouterInterface;
@@ -32,10 +33,19 @@ class Dispatcher implements DispatcherInterface, RequestHandlerInterface
     $route = $this->router->match($request);
 
     if ($route == null) {
-      return new Response(404);
+      // And change CORS middleware so it's more something like this.
+      // https://stackoverflow.com/questions/8719276/cross-origin-request-headerscors-with-php-headers
+
+      // TODO: Make this cleaner
+
+      $globalMiddleware = config('middleware.php');
+
+      $this->middlewareStack->appendArray($globalMiddleware);
+
+      $this->middlewareStack->append(RouteNotFoundMiddleware::class);
+    } else {
+      $this->addRouteMiddlewaresToStack($route);
     }
-    
-    $this->addRouteMiddlewaresToStack($route);
 
     return $this->handle($request);
   } 
