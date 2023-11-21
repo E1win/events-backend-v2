@@ -6,6 +6,7 @@ use App\Model\Mapper\Auth\Session;
 use App\Model\Mapper\Event;
 use App\Model\Mapper\EventCollection;
 use App\Model\Mapper\Image;
+use App\Model\Mapper\Participant;
 use App\Model\Mapper\ParticipantCollection;
 
 use Framework\Auth\Model\Mapper\User;
@@ -41,7 +42,11 @@ return [
   ],
   ParticipantCollection::class => [
     PDO::class,
-    'participants'
+    'registrations'
+  ],
+  Participant::class => [
+    PDO::class,
+    'registrations'
   ],
   User::class => [
     PDO::class,
