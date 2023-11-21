@@ -75,6 +75,7 @@ class Factory implements RedirectResponseFactoryInterface, HtmlResponseFactoryIn
     $cookieParams ??= $_COOKIE;
     $uploadedFiles ??= $_FILES;
     $parsedBody ??= $_POST;
+    $headers = getallheaders();
 
     
 
@@ -94,7 +95,7 @@ class Factory implements RedirectResponseFactoryInterface, HtmlResponseFactoryIn
       '1.1',
       strtoupper($serverParams['REQUEST_METHOD']) ?? 'GET',
       $serverParams['REQUEST_URI'] ?? '/',
-      $this->createServerRequestHeaders($serverParams),
+      $headers,
       $body,
       $serverParams,
       $queryParams,
