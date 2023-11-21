@@ -121,12 +121,29 @@ class EventService
    * Adds things like image_url to event,
    * and participants
    */
-  public function addImageUrlToEvent(Event $event): Event
+  public function addImageUrlToEventEntity(Event $event): Event
   {
     if ($event->getImageId() != null) {
-      $url = $this->imageService->loadImageUrlById($event->getId());
+      $url = $this->imageService->loadImageUrlById($event->getImageId());
       $event->setImageUrl($url);
     }
+
+    return $event;
+  }
+
+  public function addParticipantsToEventEntity(Event $event): Event
+  {
+    $participants = $this->participantService->getParticipantsByEventId($event->getId());
+
+    $users = new UserCollection();
+
+    foreach ($participants as $participant) {
+      $id = $participant->getUserId();
+      $user = $this->userService->getUserById($id);
+      $users->addEntity($user);
+    }
+
+    $event->setParticipants($users->toArray());
 
     return $event;
   }

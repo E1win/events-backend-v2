@@ -31,7 +31,8 @@ class EventController extends Controller
   {
     $event = $this->eventService->getEventById($id);
 
-    $this->eventService->addImageUrlToEvent($event);
+    $this->eventService->addImageUrlToEventEntity($event);
+    $this->eventService->addParticipantsToEventEntity($event);
 
     return $this->responseFactory->createJsonResponse(
       $event,
