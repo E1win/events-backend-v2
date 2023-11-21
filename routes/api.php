@@ -23,6 +23,7 @@ $router->group('', function(Router $router) {
   $router->get('/events/upcoming/{amount:number}', [EventController::class, 'upcoming']);
   $router->get('/events/{id:number}', [EventController::class, 'show']);
   $router->get('/events/{id:number}/participants', [EventController::class, 'participants']);
+  $router->post('/events/{id:number}/join', [EventController::class, 'join']);
   
   $router->group('', function(Router $router) {
     $router->post('/events', [EventController::class, 'store']);

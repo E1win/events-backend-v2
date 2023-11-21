@@ -38,6 +38,22 @@ class EventController extends Controller
     );
   }
 
+  /**
+   * Make user join event.
+   */
+  public function join(ServerRequestInterface $request, int $id): ResponseInterface
+  {
+    $event = $this->eventService->getEventById($id);
+
+    $user = $request->getAttribute('user');
+
+    $this->eventService->addEventRegistration($event, $user->getId());
+
+    return $this->responseFactory->createJsonResponse(
+      $event,
+    );
+  }
+
   public function upcoming(ServerRequestInterface $request, ?int $amount = null): ResponseInterface
   {
     if ($amount == null) {

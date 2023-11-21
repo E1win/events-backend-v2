@@ -40,7 +40,6 @@ function eventData() {
       fetch(API_URL + `/events/${eventId}/join`, {
         credentials: "same-origin",
         method: "POST",
-        body: formData
       }).then(response => response.json())
         .then(event => this.event = event);
     },

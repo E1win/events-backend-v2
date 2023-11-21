@@ -131,6 +131,13 @@ class EventService
     return $event;
   }
 
+  public function addEventRegistration(Event $event, int $userId): Event
+  {
+    $this->participantService->addRegistration($event->getId(), $userId);
+
+    return $event;
+  }
+
   public function getAllUpcomingEvents(): EventCollection
   {
     $collection = new EventCollection();
