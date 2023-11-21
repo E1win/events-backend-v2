@@ -9,6 +9,6 @@ use Framework\Exception\ExceptionMiddleware;
 use Framework\Middleware\CorsMiddleware;
 
 return [
+  CorsMiddleware::class,
   ExceptionMiddleware::class,
-  CorsMiddleware::class
 ];

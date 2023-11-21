@@ -3,6 +3,7 @@ namespace Framework\Exception;
 
 use Framework\Message\Contract\HtmlResponseFactoryInterface;
 use Framework\Message\Contract\JsonResponseFactoryInterface;
+use Framework\Message\Response;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -39,20 +40,25 @@ class ExceptionMiddleware implements MiddlewareInterface
   {
     $statusCode =  $error->getCode() === 0 ? 500 : $error->getCode();
 
-    $response = $this->jsonResponseFactory->createJsonResponse([
-      'error' => $error->getMessage()
-    ], $statusCode);
-    
-    $accept = $request->getHeaderLine('Accept');
+    $response = new Response($statusCode, $error->getMessage());
 
-    if (!array_key_exists($accept, self::CONTENT_TYPE_CONVERSION)) {
-      return $response;
-    } else {
-      return $response->withAddedHeader(
-        'Content-Type',
-        self::CONTENT_TYPE_CONVERSION[$accept] . '; charset=' . $request->getHeaderLine('Accept-Charset')
-      );
-    }
+    return $response;
+
+    // $response = $this->jsonResponseFactory->createJsonResponse([
+    //   'error' => $error->getMessage()
+    // ], $statusCode);
+    
+    // $accept = $request->getHeaderLine('Accept');
+
+    
+    // if (!array_key_exists($accept, self::CONTENT_TYPE_CONVERSION)) {
+    //   return $response;
+    // } else {
+    //   return $response->withAddedHeader(
+    //     'Content-Type',
+    //     self::CONTENT_TYPE_CONVERSION[$accept] . '; charset=' . $request->getHeaderLine('Accept-Charset')
+    //   );
+    // }
 
   }
 }
