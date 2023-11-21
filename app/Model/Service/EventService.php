@@ -117,6 +117,20 @@ class EventService
     return $collection;
   }
 
+  /**
+   * Adds things like image_url to event,
+   * and participants
+   */
+  public function addImageUrlToEvent(Event $event): Event
+  {
+    if ($event->getImageId() != null) {
+      $url = $this->imageService->loadImageUrlById($event->getId());
+      $event->setImageUrl($url);
+    }
+
+    return $event;
+  }
+
   public function getAllUpcomingEvents(): EventCollection
   {
     $collection = new EventCollection();

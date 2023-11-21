@@ -18,6 +18,9 @@ class Event extends Entity
   protected ?int $imageId = null;
   protected ?bool $completed = false;
 
+  protected ?string $imageUrl = null;
+  protected ?array $participants = null;
+
   public function __construct(?int $id = null)
   {
     $this->id = $id;
@@ -111,5 +114,25 @@ class Event extends Entity
   public function getCompleted()
   {
     return $this->completed;
+  }
+
+  public function setImageUrl(string $imageUrl)
+  {
+    $this->imageUrl = $imageUrl;
+  }
+
+  public function getImageUrl()
+  {
+    return $this->imageUrl;
+  }
+
+  public function setParticipants(array $participants)
+  {
+    $this->participants = $participants;
+  }
+
+  public function getParticipants()
+  {
+    return $this->participants;
   }
 }
