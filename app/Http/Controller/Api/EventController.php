@@ -46,7 +46,22 @@ class EventController extends Controller
     $user = $request->getAttribute('user');
 
     if (! $this->eventService->isUserRegisteredToEvent($event->getId(), $user->getId())) {
-      $this->eventService->addEventRegistration($event, $user->getId());
+      $this->eventService->addEventRegistration($event, $user);
+    }
+
+    return $this->responseFactory->createJsonResponse(
+      $event,
+    );
+  }
+
+  public function leave(ServerRequestInterface $request, int $id): ResponseInterface
+  {
+    $event = $this->eventService->getEventById($id);
+
+    $user = $request->getAttribute('user');
+
+    if ($this->eventService->isUserRegisteredToEvent($event->getId(), $user->getId())) {
+      $this->eventService->removeEventRegistration($event, $user);
     }
 
     return $this->responseFactory->createJsonResponse(

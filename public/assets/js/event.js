@@ -52,8 +52,6 @@ function eventData() {
     },
 
     isUserRegisteredInEvent(userId) {
-      console.log(userId);
-
       if (this.event.participants != null) {
         return this.event.participants.some(user => user.id === userId);
       }

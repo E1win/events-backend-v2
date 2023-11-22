@@ -25,6 +25,18 @@ class ParticipantService
     return $participant;
   }
 
+  public function removeRegistration(int $eventId, int $userId): Participant
+  {
+    $participant = new Participant();
+
+    $participant->setEventId($eventId);
+    $participant->setUserId($userId);
+
+    $this->mapper->delete($participant);
+
+    return $participant;
+  }
+
   public function getParticipantsByEventId(int $id): ParticipantCollection
   {
     $participants = new ParticipantCollection();

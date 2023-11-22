@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use DateTimeImmutable;
+use Exception;
 use Framework\Model\Entity\Entity;
 
 class Event extends Entity
@@ -134,5 +135,21 @@ class Event extends Entity
   public function getParticipants()
   {
     return $this->participants;
+  }
+
+  public function addParticipant(array $participant)
+  {
+    array_unshift($this->participants, $participant);
+  }
+
+  public function removeParticipant(array $participant)
+  {
+    // if(($key = array_search($participant, $this->participants, true)) !== FALSE) {
+    //   unset($this->participants[$key]);
+    // }
+
+    if (($key = array_search($participant['id'], array_column($this->participants, 'id'))) !== false) {
+      unset($this->participants[$key]);
+    }
   }
 }

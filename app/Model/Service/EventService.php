@@ -7,6 +7,7 @@ use App\Model\Mapper\Event as EventMapper;
 use App\Model\Mapper\EventCollection as EventCollectionMapper;
 use DateTimeImmutable;
 use Exception;
+use Framework\Auth\Model\Entity\User;
 use Framework\Auth\Model\Entity\UserCollection;
 use Framework\Auth\Model\Service\UserService;
 use Psr\Http\Message\UploadedFileInterface;
@@ -153,14 +154,23 @@ class EventService
 
   public function isUserRegisteredToEvent(int $eventId, int $userId): bool
   {
-    $this->participantService->registrationExists($eventId, $userId);
-
-    return true;
+    return $this->participantService->registrationExists($eventId, $userId);;
   }
 
-  public function addEventRegistration(Event $event, int $userId): Event
+  public function addEventRegistration(Event $event, User $user): Event
   {
-    $this->participantService->addRegistration($event->getId(), $userId);
+    $this->participantService->addRegistration($event->getId(), $user->getId());
+
+    $event->addParticipant($user->toArray());
+
+    return $event;
+  }
+
+  public function removeEventRegistration(Event $event, User $user): Event
+  {
+    $this->participantService->removeRegistration($event->getId(), $user->getId());
+
+    $event->removeParticipant($user->toArray());
 
     return $event;
   }

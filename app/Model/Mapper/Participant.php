@@ -32,10 +32,23 @@ class Participant extends DataMapper
     
     $statement = $this->connection->prepare($sql);
 
-    $statement->bindValue(':event_id', $entity->getEventId());
-    $statement->bindValue(':user_id', $entity->getUserId());
+    $statement->bindValue(':event_id', $entity->getEventId(), PDO::PARAM_INT);
+    $statement->bindValue(':user_id', $entity->getUserId(), PDO::PARAM_INT);
     $statement->execute();
 
     $entity->setId($this->connection->lastInsertId());
+  }
+
+  public function delete(EntityParticipant $entity)
+  {
+    $sql = "DELETE FROM {$this->table} 
+            WHERE event_id = :event_id
+            AND user_id = :user_id";
+
+    $statement = $this->connection->prepare($sql);
+    $statement->bindValue(':event_id', $entity->getEventId(), PDO::PARAM_INT);
+    $statement->bindValue(':user_id', $entity->getUserId(), PDO::PARAM_INT);
+
+    $statement->execute();
   }
 }
