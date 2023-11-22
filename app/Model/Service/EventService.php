@@ -106,6 +106,9 @@ class EventService
 
     $this->mapper->fetch($event);
 
+    $this->addImageUrlToEventEntity($event);
+    $this->addParticipantsToEventEntity($event);
+
     return $event;
   }
 
@@ -146,6 +149,13 @@ class EventService
     $event->setParticipants($users->toArray());
 
     return $event;
+  }
+
+  public function isUserRegisteredToEvent(int $eventId, int $userId): bool
+  {
+    $this->participantService->registrationExists($eventId, $userId);
+
+    return true;
   }
 
   public function addEventRegistration(Event $event, int $userId): Event

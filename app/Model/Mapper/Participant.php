@@ -7,6 +7,22 @@ use PDO;
 
 class Participant extends DataMapper
 {
+  public function exists(EntityParticipant $entity): bool
+  {
+    $sql = "SELECT 1 FROM {$this->table} 
+            WHERE event_id = :event_id
+            AND user_id = :user_id";
+
+    $statement = $this->connection->prepare($sql);
+
+    $statement->bindValue(":event_id", $entity->getEventId(), PDO::PARAM_INT);
+    $statement->bindValue(":user_id", $entity->getUserId(), PDO::PARAM_INT);
+    $statement->execute();
+
+    $data = $statement->fetch();
+
+    return empty($data) === false;
+  }
 
   public function store(EntityParticipant $entity)
   {

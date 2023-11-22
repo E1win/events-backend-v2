@@ -35,4 +35,14 @@ class ParticipantService
 
     return $participants;
   }
+
+  public function registrationExists(int $eventId, int $userId): bool
+  {
+    $participant = new Participant();
+
+    $participant->setEventId($eventId);
+    $participant->setUserId($userId);
+
+    return $this->mapper->exists($participant);
+  }
 }
