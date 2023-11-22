@@ -2,6 +2,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
 const BASE_URL = "http://localhost:80";
+// const BASE_URL = "https://admin.elwinj21.fc.school";
 const API_URL = BASE_URL + "/api";
 const TOKEN_NAME = 'EventsCMSSession';
 
@@ -11,7 +12,7 @@ let roles = ['User', 'Admin', 'Owner'];
 
 async function doRequest(url, method = "GET", body = {}, headers = {}) {
   const response = await fetch(API_URL + url, {
-    credentials: "same-origin",
+    credentials: "include",
     method: method,
     headers: {
       // 'Accept': 'application/json',
