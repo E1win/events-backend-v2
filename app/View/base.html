@@ -17,7 +17,7 @@
   {% endblock %}
 </head>
 <body>
-  <div id="wrapper">
+  <div {% if loggedIn == true %}x-data="userData()" x-init="setCurrentUser({{user|json_encode()}})"{% endif %} id="wrapper">
     {% if loggedIn == true %}
       <div x-data="{open: false}" id="navigation">
         <div id="top-bar">
@@ -90,6 +90,7 @@
 
   <script src="{{ 'js/script.js'|asset }}"></script>
 
+  <script src="{{ 'js/user.js'|asset }}"></script>
   {% block scripts %}{% endblock %}
 
   <!-- Bootstrap -->

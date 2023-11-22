@@ -43,6 +43,24 @@ function eventData() {
       }).then(response => response.json())
         .then(event => this.event = event);
     },
+    leaveEvent(eventId) {
+      fetch(API_URL + `/events/${eventId}/leave`, {
+        credentials: "same-origin",
+        method: "POST",
+      }).then(response => response.json())
+        .then(event => this.event = event);
+    },
+
+    isUserRegisteredInEvent(userId) {
+      console.log(userId);
+
+      if (this.event.participants != null) {
+        return this.event.participants.some(user => user.id === userId);
+      }
+
+      return false;
+    },
+
     showModal() {
       this.isModalOpen = true;
     },
