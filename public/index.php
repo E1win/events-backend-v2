@@ -12,11 +12,7 @@ use Framework\Routing\RouteGatherer;
  * and helper functions
  */
 
-<<<<<<< HEAD
-// require_once __DIR__ . '/../framework/bootstrap.php';
-=======
 require_once __DIR__ . '/../framework/bootstrap.php';
->>>>>>> parent of cdb3285 (test)
 
 /**
  * CREATE CONTAINER
