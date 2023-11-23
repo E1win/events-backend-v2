@@ -2,7 +2,8 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
 // const BASE_URL = "http://localhost:80";
-const BASE_URL = "https://admin.elwinj21.fc.school";
+// const BASE_URL = "https://admin.elwinj21.fc.school";
+const BASE_URL = "https://localhost";
 const API_URL = BASE_URL + "/api";
 const TOKEN_NAME = 'EventsCMSSession';
 
