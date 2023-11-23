@@ -28,10 +28,7 @@ class ExceptionMiddleware implements MiddlewareInterface
       return $handler->handle($request);
     } catch (\Throwable $error) {
       // todo: Get better way to add debug information
-      // if ($_ENV['APP_DEBUG'] == "true") {
-      //   throw $error;
-      // }
-
+  
       return $this->generateResponse($request, $error);
     }
   }
@@ -40,13 +37,23 @@ class ExceptionMiddleware implements MiddlewareInterface
   {
     $statusCode =  $error->getCode() === 0 ? 500 : $error->getCode();
 
-    $response = new Response($statusCode, $error->getMessage());
+    // if ($_ENV['APP_DEBUG'] == "true") {
+    //   throw $error;
+    // }
 
-    return $response;
+    // $response = new Response($statusCode, $error->getMessage());
 
-    // $response = $this->jsonResponseFactory->createJsonResponse([
-    //   'error' => $error->getMessage()
-    // ], $statusCode);
+    // return $response;
+
+    $body = ['error' => $error->getMessage()];
+    
+    if ($_ENV['APP_DEBUG'] == "true") {
+      $body['trace'] = $error->getTraceAsString();
+    }
+
+    $response = $this->jsonResponseFactory->createJsonResponse($body, $statusCode);
+
+    return $response->withStatus($response->getStatusCode(), $error->getMessage());
     
     // $accept = $request->getHeaderLine('Accept');
 
