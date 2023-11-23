@@ -12,7 +12,10 @@ use Framework\Routing\RouteGatherer;
  * and helper functions
  */
 
-require_once __DIR__ . '/../framework/bootstrap.php';
+echo 'Testing this shittt';
+exit;
+
+// require_once __DIR__ . '/../framework/bootstrap.php';
 
 /**
  * CREATE CONTAINER
