@@ -69,7 +69,7 @@ class AuthController extends Controller
     //  $body['password'] => blahblah
     // ])
 
-    $user = $this->authService->register();
+    $user = $this->authService->register($body['email'], $body['password'], $body['firstName'], $body['prefix'], $body['lastName']);
 
     return $this->responseFactory->createJsonResponse(
       [

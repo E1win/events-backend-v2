@@ -14,6 +14,7 @@ $router->addPrefix('/api');
 
 
 $router->post('/login', [AuthController::class, 'login']);
+$router->post('/register', [AuthController::class, 'register']);
 $router->group('', function(Router $router) {
   $router->post('/logout', [AuthController::class, 'logout']);
 

@@ -98,11 +98,20 @@ class UserService
   ): User {
     $user = new User;
     
-    // fill user object
+    // Fill User entity with data
+    $user->setEmail($email);
+    $user->setPassword($hash);
+    $user->setFirstName($firstName);
+    if ($prefix != null) {
+      $user->setPrefix($prefix);
+    }
+    $user->setLastName($lastName);
 
-    // Also create sessions, etc.
+    // Create session
+    $user->setSessionUuid($this->generateUuid());
+    $user->setExpiresOn(time() + UserService::SESSION_LIFESPAN);
 
-    // mapper->store;
+    $this->mapper->store($user);
 
     return $user;
   }
