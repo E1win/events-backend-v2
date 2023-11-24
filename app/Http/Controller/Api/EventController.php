@@ -143,15 +143,6 @@ class EventController extends Controller
     );
   }
 
-  public function participants(ServerRequestInterface $request, int $id): ResponseInterface
-  {
-    $participants = $this->eventService->getParticipantsByEventId($id);
-
-    return $this->responseFactory->createJsonResponse(
-      $participants
-    );
-  }
-
   private function formatEventArrayWithImageUrl(Event $event): array
   {
     $imageUrl = $event->getImageId() != null ? $this->imageService->loadImageUrlById($event->getImageId()) : null;
