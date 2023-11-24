@@ -92,13 +92,16 @@ class User extends DataMapper
   private function createUser(UserEntity $entity)
   {
     $sql = "INSERT INTO {$this->table}
-              (email, password, session_uuid, expires_on)
-            VALUES (:email, :password, :session_uuid, :expires_on)";
+              (email, password, first_name, prefix, last_name, session_uuid, expires_on)
+            VALUES (:email, :password, :first_name, :prefix, :last_name, :session_uuid, :expires_on)";
     
     $statement = $this->connection->prepare($sql);
 
     $statement->bindValue(":email", $entity->getEmail(), PDO::PARAM_STR);
     $statement->bindValue(":password", $entity->getPassword(), PDO::PARAM_STR);
+    $statement->bindValue(":first_name", $entity->getFirstName(), PDO::PARAM_STR);
+    $statement->bindValue(":prefix", $entity->getPrefix(), PDO::PARAM_STR);
+    $statement->bindValue(":last_name", $entity->getLastName(), PDO::PARAM_STR);
     $statement->bindValue(':session_uuid', $entity->getSessionUuid(), PDO::PARAM_STR);
     $statement->bindValue(':expires_on', $entity->getExpiresOn(), PDO::PARAM_INT);
 

@@ -14,6 +14,7 @@ $router->addPrefix('/api');
 
 
 $router->post('/login', [AuthController::class, 'login']);
+$router->post('/register', [AuthController::class, 'register']);
 $router->group('', function(Router $router) {
   $router->post('/logout', [AuthController::class, 'logout']);
 
@@ -22,7 +23,6 @@ $router->group('', function(Router $router) {
   $router->get('/events/upcoming', [EventController::class, 'upcoming']);
   $router->get('/events/upcoming/{amount:number}', [EventController::class, 'upcoming']);
   $router->get('/events/{id:number}', [EventController::class, 'show']);
-  $router->get('/events/{id:number}/participants', [EventController::class, 'participants']);
   $router->post('/events/{id:number}/join', [EventController::class, 'join']);
   $router->post('/events/{id:number}/leave', [EventController::class, 'leave']);
   
