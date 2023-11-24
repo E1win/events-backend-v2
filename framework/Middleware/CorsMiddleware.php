@@ -30,9 +30,7 @@ class CorsMiddleware implements MiddlewareInterface
       }
 
       if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
-        $headers = $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'];
-        array_push($headers, 'Authorization');
-        $response = $response->withHeader('Access-Control-Allow-Headers', $headers);
+        $response = $response->withHeader('Access-Control-Allow-Headers', $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']);
       }
 
       return $response->withStatus(200);
