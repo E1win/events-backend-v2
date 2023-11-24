@@ -49,6 +49,7 @@ class ExceptionMiddleware implements MiddlewareInterface
     
     if ($_ENV['APP_DEBUG'] == "true") {
       $body['trace'] = $error->getTraceAsString();
+      $body['request'] = (string)$request;
     }
 
     $response = $this->jsonResponseFactory->createJsonResponse($body, $statusCode);
