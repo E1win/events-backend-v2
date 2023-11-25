@@ -49,7 +49,7 @@ class UserController extends Controller
     // Is user from request same as user id from url
     if ($user->getId() === $id) {
       // if so, you can update user
-      $this->userService->updateUser($user, $body['firstName'], $body['prefix'], $body['lastName']);
+      $user = $this->userService->updateUser($user, $body['firstName'], $body['prefix'], $body['lastName']);
     } else {
       throw new Exception("Logged in user doesn't match URL id", 500);
     }
