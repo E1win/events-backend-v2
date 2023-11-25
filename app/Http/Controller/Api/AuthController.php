@@ -49,7 +49,8 @@ class AuthController extends Controller
           'value' => $user->getSessionUuid(),
           'expires' => $user->getExpiresOn()
         ],
-        'status' => 'success'
+        'status' => 'success',
+        'user' => $user->withoutSensitiveData()
       ]
     );
   }
@@ -78,7 +79,8 @@ class AuthController extends Controller
           'value' => $user->getSessionUuid(),
           'expires' => $user->getExpiresOn()
         ],
-        'status' => 'success'
+        'status' => 'success',
+        'user' => $user->withoutSensitiveData()
       ]
     );
   }

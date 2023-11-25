@@ -156,4 +156,13 @@ class User extends Entity
     $this->password = null;
     $this->sessionUuid = null;
   }
+
+  public function withoutSensitiveData(): User
+  {
+    $clone = clone $this;
+
+    $clone->unsetSensitiveData();
+    
+    return $clone;
+  }
 }
