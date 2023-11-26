@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controller\Api;
 
+use Exception;
 use Framework\Auth\Model\Service\UserService;
 use Framework\Controller\Controller;
 use Framework\Message\Contract\JsonResponseFactoryInterface;
@@ -33,6 +34,25 @@ class UserController extends Controller
     $roleId = $body['roleId'];
 
     $user = $this->userService->changeUserRoleById($id, $roleId);
+
+    return $this->responseFactory->createJsonResponse(
+      $user
+    );
+  }
+
+  public function updateUser(ServerRequestInterface $request, int $id): ResponseInterface
+  {
+    $body = $request->getParsedBody();
+
+    $user = $request->getAttribute('user');
+
+    // Is user from request same as user id from url
+    if ($user->getId() === $id) {
+      // if so, you can update user
+      $user = $this->userService->updateUser($user, $body['firstName'], $body['prefix'], $body['lastName']);
+    } else {
+      throw new Exception("Logged in user doesn't match URL id", 500);
+    }
 
     return $this->responseFactory->createJsonResponse(
       $user

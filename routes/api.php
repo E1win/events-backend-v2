@@ -18,6 +18,7 @@ $router->post('/register', [AuthController::class, 'register']);
 $router->group('', function(Router $router) {
   $router->post('/logout', [AuthController::class, 'logout']);
 
+  $router->post('/users/{id:number}', [UserController::class, 'updateUser']);
   
   $router->get('/events', [EventController::class, 'index']);
   $router->get('/events/upcoming', [EventController::class, 'upcoming']);

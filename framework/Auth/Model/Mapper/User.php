@@ -75,6 +75,24 @@ class User extends DataMapper
     }
   }
 
+  public function update(UserEntity $entity)
+  {
+    $sql = "UPDATE {$this->table}
+              SET first_name = :first_name,
+                  prefix = :prefix,
+                  last_name = :last_name
+              WHERE id = :id";
+    
+    $statement = $this->connection->prepare($sql);
+
+    $statement->bindValue(":id", $entity->getId(), PDO::PARAM_INT);
+    $statement->bindValue(':first_name', $entity->getSessionUuid(), PDO::PARAM_STR);
+    $statement->bindValue(':prefix', $entity->getPrefix(), PDO::PARAM_STR);
+    $statement->bindValue(':last_name', $entity->getLastName(), PDO::PARAM_STR);
+
+    $statement->execute();
+  }
+
   public function updateRoleId(UserEntity $entity)
   {
     $sql = "UPDATE {$this->table}

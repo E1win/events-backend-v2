@@ -71,6 +71,8 @@ class UserService
 
     $this->mapper->fetch($user);
 
+    // TODO: Check if token is not expired.
+
     if ($user->getId() === null) {
       throw new UserNotFoundException();
     }
@@ -112,6 +114,22 @@ class UserService
     $user->setExpiresOn(time() + UserService::SESSION_LIFESPAN);
 
     $this->mapper->store($user);
+
+    return $user;
+  }
+
+  public function updateUser(
+    User $user, 
+    string $firstName,
+    ?string $prefix,
+    string $lastName
+  ): User {
+
+    $user->setFirstName($firstName);
+    $user->setPrefix($prefix);
+    $user->setLastName($lastName);
+
+    $this->mapper->update($user);
 
     return $user;
   }
