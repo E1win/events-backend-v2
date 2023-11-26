@@ -51,9 +51,8 @@ class ExceptionMiddleware implements MiddlewareInterface
       $body['trace'] = $error->getTraceAsString();
     }
 
-    $response = $this->jsonResponseFactory->createJsonResponse($body, $statusCode);
+    return $this->jsonResponseFactory->createJsonResponse($body, $statusCode);
 
-    return $response->withStatus($response->getStatusCode(), $error->getMessage());
     
     // $accept = $request->getHeaderLine('Accept');
 
