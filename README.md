@@ -1,4 +1,4 @@
-EvenementenCMS
+EventCMS
 
 This project is to create a CMS for managing events. 
 Admins should be able to add/delete/update events and there will
@@ -10,25 +10,3 @@ modules used in this project are:
 - Twig (a templating engine)
 - phpdotenv (for retrieving env variables)
 - psr interfaces
-
-**Database**
-
-- events
-  - id
-  - name
-  - created_on
-  - image_id
-- users
-  - id
-  - email
-  - password
-  - session_uuid
-  - expires_on
-- participants (pivot table)
-  - id
-  - event_id
-  - user_id
-- images
-  - id
-  - name
-  - file_extension
