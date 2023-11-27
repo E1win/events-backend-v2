@@ -340,6 +340,10 @@ h3 {
   column-gap: 0.5rem;
 }
 
+.events-filter-btn-active {
+  background-color: var(--primary-100);
+}
+
 .list-events {
   display: grid;
   grid-template-columns: auto;

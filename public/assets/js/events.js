@@ -3,6 +3,7 @@ const eventCreateForm = document.getElementById('form-event-create');
 function eventsData() {
   return {
     events: [],
+    showAllEvents: true,
     getEvents() {
       fetch('api/events')
         .then(response => response.json())

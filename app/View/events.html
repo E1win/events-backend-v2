@@ -17,8 +17,20 @@
     <!-- Content -->
     <div id="events-content">
       <div class="events-filters">
-        <button class="events-filter-btn btn btn-light" @click="getUpcomingEvents()">Upcoming</button>
-        <button class="events-filter-btn btn btn-light" @click="getEvents()">All events</button>
+        <button 
+        class="events-filter-btn btn btn-light" 
+        :class="!showAllEvents || 'events-filter-btn-active'"
+        @click="getEvents(); showAllEvents = true"
+        >
+        All events
+      </button>
+      <button 
+        class="events-filter-btn btn btn-light" 
+        :class="showAllEvents || 'events-filter-btn-active'"
+        @click="getUpcomingEvents(); showAllEvents = false"
+      >
+        Upcoming
+      </button>
       </div>
       <div>
         <h2>List</h2>
