@@ -444,7 +444,7 @@ h3 {
   }
 
   .list-events {
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .desktop-only {
