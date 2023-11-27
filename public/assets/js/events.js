@@ -8,6 +8,11 @@ function eventsData() {
         .then(response => response.json())
         .then(events => this.events = events);
     },
+    getUpcomingEvents() {
+      fetch('api/events/upcoming')
+        .then(response => response.json())
+        .then(events => this.events = events);
+    },
     addEvent() {
       let formData = new FormData(eventCreateForm);
 

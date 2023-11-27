@@ -17,9 +17,8 @@
     <!-- Content -->
     <div id="events-content">
       <div class="events-filters">
-        <button class="events-filter-btn btn btn-light">Upcoming</button>
-        <button class="events-filter-btn btn btn-light">All events</button>
-        <button class="events-filter-btn btn btn-light">Past</button>
+        <button class="events-filter-btn btn btn-light" @click="getUpcomingEvents()">Upcoming</button>
+        <button class="events-filter-btn btn btn-light" @click="getEvents()">All events</button>
       </div>
       <div>
         <h2>List</h2>
