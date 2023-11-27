@@ -1,9 +1,7 @@
 // https://stackoverflow.com/questions/39565706/post-request-with-fetch-api
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
-// const BASE_URL = "http://localhost:80";
-const BASE_URL = "https://preview.elwinj21.fc.school";
-// const BASE_URL = "https://localhost";
+const BASE_URL = window.location.origin;
 const API_URL = BASE_URL + "/api";
 const TOKEN_NAME = 'EventsCMSSession';
 
