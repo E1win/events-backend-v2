@@ -8,9 +8,6 @@ use Framework\Container\Resource\ContainerResourceCollection;
 use Framework\Container\Resource\ResourceResolver;
 use Psr\Container\ContainerInterface;
 
-// https://medium.com/tech-tajawal/dependency-injection-di-container-in-php-a7e5d309ccc6
-// https://github.com/PHP-DI/PHP-DI/tree/master
-
 class Container implements ContainerInterface
 {
   private $containerName = 'Container';

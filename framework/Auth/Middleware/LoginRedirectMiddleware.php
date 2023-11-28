@@ -7,8 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-// middleware will probably be added on web endpoints
-
 /**
  * Redirects to /login screen,
  * if 401 exception is thrown
