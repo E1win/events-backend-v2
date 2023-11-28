@@ -72,10 +72,8 @@ class Route implements RouteInterface
 
   /**
    * Run the route controller action and return the response
-   * 
-   * TODO: make private, temp public for testing
    */
-  public function runController(ServerRequestInterface $request): ResponseInterface
+  private function runController(ServerRequestInterface $request): ResponseInterface
   {
     
 
