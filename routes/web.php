@@ -25,7 +25,6 @@ $router->group('', function(Router $router) {
   $router->get('/', [ViewController::class, 'home']);
   
   $router->get('/events', [EventController::class, 'index']);
-  $router->post('/events', [EventController::class, 'store']);
   $router->get('/events/{id:number}', [EventController::class, 'show']);
 
   $router->get('/users', [UserController::class, 'index']);
