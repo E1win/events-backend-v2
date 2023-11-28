@@ -102,8 +102,6 @@ class ContainerResourceCollectionTest extends TestCase
       $resource->getName(),
     );
 
-    // TODO: figure out why this is hitting the dependency === null echo
-    // in ReflectionAutowiring
 
     $this->assertSame(
       $expected->getParameters()[0]->getName(),

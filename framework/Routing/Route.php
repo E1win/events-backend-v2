@@ -38,7 +38,6 @@ class Route implements RouteInterface
     $this->pattern = $pattern;
     // TODO: Check if method(s) are valid
     $this->method = $method;
-    // TODO: Check if action is valid
     $this->action = $action;
   }
 

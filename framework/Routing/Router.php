@@ -113,7 +113,6 @@ class Router implements RouterInterface
       if ($matches) {
         $tokens = $this->getTokenArray($route->getPattern());
         
-        // TODO: This can definitely be refactored.
         foreach($matches as $index => $match) {
           // Not interested in the complete match, just the tokens
           if ($index == 0) {
@@ -136,8 +135,6 @@ class Router implements RouterInterface
 
   public function group(string $prefix, callable $callback): RouterInterface
   {
-    // TODO: Maybe make this a container->get call?
-    // This is probably a lot quicker though
     $subRouter = Router::create()->addPrefix($this->prefix . $prefix);
 
     call_user_func($callback, $subRouter);
@@ -176,8 +173,6 @@ class Router implements RouterInterface
 
   public function method(string $method, string $pattern, mixed $callback): void
   {
-    // TODO: Check if method is valid
-
     $this->routes[] = new Route($method, $this->prefix . $pattern, $callback);
   }
 
