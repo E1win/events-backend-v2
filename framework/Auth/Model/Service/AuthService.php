@@ -1,9 +1,11 @@
 <?php
 namespace Framework\Auth\Model\Service;
 
+use Framework\Auth\Exception\EmailAlreadyUsedException;
 use Framework\Auth\Model\Entity\User;
 use Framework\Auth\Exception\InvalidPasswordException;
 use Framework\Auth\Exception\SessionExpiredException;
+use RangeException;
 
 class AuthService
 {
@@ -61,12 +63,11 @@ class AuthService
     ?string $prefix,
     string $lastName,
   ): User {
-    // Check if user already exists
-    // $this->userService->userExists($email);
-
+    if ($this->userService->userWithEmailExists($email)) {
+      throw new EmailAlreadyUsedException();
+    }
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
-
 
     return $this->userService->createUser($email, $hash, $firstName, $prefix, $lastName);
   }

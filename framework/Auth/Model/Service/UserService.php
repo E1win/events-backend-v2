@@ -29,6 +29,15 @@ class UserService
     private UserCollectionMapper $collectionMapper,
   ) { }
 
+  public function userWithEmailExists($email): bool
+  {
+    $user = new User;
+
+    $user->setEmail($email);
+
+    return $this->mapper->exists($user);
+  }
+
   public function getAllUsers(): UserCollection
   {
     $collection = new UserCollection();
