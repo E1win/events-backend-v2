@@ -33,11 +33,6 @@ class Dispatcher implements DispatcherInterface, RequestHandlerInterface
     $route = $this->router->match($request);
 
     if ($route == null) {
-      // And change CORS middleware so it's more something like this.
-      // https://stackoverflow.com/questions/8719276/cross-origin-request-headerscors-with-php-headers
-
-      // TODO: Make this cleaner
-
       $globalMiddleware = config('middleware.php');
 
       $this->middlewareStack->appendArray($globalMiddleware);

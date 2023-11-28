@@ -27,8 +27,6 @@ class ExceptionMiddleware implements MiddlewareInterface
     try {
       return $handler->handle($request);
     } catch (\Throwable $error) {
-      // todo: Get better way to add debug information
-  
       return $this->generateResponse($request, $error);
     }
   }

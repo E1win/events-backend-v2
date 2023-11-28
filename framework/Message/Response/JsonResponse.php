@@ -7,12 +7,6 @@ use InvalidArgumentException;
 use JsonException;
 use Psr\Http\Message\StreamInterface;
 
-/**
- * TODO: Make it clearer that json should not be send here,
- * it will be encoded in the class.
- * Or maybe change it so json needs to be input,
- * just make it more obvious
- */
 class JsonResponse extends Response
 {
   public function __construct(int $statusCode, $data, int $flags = 0, int $depth = 512)

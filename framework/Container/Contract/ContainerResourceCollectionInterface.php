@@ -5,8 +5,6 @@ interface ContainerResourceCollectionInterface
 {
   /**
    * Returns the DI definition for entry name.
-   * 
-   * TODO: add return type
    */
   public function getResource(string $name): ContainerResourceInterface|null;
 

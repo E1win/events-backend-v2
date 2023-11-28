@@ -38,7 +38,6 @@ class Route implements RouteInterface
     $this->pattern = $pattern;
     // TODO: Check if method(s) are valid
     $this->method = $method;
-    // TODO: Check if action is valid
     $this->action = $action;
   }
 
@@ -72,10 +71,8 @@ class Route implements RouteInterface
 
   /**
    * Run the route controller action and return the response
-   * 
-   * TODO: make private, temp public for testing
    */
-  public function runController(ServerRequestInterface $request): ResponseInterface
+  private function runController(ServerRequestInterface $request): ResponseInterface
   {
     
 

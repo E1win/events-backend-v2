@@ -16,7 +16,6 @@ use Framework\Auth\Exception\UserNotFoundException;
 use Framework\Auth\Model\Entity\UserCollection;
 use Framework\Auth\Model\Mapper\UserCollection as UserCollectionMapper;
 use Psr\Http\Message\ServerRequestInterface;
-use Ramsey\Uuid\Uuid;
 
 class UserService
 {
@@ -28,6 +27,15 @@ class UserService
     private UserMapper $mapper,
     private UserCollectionMapper $collectionMapper,
   ) { }
+
+  public function userWithEmailExists($email): bool
+  {
+    $user = new User;
+
+    $user->setEmail($email);
+
+    return $this->mapper->exists($user);
+  }
 
   public function getAllUsers(): UserCollection
   {
@@ -71,11 +79,9 @@ class UserService
 
     $this->mapper->fetch($user);
 
-    // TODO: Check if token is not expired.
-
     if ($user->getId() === null) {
       throw new UserNotFoundException();
-    }
+    }    
 
     return $user;
   }

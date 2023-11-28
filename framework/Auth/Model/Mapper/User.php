@@ -7,6 +7,43 @@ use PDO;
 
 class User extends DataMapper
 {
+  public function exists(UserEntity $entity)
+  {
+    if ($entity->getEmail() !== null) {
+      return $this->existsByEmail($entity);
+    }
+
+    return $this->existsById($entity);
+  }
+
+  private function existsByEmail(UserEntity $entity)
+  {
+    $sql = "SELECT 1 FROM {$this->table} WHERE email = :email";
+
+    $statement = $this->connection->prepare($sql);
+
+    $statement->bindValue(":email", $entity->getEmail(), PDO::PARAM_STR);
+    $statement->execute();
+
+    $data = $statement->fetch();
+
+    return empty($data) === false;
+  }
+
+  private function existsById(UserEntity $entity)
+  {
+    $sql = "SELECT 1 FROM {$this->table} WHERE id = :id";
+
+    $statement = $this->connection->prepare($sql);
+
+    $statement->bindValue(":id", $entity->getId(), PDO::PARAM_INT);
+    $statement->execute();
+
+    $data = $statement->fetch();
+
+    return empty($data) === false;
+  }
+
   public function fetch(UserEntity $entity)
   {
     if ($entity->getEmail() !== null) {

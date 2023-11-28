@@ -6,9 +6,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * TODO: Probably don't use wildcare * on Allow-Origin
- */
 class CorsMiddleware implements MiddlewareInterface
 {
   public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

@@ -336,8 +336,12 @@ h3 {
 
 .events-filters {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 0.5rem;
+}
+
+.events-filter-btn-active {
+  background-color: var(--primary-100);
 }
 
 .list-events {

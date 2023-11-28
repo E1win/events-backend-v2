@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-{% import "components/cards.html" as card %}
 {% import "components/forms.html" as form %}
 
 {% block title %}Events{% endblock %}
@@ -17,9 +16,20 @@
     <!-- Content -->
     <div id="events-content">
       <div class="events-filters">
-        <button class="events-filter-btn btn btn-light">Upcoming</button>
-        <button class="events-filter-btn btn btn-light">All events</button>
-        <button class="events-filter-btn btn btn-light">Past</button>
+        <button 
+        class="events-filter-btn btn btn-light" 
+        :class="!showAllEvents || 'events-filter-btn-active'"
+        @click="getEvents(); showAllEvents = true"
+        >
+        All events
+      </button>
+      <button 
+        class="events-filter-btn btn btn-light" 
+        :class="showAllEvents || 'events-filter-btn-active'"
+        @click="getUpcomingEvents(); showAllEvents = false"
+      >
+        Upcoming
+      </button>
       </div>
       <div>
         <h2>List</h2>
