@@ -171,7 +171,7 @@ class Router implements RouterInterface
     $this->method('PUT', $pattern, $callback);
   }
 
-  public function method(string $method, string $pattern, mixed $callback): void
+  private function method(string $method, string $pattern, mixed $callback): void
   {
     $this->routes[] = new Route($method, $this->prefix . $pattern, $callback);
   }
