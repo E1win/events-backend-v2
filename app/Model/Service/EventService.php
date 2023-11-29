@@ -72,7 +72,7 @@ class EventService
       $event->setImageId($image->getId());
       
       if ($prevImageId != null) {
-        // TODO: Delete event from file storage and database
+        $this->imageService->deleteImageById($prevImageId);
       }
     }
 
