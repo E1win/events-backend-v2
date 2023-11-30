@@ -33,26 +33,4 @@ class EventController extends Controller
       'event' => $event,
     ]);
   }
-
-  public function store(ServerRequestInterface $request): ResponseInterface
-  {
-    /**
-     * TODO: Function to verify form data.
-     * Maybe also function to verify/retrieve images
-     * Probably avoid logic in Controllers
-     */
-
-    $body = $request->getParsedBody();
-
-    $files = $request->getUploadedFiles();
-
-    $image = null;
-    if (count($files) !== 0) {
-      $image = $files[0];
-    }
-
-    $event = $this->eventService->createEvent($body['name'], $image);
-
-    return $this->view->load('events.html');
-  }
 }

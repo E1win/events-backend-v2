@@ -35,14 +35,6 @@ class ExceptionMiddleware implements MiddlewareInterface
   {
     $statusCode =  $error->getCode() === 0 ? 500 : $error->getCode();
 
-    // if ($_ENV['APP_DEBUG'] == "true") {
-    //   throw $error;
-    // }
-
-    // $response = new Response($statusCode, $error->getMessage());
-
-    // return $response;
-
     $body = ['error' => $error->getMessage()];
     
     if ($_ENV['APP_DEBUG'] == "true") {
@@ -50,19 +42,5 @@ class ExceptionMiddleware implements MiddlewareInterface
     }
 
     return $this->jsonResponseFactory->createJsonResponse($body, $statusCode);
-
-    
-    // $accept = $request->getHeaderLine('Accept');
-
-    
-    // if (!array_key_exists($accept, self::CONTENT_TYPE_CONVERSION)) {
-    //   return $response;
-    // } else {
-    //   return $response->withAddedHeader(
-    //     'Content-Type',
-    //     self::CONTENT_TYPE_CONVERSION[$accept] . '; charset=' . $request->getHeaderLine('Accept-Charset')
-    //   );
-    // }
-
   }
 }

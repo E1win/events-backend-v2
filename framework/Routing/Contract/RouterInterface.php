@@ -20,9 +20,6 @@ interface RouterInterface
   public function delete(string $pattern, mixed $callback): void;
   public function put(string $pattern, mixed $callback): void;
 
-  // Add route for given HTTP method
-  public function method(string $method, string $pattern, mixed $callback): void;
-
   // Add middleware to route
   public function addMiddleware(string $middleware);
   public function addMiddlewares(array $middlewares);

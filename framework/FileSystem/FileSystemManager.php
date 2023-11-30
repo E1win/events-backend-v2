@@ -49,6 +49,17 @@ class FileSystemManager implements ContractFileSystemManager
     return $directory . $fileName . ".". $fileExtension;
   }
 
+  public function delete(string $fileName, string $fileMediaType, string $directory): void
+  {
+    $path = $this->formatPath($fileName, $fileMediaType, $directory);
+
+    if (!is_writable($path)) {
+      throw new Exception("Can't delete given file.");
+    }
+
+    unlink($path);
+  }
+  
   private function formatPath(string $fileName, string $fileMediaType, string $directory = ""): string
   {
     $fileExtension = $this->formatFileExtension($fileMediaType);

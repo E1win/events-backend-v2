@@ -66,6 +66,15 @@ class ImageService
     $image = new Image();
 
     $image->setId($id);
+
+    $this->mapper->fetch($image);
+    
+    // Delete from database
+    $this->mapper->delete($image);
+
+    // Delete from filesystem
+    $fileName = $this->formatImageFileName($image->getId(), $image->getName());
+    $this->fileSystemManager->delete($fileName, $image->getContentType(), $this->imagesDir);
   }
 
   private function formatImageFileName(int $id, string $name): string {

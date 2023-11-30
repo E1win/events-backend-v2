@@ -36,7 +36,6 @@ class Route implements RouteInterface
   public function __construct($method, string $pattern, $action)
   {
     $this->pattern = $pattern;
-    // TODO: Check if method(s) are valid
     $this->method = $method;
     $this->action = $action;
   }

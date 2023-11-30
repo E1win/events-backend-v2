@@ -56,12 +56,3 @@ return [
     'sessions'
   ]
 ];
-
-
-
-// alternative to this:
-
-// App\Model\Mapper\Event::class => [
-//    and all parameters here,
-// ]
-//    probably takes way less time,

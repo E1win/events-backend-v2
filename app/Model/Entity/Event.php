@@ -144,10 +144,6 @@ class Event extends Entity
 
   public function removeParticipant(array $participant)
   {
-    // if(($key = array_search($participant, $this->participants, true)) !== FALSE) {
-    //   unset($this->participants[$key]);
-    // }
-
     if (($key = array_search($participant['id'], array_column($this->participants, 'id'))) !== false) {
       unset($this->participants[$key]);
     }

@@ -153,14 +153,11 @@ class UserService
 
     $this->mapper->store($user);
 
-    // $this->setSessionCookie($user);
-    
     return $user;
   }
 
   private function generateUuid(): string
   {
-    // return Uuid::uuid4()->toString();
     $data = openssl_random_pseudo_bytes(16, $strong);
     assert($data !== false && $strong);
 

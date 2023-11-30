@@ -37,11 +37,6 @@ class AuthController extends Controller
 
     $user = $this->authService->loginWithEmailAndPassword($email, $password);
 
-    // maybe set session token in header here
-    // but also maybe not necessary, since client should
-    // save token and everything in storage and set
-    // authorization headers
-
     return $this->responseFactory->createJsonResponse(
       [
         'token' => [

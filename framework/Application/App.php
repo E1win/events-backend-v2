@@ -25,8 +25,6 @@ class App
     App::$container = $container;
 
     $this->routeGatherer = $routeGatherer;
-
-    // add middlewares, etc.
   }
 
   /**

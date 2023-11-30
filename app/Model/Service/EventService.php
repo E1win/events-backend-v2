@@ -70,13 +70,17 @@ class EventService
 
       $image = $this->imageService->uploadImage($image);
       $event->setImageId($image->getId());
-      
-      if ($prevImageId != null) {
-        // TODO: Delete event from file storage and database
-      }
     }
 
+    // TODO: Updating / deleting old image definitely should be refactored.
+
     $this->mapper->store($event);
+
+    if ($image != null && $prevImageId != null) {
+      $this->imageService->deleteImageById($prevImageId);
+    }
+
+    $this->addImageUrlToEventEntity($event);
 
     return $event;
   }
