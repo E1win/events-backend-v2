@@ -67,6 +67,8 @@ class ImageService
 
     $image->setId($id);
 
+    $this->mapper->fetch($image);
+    
     // Delete from database
     $this->mapper->delete($image);
 

@@ -117,7 +117,7 @@ class EventController extends Controller
     $event = $this->eventService->updateEvent($id, $body, $image);
 
     return $this->responseFactory->createJsonResponse(
-      $this->formatEventArrayWithImageUrl($event),
+      $event,
     );
   }
 
