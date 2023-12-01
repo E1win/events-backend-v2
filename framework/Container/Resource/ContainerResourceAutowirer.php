@@ -9,10 +9,8 @@ use Framework\Container\Exception\ContainerCantResolveClassParametersException;
 use Framework\Container\Exception\ContainerException;
 use ReflectionClass;
 
-class ContainerAutowirer implements AutowiringInterface, ContainerResourceCollectionInterface
+class ContainerResourceAutowirer implements AutowiringInterface, ContainerResourceCollectionInterface
 {
-  // . . .
-
   public function __construct(
     private ?ContainerResourceCollectionInterface $parent = null
   )
