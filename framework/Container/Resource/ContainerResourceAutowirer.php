@@ -58,14 +58,10 @@ class ContainerResourceAutowirer implements AutowiringInterface, ContainerResour
 
     $constructorParameters = $constructor->getParameters();
 
-    if (count($constructorParameters) === 0) {
-      return [];
-    }
-
     foreach ($constructorParameters as $index => $parameter) {
-      $parameterIsDependency = class_exists($parameter->getType()) || interface_exists($parameter->getType());
+      $parameterIsClassOrInterface = class_exists($parameter->getType()) || interface_exists($parameter->getType());
 
-      if ($parameterIsDependency) {
+      if ($parameterIsClassOrInterface) {
         $resourceParameters[$index] = $this->resolveDependencyParameter($parameter);
       } else {
         $resourceParameters[$index] = $this->resolvePrimitiveParameter($parameter, $className);
