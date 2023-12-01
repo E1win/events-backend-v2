@@ -11,7 +11,7 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
 {
   private array $unprocessedResources = [];
 
-  private array $cachedResources = [];
+  private array $processedResources = [];
 
   private AutowiringInterface $autowiring;
 
@@ -34,16 +34,16 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
     }
   }
 
-  public function getResource(string $name): ?ContainerResourceInterface
+  public function getResource(string $name): ContainerResourceInterface
   {
-    if (array_key_exists($name, $this->cachedResources)) {
-      return $this->cachedResources[$name];
+    if (array_key_exists($name, $this->processedResources)) {
+      return $this->processedResources[$name];
     }
 
     if (interface_exists($name)) {
       return $this->getResourceWithAlias($name);
     }
-
+    
     if (array_key_exists($name, $this->unprocessedResources)) {
       $parameters = $this->unprocessedResources[$name];
       
@@ -52,20 +52,19 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
       return $this->cacheAndReturnResource($resource);
     }
 
-    $resource = $this->autowiring->autowire($name);
 
-    // TODO: Don't return null, throw exceptions 
-    // and handle them if necessary.
-    if ($resource == null) {
-      return null;
+    if (! class_exists($name)) {
+      throw new NotFoundException("Could not find class with name: '{$name}'.");
     }
+
+    $resource = $this->autowiring->autowire($name);
 
     return $this->cacheAndReturnResource($resource);
   }
 
   public function getResources(): array
   {
-    return $this->cachedResources + $this->unprocessedResources;
+    return $this->processedResources + $this->unprocessedResources;
   }
 
   public function addResources(array $resources = []): self
@@ -93,23 +92,23 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
     return $this;
   }
   
-  private function getResourceWithAlias(string $name): ?ContainerResourceInterface
+  private function getResourceWithAlias(string $interfaceName): ?ContainerResourceInterface
   {
-    if (!array_key_exists($name, $this->resourceAliases)) {
-      throw new NotFoundException("No alias found for interface: '{$name}'.");
+    if (!array_key_exists($interfaceName, $this->resourceAliases)) {
+      throw new NotFoundException("No class found for interface: '{$interfaceName}'.");
     }
     
-    $resourceToRetrieve = $this->resourceAliases[$name];
+    $className = $this->resourceAliases[$interfaceName];
     
-    if (array_key_exists($resourceToRetrieve, $this->cachedResources)) {
-      return $this->cachedResources[$resourceToRetrieve];
+    if (array_key_exists($className, $this->processedResources)) {
+      return $this->processedResources[$className];
     }
 
-    $resource = $this->getResource($resourceToRetrieve);
+    $resource = $this->getResource($className);
 
     // adding Interface as key for new resource too,
     // instead of just the actual class.
-    return $this->cacheAndReturnResource($resource, $name);
+    return $this->cacheAndReturnResource($resource, $interfaceName);
   }
 
   private function processResource($name, $parameters): ?ContainerResource
@@ -145,7 +144,7 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
       $name = $resource->getName();
     }
 
-    $this->cachedResources[$name] = $resource;
-    return $this->cachedResources[$name];
+    $this->processedResources[$name] = $resource;
+    return $this->processedResources[$name];
   }
 }

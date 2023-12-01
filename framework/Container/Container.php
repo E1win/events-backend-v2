@@ -2,6 +2,7 @@
 namespace Framework\Container;
 
 use Framework\Container\Contract\ContainerResourceCollectionInterface;
+use Framework\Container\Contract\ContainerResourceInterface;
 use Framework\Container\Contract\MutableResourceCollection;
 use Framework\Container\Exception\NotFoundException;
 use Framework\Container\Resource\ContainerResourceCollection;
@@ -47,15 +48,14 @@ class Container implements ContainerInterface
       return $this->resolvedResources[$name];
     }
     
-    // TODO: Stop returning null, throw exceptions and handle them.
+    // Get ContainerResource using name
     $resource = $this->resourceCollection->getResource($name);
 
-    if ($resource == null) {
-      throw new NotFoundException("Resource {$name} not found in {$this->containerName}");
-    }
-
+    // Resolve ContainerResource into an instance
     $resolvedResource = $this->resourceResolver->resolve($resource);
 
+    // TODO: Maybe not a great idea to cache instances like this?
+    // Can cause undefined behaviour
     $this->resolvedResources[$name] = $resolvedResource;
 
     return $resolvedResource;

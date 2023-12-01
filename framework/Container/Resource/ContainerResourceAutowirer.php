@@ -17,7 +17,7 @@ class ContainerResourceAutowirer implements AutowiringInterface, ContainerResour
   {
   }
 
-  public function autowire(string $name): ContainerResourceInterface|null
+  public function autowire(string $name): ContainerResourceInterface
   {
     $reflector = new ReflectionClass($name);
 
@@ -39,7 +39,7 @@ class ContainerResourceAutowirer implements AutowiringInterface, ContainerResour
     return new ContainerResource($name, $parameters);
   }
 
-  public function getResource(string $name): ContainerResourceInterface|null
+  public function getResource(string $name): ContainerResourceInterface
   {
     return $this->autowire($name);
   }
