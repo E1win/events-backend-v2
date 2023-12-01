@@ -9,7 +9,7 @@ use Framework\Container\Exception\ContainerCantResolveClassParametersException;
 use Framework\Container\Exception\ContainerException;
 use ReflectionClass;
 
-class ReflectionAutowiring implements AutowiringInterface, ContainerResourceCollectionInterface
+class ContainerAutowirer implements AutowiringInterface, ContainerResourceCollectionInterface
 {
   // . . .
 

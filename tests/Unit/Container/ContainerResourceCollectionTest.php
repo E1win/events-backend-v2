@@ -4,7 +4,7 @@ namespace Tests\Unit\Container;
 use Framework\Container\Exception\ContainerException;
 use Framework\Container\Resource\ContainerResource;
 use Framework\Container\Resource\ContainerResourceCollection;
-use Framework\Container\Resource\ReflectionAutowiring;
+use Framework\Container\Resource\ContainerAutowirer;
 use PHPUnit\Framework\TestCase;
 use Tests\Unit\Container\MockClass\ClassWithDependency;
 use Tests\Unit\Container\MockClass\ClassWithInterfaceDependency;
@@ -21,7 +21,7 @@ class ContainerResourceCollectionTest extends TestCase
 
     $this->resourceCollection = new ContainerResourceCollection(
       [],
-      (new ReflectionAutowiring())
+      (new ContainerAutowirer())
     );
   }
 

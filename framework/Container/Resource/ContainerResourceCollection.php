@@ -27,7 +27,7 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
     $this->unprocessedResources = $unprocessedResources;
 
     if ($autowiring == null) {
-      $this->autowiring = new ReflectionAutowiring($this);
+      $this->autowiring = new ContainerAutowirer($this);
     } else {
       $this->autowiring = $autowiring;
       $this->autowiring->setParent($this);
