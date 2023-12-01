@@ -1,12 +1,13 @@
 <?php
 namespace Tests\Unit\Container;
 
-use Framework\Container\Exception\ContainerException;
+use Psr\Container\ContainerExceptionInterface;
 use Framework\Container\Resource\ContainerResource;
 use Framework\Container\Resource\ContainerResourceCollection;
 use Framework\Container\Resource\ContainerResourceAutowirer;
 use PHPUnit\Framework\TestCase;
 use Tests\Unit\Container\MockClass\ClassWithDependency;
+use Tests\Unit\Container\MockClass\ClassWithEmptyConstructor;
 use Tests\Unit\Container\MockClass\ClassWithInterfaceDependency;
 use Tests\Unit\Container\MockClass\ClassWithPrimitiveParameter;
 use Tests\Unit\Container\MockClass\MockInterface;
@@ -20,8 +21,7 @@ class ContainerResourceCollectionTest extends TestCase
     parent::setUp();
 
     $this->resourceCollection = new ContainerResourceCollection(
-      [],
-      (new ContainerResourceAutowirer())
+      []
     );
   }
 
@@ -41,6 +41,26 @@ class ContainerResourceCollectionTest extends TestCase
     ];
 
     $this->assertSame($expected, $this->resourceCollection->getResources());
+  }
+
+  /** @test */
+  public function it_ignores_constructors_without_parameters(): void
+  {
+    $expected = new ContainerResource(
+      ClassWithEmptyConstructor::class,
+    );
+
+    $resource = $this->resourceCollection->getResource(ClassWithEmptyConstructor::class);
+
+    $this->assertSame(
+      $expected->getName(),
+      $resource->getName(),
+    );
+
+    $this->assertSame(
+      $expected->getParameters(),
+      $resource->getParameters()
+    );
   }
 
   /** @test */
@@ -72,7 +92,7 @@ class ContainerResourceCollectionTest extends TestCase
   /** @test */
   public function it_throws_container_exception_for_unknown_parameters()
   {
-    $this->expectException(ContainerException::class);
+    $this->expectException(ContainerExceptionInterface::class);
 
     $this->resourceCollection->getResource(ClassWithPrimitiveParameter::class);
   }
