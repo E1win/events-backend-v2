@@ -74,17 +74,17 @@ class Route implements RouteInterface
   private function runController(ServerRequestInterface $request): ResponseInterface
   {
     
-
-
-
     $container = App::getContainer();
-    // use ControllerDispatcher to dispatch route
-    $dispatcher = new ControllerDispatcher($container);
+    $dispatcher = $container->get(ControllerDispatcher::class);
 
     return $dispatcher->dispatch($this, $request);
-    // controllerDispatcher->dispatch($this, $request)
 
-    // return new Response();
+
+    // $container = App::getContainer();
+    // // use ControllerDispatcher to dispatch route
+    // $dispatcher = new ControllerDispatcher($container);
+
+    // return $dispatcher->dispatch($this, $request);
   }
 
   public function getAction()

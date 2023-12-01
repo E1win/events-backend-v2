@@ -7,6 +7,6 @@ class ContainerCantResolveClassParametersException extends \Exception implements
 {
   public function __construct(string $className)
   {
-    parent::__construct("Can't resolve parameters of class '{$className}' in Container");
+    parent::__construct("Container failed to resolve parameters of class: '{$className}'");
   }
 }

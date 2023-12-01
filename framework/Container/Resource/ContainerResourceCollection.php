@@ -21,7 +21,7 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
    * @param ContainerResourceInterface[] $resources
    */
   public function __construct(
-    array $unprocessedResources, 
+    array $unprocessedResources = [], 
     ?AutowiringInterface $autowiring = null
   ) {
     $this->unprocessedResources = $unprocessedResources;

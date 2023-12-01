@@ -36,7 +36,7 @@ class Container implements ContainerInterface
   ) {
     $this->resourceCollection = $resourceCollection;
 
-    $this->resourceResolver = new ResourceResolver();
+    $this->resourceResolver = new ResourceResolver($this);
 
     $this->resolvedResources[Container::class] = $this;
     $this->resolvedResources[ContainerInterface::class] = $this;

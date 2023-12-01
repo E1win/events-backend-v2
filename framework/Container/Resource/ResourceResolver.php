@@ -3,16 +3,26 @@ namespace Framework\Container\Resource;
 
 use Exception;
 use Framework\Container\Contract\ContainerResourceInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use ReflectionClass;
 use ReflectionMethod;
 
 class ResourceResolver
 {
+  public function __construct(
+    private ?ContainerInterface $parent = null
+  )
+  {
+  }
+
   public function resolve(ContainerResourceInterface $resource)
   {
     $className = $resource->getName();
 
+    if ($this->parent != null && $className == $this->parent::class) {
+      return $this->parent;
+    }
 
     $reflectionClass = new ReflectionClass($className);
 
