@@ -47,6 +47,7 @@ class Container implements ContainerInterface
       return $this->resolvedResources[$name];
     }
     
+    // TODO: Stop returning null, throw exceptions and handle them.
     $resource = $this->resourceCollection->getResource($name);
 
     if ($resource == null) {

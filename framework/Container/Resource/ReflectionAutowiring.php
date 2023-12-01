@@ -5,6 +5,7 @@ use Exception;
 use Framework\Container\Contract\AutowiringInterface;
 use Framework\Container\Contract\ContainerResourceCollectionInterface;
 use Framework\Container\Contract\ContainerResourceInterface;
+use Framework\Container\Exception\ContainerCantResolveClassParametersException;
 use Framework\Container\Exception\ContainerException;
 use ReflectionClass;
 
@@ -32,13 +33,10 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
       return new ContainerResource($name);
     }
 
-    $parameters = $this->getResourceParameters($constructor);
+    $parameters = $this->getResourceParameters($constructor, $name);
 
     // TODO: Fix error when constructer exists
     // but has no parameters
-    if ($parameters == null) {
-      throw new ContainerException("Can't resolve parameters of class '{$name}' in Container");
-    }
 
     return new ContainerResource($name, $parameters);
   }
@@ -56,7 +54,7 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
     return [];
   }
 
-  private function getResourceParameters(\ReflectionMethod $constructor)
+  private function getResourceParameters(\ReflectionMethod $constructor, string $className)
   {
     $resourceParameters = [];
 
@@ -67,27 +65,35 @@ class ReflectionAutowiring implements AutowiringInterface, ContainerResourceColl
     }
 
     foreach ($constructorParameters as $index => $parameter) {
-      $dependency = class_exists($parameter->getType()) || interface_exists($parameter->getType()) ? $parameter->getType() : null;
+      $parameterIsDependency = class_exists($parameter->getType()) || interface_exists($parameter->getType());
 
-      if ($dependency === null) {
-        // Check if default value for a parameter is available
-        if ($parameter->isDefaultValueAvailable()) {
-          $resourceParameters[$index] = $parameter->getDefaultValue();
-        } else {
-          return null;
-        }
+      if ($parameterIsDependency) {
+        $resourceParameters[$index] = $this->resolveDependencyParameter($parameter);
       } else {
-        if ($this->parent != null) {
-          // TODO: First check here if dependency has primitive values.
-          // To avoid unnecessarily going back up the chain.
-          $resourceParameters[$index] = $this->parent->getResource($dependency->getName());
-        } else {
-          $resourceParameters[$index] = $this->getResource($dependency->getName());
-        }
+        $resourceParameters[$index] = $this->resolvePrimitiveParameter($parameter, $className);
       }
     }
 
     return $resourceParameters;
+  }
+
+  private function resolveDependencyParameter($parameter)
+  {
+    $dependency = $parameter->getType();
+
+    if ($this->parent != null) {
+      return $this->parent->getResource($dependency->getName());
+    }
+
+    return $this->getResource($dependency->getName());
+  }
+
+  private function resolvePrimitiveParameter($parameter, $className) {
+    if (! $parameter->isDefaultValueAvailable()) {
+      throw new ContainerCantResolveClassParametersException($className);
+    }
+    
+    return $parameter->getDefaultValue();
   }
 
   public function setParent(ContainerResourceCollectionInterface $parent)

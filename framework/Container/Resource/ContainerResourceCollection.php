@@ -54,6 +54,8 @@ class ContainerResourceCollection implements ContainerResourceCollectionInterfac
 
     $resource = $this->autowiring->autowire($name);
 
+    // TODO: Don't return null, throw exceptions 
+    // and handle them if necessary.
     if ($resource == null) {
       return null;
     }
