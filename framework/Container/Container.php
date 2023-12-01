@@ -17,8 +17,6 @@ class Container implements ContainerInterface
 
   private ResourceResolver $resourceResolver;
   
-  protected array $resolvedResources = [];
-
   static public function createWithDefaultConfiguration()
   {
     $config = config('di/', true);
@@ -37,20 +35,10 @@ class Container implements ContainerInterface
     $this->resourceCollection = $resourceCollection;
 
     $this->resourceResolver = new ResourceResolver($this);
-
-    $this->resolvedResources[Container::class] = $this;
-    $this->resolvedResources[ContainerInterface::class] = $this;
   }
 
   public function get(string $name)
   {
-    // Maybe here, just check if the name is container
-    // if it is, then just return current instance.
-
-    if (array_key_exists($name, $this->resolvedResources)) {
-      return $this->resolvedResources[$name];
-    }
-    
     // Get ContainerResource using name
     $resource = $this->resourceCollection->getResource($name);
 
@@ -60,10 +48,6 @@ class Container implements ContainerInterface
   
   public function has(string $name): bool
   {
-    if (array_key_exists($name, $this->resolvedResources)) {
-      return true;
-    }
-
     try {
       $resource = $this->resourceCollection->getResource($name);
     } catch (\Throwable $th) {
