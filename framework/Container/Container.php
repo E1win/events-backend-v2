@@ -44,6 +44,9 @@ class Container implements ContainerInterface
 
   public function get(string $name)
   {
+    // Maybe here, just check if the name is container
+    // if it is, then just return current instance.
+
     if (array_key_exists($name, $this->resolvedResources)) {
       return $this->resolvedResources[$name];
     }
@@ -52,13 +55,7 @@ class Container implements ContainerInterface
     $resource = $this->resourceCollection->getResource($name);
 
     // Resolve ContainerResource into an instance
-    $resolvedResource = $this->resourceResolver->resolve($resource);
-
-    // TODO: Maybe not a great idea to cache instances like this?
-    // Can cause undefined behaviour
-    $this->resolvedResources[$name] = $resolvedResource;
-
-    return $resolvedResource;
+    return $this->resourceResolver->resolve($resource);
   }
   
   public function has(string $name): bool
